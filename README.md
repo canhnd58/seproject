@@ -1,11 +1,10 @@
-# seproject
-Bài tập nhóm môn Công nghệ phần mềm năm học 2015-2016
+#Quiz App
 
-Đề tài: Làm lại Quiz App
+Software engineering project: remake a quiz app
 
-Tham khảo: https://polymer-topeka.appspot.com
+Reference: https://polymer-topeka.appspot.com
 
-Thành viên trong nhóm:
+Members:
  - Nguyễn Đức Cảnh
  - Nguyễn Duy Khánh
  - Lê Hải Nam
