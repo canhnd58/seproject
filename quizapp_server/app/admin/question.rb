@@ -1,4 +1,4 @@
-ActiveAdmin.register Category do
+ActiveAdmin.register Question do
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -12,11 +12,9 @@ ActiveAdmin.register Category do
 #   permitted << :other if resource.something?
 #   permitted
 # end
-
-	permit_params :name
-
-	sidebar "Category Details", only: [:show, :edit] do
-  	link_to "Questions",    admin_category_questions_path(category)  
+	belongs_to :category
+	sidebar "Question Details", only: [:show, :edit] do
+  	link_to "Answers",    admin_question_answers_path(question)  
   end
 
 end
