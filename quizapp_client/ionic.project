@@ -1,4 +1,10 @@
 {
-  "name": "quizapp_client",
-  "app_id": ""
+  "name": "Software Enginerring firstApp",
+  "app_id": "",
+  "proxies": [
+		{
+			"path": "/questions",
+			"proxyUrl": "http://se2015-quizapp.herokuapp.com/categories/2/questions"
+		}
+  ]
 }

@@ -1,1 +1,11 @@
-/* Empty. Add your own CSS if you like */
+.trueAnswerIcon {
+  text-align:center;
+  font-size: 4em;
+  color: green;
+}
+
+.falseAnswerIcon {
+  text-align:center;
+  font-size: 4em;
+  color: red;  
+}
