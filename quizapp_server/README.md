@@ -1,5 +1,5 @@
 #Quizapp Server
-Server side of quiz app
+Server side of quiz app (http://se2015-quizapp.herokuapp.com/)
 
 ##System requirements
 * OS: Ubuntu 14.04 LTS or higher
@@ -9,4 +9,5 @@ Server side of quiz app
 
 ##Style guides
 Ruby style guide: https://github.com/bbatsov/ruby-style-guide
+
 Rails style guide: https://github.com/bbatsov/rails-style-guide
