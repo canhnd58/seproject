@@ -21,3 +21,4 @@ q1.answers.create([
   {value: 'Ha Noi', is_correct: true},
   {value: 'Bac Ninh', is_correct: false},
   {value: 'Da Nang', is_correct: false} ])
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
