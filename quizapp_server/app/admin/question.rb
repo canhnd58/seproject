@@ -1,10 +1,10 @@
 ActiveAdmin.register Question do
   permit_params :description, :image_url, :kind, :score,
-    answers_attributes: [ :value, :is_correct ]
+    answers_attributes: [:value, :is_correct]
 
-	belongs_to :category
-	sidebar "Question Details", only: [:show, :edit] do
-  	link_to "Answers", admin_question_answers_path(question)
+  belongs_to :category
+  sidebar "Question Details", only: [:show, :edit] do
+    link_to "Answers", admin_question_answers_path(question)
   end
 
   index do

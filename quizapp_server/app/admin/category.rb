@@ -1,8 +1,8 @@
 ActiveAdmin.register Category do
-	permit_params :name
+  permit_params :name
 
-	sidebar "Category Details", only: [:show, :edit] do
-  	link_to "Questions", admin_category_questions_path(category)
+  sidebar "Category Details", only: [:show, :edit] do
+    link_to "Questions", admin_category_questions_path(category)
   end
 
   index do
