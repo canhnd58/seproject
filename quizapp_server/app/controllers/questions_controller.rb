@@ -3,10 +3,10 @@ class QuestionsController < ApplicationController
     begin
       @category = Category.find(params[:category_id])
     rescue
-      render :json => { :error => "category #{params[:category_id]} does not exist" }
+      render json: {error: "category #{params[:category_id]} does not exist"}
     else
       @questions = @category.questions.all
-      render :json => @questions
+      render json: @questions
     end
   end
 end
