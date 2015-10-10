@@ -2,9 +2,9 @@ Rails.application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  resources :categories do
-    resources :questions
-  end
+
+  get 'questions' => 'questions#index'
+  get 'categories' => 'categories#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
