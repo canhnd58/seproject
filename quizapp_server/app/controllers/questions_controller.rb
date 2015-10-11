@@ -1,9 +1,9 @@
 class QuestionsController < ApplicationController
   def index
     begin
-      @category = Category.find(params[:category_id])
+      @category = Category.find(params[:category])
     rescue
-      render json: {error: "category #{params[:category_id]} does not exist"}
+      render json: {error: "category #{params[:category]} does not exist"}
     else
       @questions = @category.questions.all
       render json: @questions
