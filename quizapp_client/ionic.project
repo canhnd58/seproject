@@ -4,7 +4,7 @@
   "proxies": [
 		{
 			"path": "/questions",
-			"proxyUrl": "http://se2015-quizapp.herokuapp.com/categories/2/questions"
+			"proxyUrl": "http://se2015-quizapp.herokuapp.com/categories/1/questions"
 		}
   ]
 }

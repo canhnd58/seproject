@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="starter">
+<html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -21,31 +21,9 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
   </head>
-  <body ng-controller="MainCtrl">
-    <ion-pane>
-      <ion-content>
-        <div class="card">
-          <div class="item item-text-wrap" style="text-align:center">
-            {{clientSideList.description}}
-          </div>
-        </div>
-        <div class="list">
-          <ion-radio ng-repeat="item in clientSideList.answers" ng-model="user.choice" ng-value="item">
-            {{item.value}}
-          </ion-radio>
-        </div>
-        <div class="trueAnswerIcon icon ion-ios-checkmark-outline" ng-show="correct && Submitted"> {{clientSideList.score}} pts</div>
-        <div class="falseAnswerIcon icon ion-ios-close-outline" ng-show="!correct && Submitted"> 0 pts</div>
-        <div>
-          <button class="icon ion-ionic button button-block button-balanced" ng-click="checkAnswer()" ng-hide="Submitted"> Submit </button>
-        </div>
-        <div>
-          <button class="button button-block button-positive" ng-click="nextQuestion()" ng-show="Submitted && !finished"> Next question </button>
-        </div>
-        <div>
-          <button class="button button-block button-dark" ng-show="finished"> Result: {{score}} </button>
-        </div>
-      </ion-content>
-    </ion-pane>
+  <body ng-app="starter">
+    <ion-nav-bar class="bar-calm">
+    </ion-nav-bar>
+    <ion-nav-view name="questions"></ion-nav-view>
   </body>
 </html>

@@ -18,6 +18,21 @@ angular.module('starter', ['ionic'])
   });
 })
 
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+    .state('questions', {
+      url: '/questions',
+      views: {
+        questions: {
+          templateUrl: 'templates/answerQuestionView.html',
+          controller:'MainCtrl'
+        }
+      }
+  });
+
+  $urlRouterProvider.otherwise('/questions');
+})
+
 .controller('MainCtrl', function($scope, $http) {
   // $http.get('http://se2015-quizapp.herokuapp.com/categories/2/questions')
   $http.get('/questions')
