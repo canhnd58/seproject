@@ -15,4 +15,5 @@ ActiveAdmin.register Category do
     end
     actions
   end
+
 end
