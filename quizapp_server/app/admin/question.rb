@@ -2,7 +2,8 @@ ActiveAdmin.register Question do
   permit_params :description, :image_url, :kind, :score,
     answers_attributes: [:value, :is_correct]
 
-  belongs_to :category
+  belongs_to :category, optional: true
+
   sidebar "Question Details", only: [:show, :edit] do
     link_to "Answers", admin_question_answers_path(question)
   end

@@ -260,5 +260,10 @@ ActiveAdmin.setup do |config|
   #
   # config.filters = true
 
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      #menu.add label: "Questions", url: "./que"
+    end
+  end
 
 end
