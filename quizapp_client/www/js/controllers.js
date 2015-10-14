@@ -39,18 +39,20 @@ angular.module('starter.controllers', [])
     choice: null
   };
 
-  $scope.checkAnswer = function() {
+   $scope.getValue = function(index,value) {
     $scope.Submitted = true;
-    if ($scope.user.choice.is_correct == true) {
+    $scope.activeBtn = index;
+    if(value == true){
       $scope.correct = true;
       $scope.score += $scope.clientSideList.score;
-    } else $scope.correct = false;
+    }
+    else $scope.correct = false;
     if ($scope.cnt + 1 == $scope.clientData.length) $scope.finished = true;
-  };
-
+  }
   $scope.nextQuestion = function() {
+    $scope.Submitted = false;
+    $scope.activeBtn = 5;
     $scope.cnt = $scope.cnt + 1;
     $scope.clientSideList = $scope.clientData[$scope.cnt];
-    $scope.Submitted = false;
   };
 });

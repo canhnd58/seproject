@@ -3,9 +3,31 @@
   font-size: 4em;
   color: green;
 }
+.mycard{
+  height: 100px;
+}
+
 
 .falseAnswerIcon {
   text-align:center;
   font-size: 4em;
   color: red;  
+}
+.button{
+  background-color: white;
+	width:48%;
+  height: 100px; 
+  margin-bottom: 1%;
+  margin-right: 1%;
+  margin-left: 1%;
+}
+.button-clear.button-clear{
+  color:black;
+}
+.nextButton {
+	position: relative;
+  border-radius:50px;
+  font-size:50px;
+  text-align:center;
+  left: 25%;
 }

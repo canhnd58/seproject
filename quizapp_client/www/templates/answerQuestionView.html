@@ -1,25 +1,19 @@
 <ion-view name="questions" view-title="Questions">
   <ion-content>
     <div class="card">
-      <div class="item item-text-wrap" style="text-align:center">
+      <div class="item item-text-wrap mycard" style="text-align:center">
         {{clientSideList.description}}
       </div>
     </div>
-    <ion-list>
-      <ion-radio ng-repeat="item in clientSideList.answers" ng-model="user.choice" ng-value="item">
+    <div>
+      <button class="button button-light" ng-class="{'button-balanced':activeBtn == $index}"  ng-repeat="item in clientSideList.answers" ng-click="getValue($index,item.is_correct)" ng-model="user.choice" ng-value="item">
         {{item.value}}
-      </ion-radio>
-    </ion-list>
-    <div class="trueAnswerIcon icon ion-ios-checkmark-outline" ng-show="correct && Submitted"> {{clientSideList.score}} pts</div>
-    <div class="falseAnswerIcon icon ion-ios-close-outline" ng-show="!correct && Submitted"> 0 pts</div>
-    <div>
-      <button class="icon ion-ionic button button-block button-balanced" ng-click="checkAnswer()" ng-hide="Submitted"> Submit </button>
+      </button>
+    </div>
+      <button class="button button-clear nextButton ion ion-play" ng-click="nextQuestion()" ng-show="Submitted && !finished"></button>
     </div>
     <div>
-      <button class="button button-block button-positive" ng-click="nextQuestion()" ng-show="Submitted && !finished"> Next question </button>
-    </div>
-    <div>
-      <button class="button button-block button-dark" ng-show="finished"> Result: {{score}} </button>
+      <button class="button nextButton button-outline button-positive" ng-show="finished"> Result: {{score}} </button>
     </div>
   </ion-content>
 </ion-view>
