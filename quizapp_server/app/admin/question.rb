@@ -24,6 +24,7 @@ ActiveAdmin.register Question do
 
   form do |f|
     f.inputs 'Questions details' do
+      f.input :category_id, :as => :select, :collection => Category.all.map {|u| ["#{u.name}", u.id]}, :include_blank => false
       f.input :description
       f.input :image_url
       f.input :kind
@@ -36,14 +37,15 @@ ActiveAdmin.register Question do
     f.actions
   end
 
-  show do 
-  		attributes_table do 
-  			row :id_column
-  			row :description
-  			row :image_url
-  			row :kind
-  			row :score
-  			row :updated_at
+  show do
+  	attributes_table do
+      row Category.name
+  		row :id
+  		row :description
+  		row :image_url
+  		row :kind
+  		row :score
+  		row :updated_at
   	end
 
   	panel "Answers" do
