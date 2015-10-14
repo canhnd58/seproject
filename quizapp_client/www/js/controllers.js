@@ -1,10 +1,29 @@
 angular.module('starter.controllers', [])
 
-.controller('questionsController', function($scope, $http) {
-  // $http.get('http://se2015-quizapp.herokuapp.com/categories/2/questions')
-  $http.get('/questions')
+.controller('categoriesController', function($scope, $http, $state, CategoryId) {
+  $http.get('/categories')
     .success(function(data) {
-      console.log('Success', data);
+      console.log('Categories Success', data);
+      $scope.categoriesData = data;
+    })
+    .error(function(data) {
+      console.log('Something went wrong when get categories', data);
+    });
+
+  $scope.takeQuiz = function(idValue) {
+    CategoryId.setId(idValue);
+    console.log(idValue);
+    console.log(CategoryId.getId());
+    $state.go('questions');
+  };
+})
+
+.controller('questionsController', function($scope, $http, CategoryId) {
+  // $http.get('http://se2015-quizapp.herokuapp.com/categories/2/questions')
+  $http.get('/questions' + '?category=' + CategoryId.getId())
+    .success(function(data) {
+      console.log('Questions Success', data);
+      console.log(CategoryId.getId());
       $scope.cnt = 0;
       $scope.clientData = data;
       $scope.clientSideList = $scope.clientData[0];

@@ -1,6 +1,4 @@
-'starter';
-
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -19,14 +17,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   $stateProvider
     .state('questions', {
       url: '/questions',
-      views: {
-        questions: {
-          templateUrl: 'templates/answerQuestionView.html',
-          controller:'questionsController'
-        }
-      }
+      templateUrl: 'templates/answerQuestionView.html',
+      controller: 'questionsController'
+    })
+
+    .state('categories', {
+      url: '/categories',
+      templateUrl: 'templates/categoriesSelectView.html',
+      controller: 'categoriesController'
   });
 
-  $urlRouterProvider.otherwise('/questions');
+  $urlRouterProvider.otherwise('/categories');
 
 });
