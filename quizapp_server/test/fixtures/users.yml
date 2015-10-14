@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  facebook_id: MyString
+  avatar: MyString
+  rating: 1.5
+  highscore: 1
+  exp: 1
+  accuracy: 1.5
+  speed: 1.5
+  versatility: 1.5
+  diligence: 1.5
+  impressiveness: 1.5
+
+two:
+  name: MyString
+  facebook_id: MyString
+  avatar: MyString
+  rating: 1.5
+  highscore: 1
+  exp: 1
+  accuracy: 1.5
+  speed: 1.5
+  versatility: 1.5
+  diligence: 1.5
+  impressiveness: 1.5

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151004153925) do
+ActiveRecord::Schema.define(version: 20151014145214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,18 +65,49 @@ ActiveRecord::Schema.define(version: 20151004153925) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "questions", force: :cascade do |t|
-    t.text     "description"
-    t.string   "image_url"
-    t.integer  "kind"
+  create_table "matches", force: :cascade do |t|
+    t.integer  "user_id"
     t.integer  "score"
+    t.integer  "max_score"
+    t.integer  "time"
     t.integer  "category_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
+  add_index "matches", ["category_id"], name: "index_matches_on_category_id", using: :btree
+  add_index "matches", ["user_id"], name: "index_matches_on_user_id", using: :btree
+
+  create_table "questions", force: :cascade do |t|
+    t.text     "description"
+    t.string   "image_url"
+    t.integer  "score"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "kind"
+  end
+
   add_index "questions", ["category_id"], name: "index_questions_on_category_id", using: :btree
 
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "facebook_id"
+    t.string   "avatar"
+    t.float    "rating"
+    t.integer  "highscore"
+    t.integer  "exp"
+    t.float    "accuracy"
+    t.float    "speed"
+    t.float    "versatility"
+    t.float    "diligence"
+    t.float    "impressiveness"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   add_foreign_key "answers", "questions"
+  add_foreign_key "matches", "categories"
+  add_foreign_key "matches", "users"
   add_foreign_key "questions", "categories"
 end
