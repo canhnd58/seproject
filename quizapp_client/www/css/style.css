@@ -4,7 +4,8 @@
   color: green;
 }
 .mycard{
-  height: 100px;
+  height: 200px;
+  line-height: 30px;
 }
 
 
@@ -16,7 +17,8 @@
 .button{
   background-color: white;
 	width:48%;
-  height: 100px; 
+  line-height: 20px;
+  height: 150px; 
   margin-bottom: 1%;
   margin-right: 1%;
   margin-left: 1%;
@@ -27,7 +29,33 @@
 .nextButton {
 	position: relative;
   border-radius:50px;
-  font-size:50px;
   text-align:center;
+  font-size: -webkit-xxx-large;
   left: 25%;
+}
+.blur {
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+  pointer-events: none;
+}
+.resultButton {
+  position: absolute;
+  top:150px;
+  text-decoration: bold;
+  font-weight: bolder;
+  font-size: -webkit-xxx-large;
+  font-family: cursive;
+  left: 40%;
+}
+
+.sample-show-hide {
+  -webkit-transition:all linear 2s;
+  transition:all linear 2s;
+}
+
+.sample-show-hide.ng-hide {
+  opacity:0;
 }
