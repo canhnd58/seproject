@@ -1,35 +1,61 @@
 angular.module('starter.controllers', [])
 
-.controller('categoriesController', function($scope, $http, $state, CategoryId) {
-  $http.get('/categories')
+.controller('loginController', function($scope, $state, $http, ngFB, facebookAccessToken) {
+  $scope.fbLogin = function () {
+    ngFB.login({scope: ''}).then(
+        function (response) {
+            if (response.status === 'connected') {
+                console.log('Facebook login succeeded');
+                var accessToken = response.authResponse.accessToken;
+                facebookAccessToken.setToken(accessToken);
+                $http({
+                  method: 'POST',
+                  url: '/api/users/session',
+                  data: {
+                    provider: 'facebook',
+                    access_token: accessToken
+                  }
+                })
+                  .success(function(data, status) {
+                    console.log('AccessToken sent successfully!', status);
+                  })
+                  .error(function(data, status) {
+                    console.log('AccessToken sent error!', status);
+                  });
+                $state.go('categories');
+            } else {
+                alert('Facebook login failed');
+            }
+        })
+  };
+})
+
+.controller('categoriesController', function($scope, $http, $state, categoryId, facebookAccessToken) {
+  $http.get('/api/categories')
     .success(function(data) {
       console.log('Categories Success', data);
-      $scope.categoriesData = data;
+      $scope.categoriesData = data.data;
     })
     .error(function(data) {
       console.log('Something went wrong when get categories', data);
     });
 
   $scope.takeQuiz = function(idValue) {
-    CategoryId.setId(idValue);
-    console.log(idValue);
-    console.log(CategoryId.getId());
+    categoryId.setId(idValue);
     $state.go('questions');
   };
 })
 
-.controller('questionsController', function($scope, $http, CategoryId) {
-  // $http.get('http://se2015-quizapp.herokuapp.com/categories/2/questions')
-  $http.get('/questions' + '?category=' + CategoryId.getId())
+.controller('questionsController', function($scope, $http, categoryId, facebookAccessToken) {
+  $http.get('/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
     .success(function(data) {
-      console.log('Questions Success', data);
-      console.log(CategoryId.getId());
+      console.log('Questions Success');
       $scope.cnt = 0;
-      $scope.clientData = data;
+      $scope.clientData = data.data;
       $scope.clientSideList = $scope.clientData[0];
     })
     .error(function(data) {
-      console.log('Something went wrong', data);
+      console.log('Something went wrong');
     });
 
   $scope.score = 0;

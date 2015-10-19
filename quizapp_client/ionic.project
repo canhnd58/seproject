@@ -3,12 +3,8 @@
   "app_id": "a458c686",
   "proxies": [
     {
-      "path": "/questions",
-      "proxyUrl": "http://se2015-quizapp.herokuapp.com/questions"
-    },
-    {
-      "path": "/categories",
-      "proxyUrl": "http://se2015-quizapp.herokuapp.com/categories"
+      "path": "/api",
+      "proxyUrl": "http://se2015-quizapp.herokuapp.com/api"
     }
   ]
 }
