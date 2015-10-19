@@ -39,9 +39,6 @@ ActiveAdmin.register Question do
 
   show do
     attributes_table do
-      row :category do |c|
-        c.name
-      end
       row :id
       row :description
       row :image_url
