@@ -3,22 +3,30 @@
   font-size: 4em;
   color: green;
 }
-.mycard{
-  height: 200px;
+.card{
+  height: 30%;
   line-height: 30px;
 }
-
+.scroll{
+  height: 100%;
+}
 
 .falseAnswerIcon {
   text-align:center;
   font-size: 4em;
   color: red;  
 }
+.parrentButton {
+  position: absolute;
+  top: 32%;
+  bottom: 1px;
+  width: 100%;
+}
 .button{
   background-color: white;
 	width:48%;
-  line-height: 20px;
-  height: 150px; 
+  line-height: 150%;
+  height: 30%; 
   margin-bottom: 1%;
   margin-right: 1%;
   margin-left: 1%;
@@ -26,20 +34,25 @@
 .button-clear.button-clear{
   color:black;
 }
+.test{
+  height:  100%;
+}
 .nextButton {
-	position: relative;
+	position: absolute;
   border-radius:50px;
   text-align:center;
   font-size: -webkit-xxx-large;
   left: 25%;
+  top:75%;
 }
 .blur {
-  -webkit-filter: blur(3px);
-  -moz-filter: blur(3px);
-  -o-filter: blur(3px);
-  -ms-filter: blur(3px);
-  filter: blur(3px);
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+  filter: blur(1px);
   pointer-events: none;
+
 }
 .resultButton {
   position: absolute;
@@ -48,12 +61,12 @@
   font-weight: bolder;
   font-size: -webkit-xxx-large;
   font-family: cursive;
-  left: 40%;
+  width: 100%;
+  text-align: center;
 }
-
 .sample-show-hide {
-  -webkit-transition:all linear 2s;
-  transition:all linear 2s;
+  -webkit-transition:all linear 1s;
+  transition:all linear 1s;
 }
 
 .sample-show-hide.ng-hide {

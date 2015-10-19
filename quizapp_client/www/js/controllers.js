@@ -1,5 +1,4 @@
 angular.module('starter.controllers', [])
-
 .controller('loginController', function($scope, $state, $http, ngFB, facebookAccessToken) {
   $scope.fbLogin = function () {
     ngFB.login({scope: ''}).then(
@@ -45,7 +44,6 @@ angular.module('starter.controllers', [])
     $state.go('questions');
   };
 })
-
 .controller('questionsController', function($scope, $http, categoryId, facebookAccessToken) {
   $http.get('/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
     .success(function(data) {
