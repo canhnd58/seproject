@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
 
+  namespace :api do
+    #users api
+    post 'users/session' => 'sessions#create'
+    delete 'users/session' => 'session#destroy'
+    get 'users/:id' => 'users#show'
+
+    #matches api
+    get 'categories' => 'categories#index'
+    get 'match' => 'matches#new'
+    post 'match' => 'matches#save'
+  end
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-
-  get 'questions' => 'questions#index'
-  get 'categories' => 'categories#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
