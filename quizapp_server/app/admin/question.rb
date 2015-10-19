@@ -38,22 +38,24 @@ ActiveAdmin.register Question do
   end
 
   show do
-  	attributes_table do
-      row Category.name
-  		row :id
-  		row :description
-  		row :image_url
-  		row :kind
-  		row :score
-  		row :updated_at
-  	end
+    attributes_table do
+      row :category do |c|
+        c.name
+      end
+      row :id
+      row :description
+      row :image_url
+      row :kind
+      row :score
+      row :updated_at
+    end
 
-  	panel "Answers" do
-  		table_for question.answers do
-  			column :value
-  			column :is_correct
-  		end
-  	end
+    panel "Answers" do
+      table_for question.answers do
+        column :value
+        column :is_correct
+      end
+    end
   end
 
 end
