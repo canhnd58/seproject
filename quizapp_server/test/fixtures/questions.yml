@@ -1,15 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  description: MyText
-  image_url: MyString
+  id: 1
+  description: "What is bigger? 1 or 2?"
+  image_url: nothing
   kind: 1
   score: 1
-  category_id: 
+  category_id: 1
 
 two:
-  description: MyText
-  image_url: MyString
+  id: 2
+  description: "When was hgminh born?"
+  image_url: nothing
   kind: 1
   score: 1
-  category_id: 
+  category_id: 2
+
+three:
+  id: 3
+  description: "When was hgminh born?"
+  image_url: nothing
+  kind: 2
+  score: 7
+  category_id: 2

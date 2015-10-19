@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  value: MyString
-  is_correct: false
-  question_id: 
+  value: 1995
+  is_correct: true
+  question_id: 2
 
 two:
-  value: MyString
+  value: 2012
   is_correct: false
-  question_id: 
+  question_id: 2
