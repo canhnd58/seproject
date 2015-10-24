@@ -86,9 +86,15 @@ empty, then the
   "status" : 200,
   "data": {
     "name" : "hgminh",
-    "avatar" : "sample.jpg",
+    "avatar" : "yunero.jpg"
+    "raing" : 6000,
     "highscore" : 100,
-    ...
+    "exp" : 50000,
+    "accuracy" : 10.0,
+    "speed" : 10.0,
+    "versatility" : 10.0,
+    "diligence" : 10.0,
+    "impressiveness" : 10.0
   }
 }
 ```
@@ -122,10 +128,11 @@ No parameter required.
 }
 ```
 
-##### GET api/match
+##### POST api/match
 
 Return list of questions and answers of them. You must provide access token and
-category id.
+category id. After this action, new match will be created in the database. The
+match id will be return to the user.
 
 | Params | Required | Descriptions |
 |--------|----------|--------------|
@@ -139,42 +146,42 @@ category id.
 ```
 {
   "status" : 200,
-  "data": [
-    {
-      "description" : "abc def ghiklmn?",
-      "image_url" : "someurl.jpg",
-      "kind" : 1,
-      "score" : 10,
-      "answer" : [
-        {
-          "value" : "pqrs",
-          "is_correct" : true
-        },
-        {
-          "value" : "wtxz",
-          "is_correct" : false
-        },
-        ...
-      ]
-    },
-    ...
-  ]
+  "data": { 
+    "match_id" : 123456
+    "questions" : [
+      {
+        "description" : "abc def ghiklmn?",
+        "image_url" : "someurl.jpg",
+        "kind" : 1,
+        "score" : 10,
+        "answer" : [
+          {
+            "value" : "pqrs",
+            "is_correct" : true
+          },
+          {
+            "value" : "wtxz",
+            "is_correct" : false
+          },
+          ...
+        ]
+      },
+      ...
+    ]
 }
 ```
 
 ##### POST api/match
 
-_**NOTE**: This has not been completed yet._
-
-Send the match's result to the server.
+Send the match's result to the server. The user has to send the match id as 
+well as the access token to server to authenticate.
 
 | Params | Required | Descriptions |
 |--------|----------|--------------|
 | access_token | YES | |
 | score | YES | Total score of user |
-| max_score | YES | Total score of questions |
 | time | YES | Total time |
-| match_id | YES |  |
+| match_id | YES | The match id of the match |
 
 **Respond's example**:
 
