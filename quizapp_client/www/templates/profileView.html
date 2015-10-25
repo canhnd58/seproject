@@ -1,0 +1,14 @@
+<ion-view name='profile' title='Profile'>
+  <ion-content>
+    <div class="list padding">
+      <div class="item item-divider">
+        {{user.name}}
+      </div>
+      <a class="item">Rating <span class="item-note">{{user.rating}}</span></a>
+      <a class="item">Highscore <span class="item-note">{{user.highscore}}</span></a>
+      <a class="item">Level <span class="item-note">{{user.exp / 1000}}</span></a>
+    </div>
+    <canvas class="chart chart-radar padding" chart-data="chart.data"
+    chart-labels="chart.labels" chart-options="chart.options" chart-colours="chart.colour"></canvas>
+  </ion-content>
+</ion-view>

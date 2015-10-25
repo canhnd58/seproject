@@ -1,18 +1,18 @@
 <ion-view name="questions" view-title="Questions">
   <ion-content>
   <div class='test' ng-class="{'blur':finished == true}">
-      <div class="card">
-        <div class="item item-text-wrap mycard" style="text-align:center">
-          {{clientSideList.description}}
-        </div>
+    <div class="card">
+      <div class="item item-text-wrap mycard" style="text-align:center">
+        {{clientSideList.description}}
       </div>
-      <div class='parrentButton'>
-        <button class="button button-light" ng-class="{'button-balanced':activeBtn == $index}"  ng-repeat="item in clientSideList.answers" ng-click="getValue($index,item.is_correct)" ng-model="user.choice" ng-value="item">
-            {{item.value}}
-        </button>
-      </div>
-        <button class="button button-clear nextButton ion ion-play " ng-click="nextQuestion()" ng-show="Submitted && !finished"></button>
-      </div>
+    </div>
+    <div class='parrentButton'>
+      <button class="button button-light" ng-class="{'button-balanced':activeBtn == $index}"
+      ng-repeat="item in clientSideList.answers" ng-click="getValue($index,item.is_correct)" ng-model="user.choice" ng-value="item">
+          {{item.value}}
+      </button>
+    </div>
+    <button class="button button-clear nextButton ion ion-play " ng-click="nextQuestion()" ng-show="Submitted && !finished"></button>
     <div>
       <div class="sample-show-hide" ng-class="{'resultButton':finished == true}" ng-show="finished"> Result: {{score}} </div>
     </div>

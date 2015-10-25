@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngOpenFB'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngOpenFB', 'chart.js'])
 
 .run(function($ionicPlatform, ngFB) {
   $ionicPlatform.ready(function() {
@@ -45,8 +45,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           controller: 'loginController'
         }
       }
-  });
+    })
 
-  $urlRouterProvider.otherwise('/login');
+    .state('profile', {
+      url: '/profile',
+      views: {
+        '': {
+          templateUrl: 'templates/profileView.html',
+          controller: 'profileController'
+        }
+      }
+    });
+
+  $urlRouterProvider.otherwise('/profile');
 
 });

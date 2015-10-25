@@ -1,4 +1,27 @@
 angular.module('starter.controllers', [])
+
+.controller('profileController', function($scope) {
+  $scope.chart = {
+      labels: ["Accuracy", "Speed", "Versatility", "Diligence", "Impressiveness"],
+      data: [[6, 7, 8, 5, 8]],
+      options: {
+        scaleOverride: true,
+        scaleStartValue: 0,
+        scaleStepWidth: 2,
+        scaleSteps: 5,
+        responsive: true,
+        pointLabelFontSize : 12,
+        pointDotRadius: 2
+      }
+  };
+  $scope.user = {
+    name: "Nam Răng",
+    rating: 6000,
+    highscore: 100,
+    exp: 50000
+  }
+})
+
 .controller('loginController', function($scope, $state, $http, ngFB, facebookAccessToken) {
   $scope.fbLogin = function () {
     ngFB.login({scope: ''}).then(
@@ -10,6 +33,7 @@ angular.module('starter.controllers', [])
                 $http({
                   method: 'POST',
                   url: '/api/users/session',
+                  // url: 'http://se2015-quizapp.herokuapp.com/api/users/session',
                   data: {
                     provider: 'facebook',
                     access_token: accessToken
@@ -17,6 +41,7 @@ angular.module('starter.controllers', [])
                 })
                   .success(function(data, status) {
                     console.log('AccessToken sent successfully!', status);
+                    console.log(data);
                   })
                   .error(function(data, status) {
                     console.log('AccessToken sent error!', status);
@@ -31,6 +56,7 @@ angular.module('starter.controllers', [])
 
 .controller('categoriesController', function($scope, $http, $state, categoryId, facebookAccessToken) {
   $http.get('/api/categories')
+  // $http.get('http://se2015-quizapp.herokuapp.com/api/categories')
     .success(function(data) {
       console.log('Categories Success', data);
       $scope.categoriesData = data.data;
@@ -46,6 +72,7 @@ angular.module('starter.controllers', [])
 })
 .controller('questionsController', function($scope, $http, categoryId, facebookAccessToken) {
   $http.get('/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
+  // $http.get('http://se2015-quizapp.herokuapp.com/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
     .success(function(data) {
       console.log('Questions Success');
       $scope.cnt = 0;
