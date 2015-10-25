@@ -1,25 +1,24 @@
 angular.module('starter.controllers', [])
 
-.controller('profileController', function($scope) {
+.controller('profileController', function($scope, $http, profileService) {
+  profileService.getData.then(function(data) {
+    $scope.user = data.data.data;
+    $scope.chart.data = [[$scope.user.accuracy, $scope.user.speed, $scope.user.versatility,
+                          $scope.user.diligence, $scope.user.impressiveness]];
+  });
+
   $scope.chart = {
       labels: ["Accuracy", "Speed", "Versatility", "Diligence", "Impressiveness"],
-      data: [[6, 7, 8, 5, 8]],
       options: {
         scaleOverride: true,
         scaleStartValue: 0,
         scaleStepWidth: 2,
         scaleSteps: 5,
         responsive: true,
-        pointLabelFontSize : 12,
+        pointLabelFontSize : 14,
         pointDotRadius: 2
       }
   };
-  $scope.user = {
-    name: "Nam Răng",
-    rating: 6000,
-    highscore: 100,
-    exp: 50000
-  }
 })
 
 .controller('loginController', function($scope, $state, $http, ngFB, facebookAccessToken) {
@@ -40,12 +39,8 @@ angular.module('starter.controllers', [])
                   }
                 })
                   .success(function(data, status) {
-                    console.log('AccessToken sent successfully!', status);
-                    console.log(data);
+                    console.log('AccessToken sent successfully!', status, data);
                   })
-                  .error(function(data, status) {
-                    console.log('AccessToken sent error!', status);
-                  });
                 $state.go('categories');
             } else {
                 alert('Facebook login failed');
@@ -69,7 +64,12 @@ angular.module('starter.controllers', [])
     categoryId.setId(idValue);
     $state.go('questions');
   };
+
+  $scope.goProfile = function() {
+    $state.go('profile');
+  }
 })
+
 .controller('questionsController', function($scope, $http, categoryId, facebookAccessToken) {
   $http.get('/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
   // $http.get('http://se2015-quizapp.herokuapp.com/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
@@ -90,7 +90,7 @@ angular.module('starter.controllers', [])
     choice: null
   };
 
-   $scope.getValue = function(index,value) {
+  $scope.getValue = function(index,value) {
     $scope.Submitted = true;
     $scope.activeBtn = index;
     if(value == true){

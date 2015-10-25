@@ -57,6 +57,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     });
 
-  $urlRouterProvider.otherwise('/profile');
+  $urlRouterProvider.otherwise('/login');
 
 });
