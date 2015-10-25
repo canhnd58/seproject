@@ -12,6 +12,7 @@ one:
   versatility: 1.5
   diligence: 1.5
   impressiveness: 1.5
+  access_token: yyy
 
 two:
   name: MyString

@@ -4,9 +4,6 @@ class Api::MatchesControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
-  setup do
-    @request.headers['Accept'] = Mime::JSON
-  end
 
   test "should return authentication error" do
     get :new, {category: 2, access_token: 'xxx'}
@@ -35,7 +32,7 @@ class Api::MatchesControllerTest < ActionController::TestCase
 
   test "should return questions" do
     # NOTE: this test has not been completed yet
-    get :new, {category: 2, access_token: 'xxx'}
+    get :new, {category: 2, access_token: 'yyy'}
     assert_response :success
 
     data = JSON.parse @response.body
