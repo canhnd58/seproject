@@ -1,49 +1,24 @@
-.trueAnswerIcon {
-  text-align:center;
-  font-size: 4em;
-  color: green;
-}
-.card{
-  height: 30%;
-  line-height: 30px;
+
+.card-change{
+  background-color: #0FE213 ;
 }
 .scroll{
   height: 100%;
 }
-
-.falseAnswerIcon {
-  text-align:center;
-  font-size: 4em;
-  color: red;  
+.full-height{
+  height: 100%;
 }
-.parrentButton {
+.card-question{
   position: absolute;
-  top: 32%;
-  bottom: 1px;
+  height: 30%;
   width: 100%;
 }
-.button{
-  background-color: white;
-	width:48%;
-  line-height: 150%;
-  height: 30%; 
-  margin-bottom: 1%;
-  margin-right: 1%;
-  margin-left: 1%;
+.list{
+  height: 25%;
+  top:40%;
 }
-.button-clear.button-clear{
-  color:black;
-}
-.test{
-  height:  100%;
-}
-.nextButton {
-	position: absolute;
-  border-radius:50px;
-  text-align:center;
-  font-size: -webkit-xxx-large;
-  left: 25%;
-  top:75%;
+.card{
+	text-align: center;
 }
 .blur {
   -webkit-filter: blur(1px);
@@ -52,7 +27,6 @@
   -ms-filter: blur(1px);
   filter: blur(1px);
   pointer-events: none;
-
 }
 .resultButton {
   position: absolute;
@@ -63,10 +37,10 @@
   font-family: cursive;
   width: 100%;
   text-align: center;
-}
+  }
 .sample-show-hide {
-  -webkit-transition:all linear 1s;
-  transition:all linear 1s;
+	-webkit-transition:all linear 1s;
+	transition:all linear 1s;
 }
 
 .sample-show-hide.ng-hide {

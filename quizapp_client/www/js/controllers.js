@@ -69,8 +69,12 @@ angular.module('starter.controllers', [])
     $state.go('profile');
   }
 })
+<<<<<<< Updated upstream
 
 .controller('questionsController', function($scope, $http, categoryId, facebookAccessToken) {
+=======
+.controller('questionsController', function($scope, $http, categoryId, facebookAccessToken,ionicMaterialInk, ionicMaterialMotion) {
+>>>>>>> Stashed changes
   $http.get('/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
   // $http.get('http://se2015-quizapp.herokuapp.com/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
     .success(function(data) {
@@ -85,6 +89,8 @@ angular.module('starter.controllers', [])
 
   $scope.score = 0;
   $scope.finished = false;
+  $scope.timeOut = false;
+  $scope.reset = true;
 
   $scope.user = {
     choice: null
@@ -92,18 +98,26 @@ angular.module('starter.controllers', [])
 
   $scope.getValue = function(index,value) {
     $scope.Submitted = true;
-    $scope.activeBtn = index;
+    $scope.activeBtn = index.currentTarget.id;
     if(value == true){
       $scope.correct = true;
       $scope.score += $scope.clientSideList.score;
     }
     else $scope.correct = false;
-    if ($scope.cnt + 1 == $scope.clientData.length) $scope.finished = true;
+
   }
   $scope.nextQuestion = function() {
     $scope.Submitted = false;
     $scope.activeBtn = 5;
     $scope.cnt = $scope.cnt + 1;
-    $scope.clientSideList = $scope.clientData[$scope.cnt];
+    if ($scope.cnt == $scope.clientData.length) $scope.finished = true;
+    else $scope.clientSideList = $scope.clientData[$scope.cnt];
+    
   };
+  // Set Motion
+    ionicMaterialMotion.fadeSlideInRight();
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
 });
+

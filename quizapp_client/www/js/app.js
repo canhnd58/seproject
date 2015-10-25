@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngOpenFB', 'chart.js'])
+=======
+angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material','starter.services', 'ngOpenFB'])
+>>>>>>> Stashed changes
 
 .run(function($ionicPlatform, ngFB) {
   $ionicPlatform.ready(function() {
@@ -15,7 +19,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
   $stateProvider
     .state('questions', {
       url: '/questions',
@@ -34,6 +38,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           templateUrl: 'templates/categoriesSelectView.html',
           controller: 'categoriesController'
         }
+
       }
     })
 
