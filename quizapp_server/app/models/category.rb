@@ -4,7 +4,7 @@ class Category < ActiveRecord::Base
 
   validates :name, presence: true
 
-  def as_json(options={})
-    super(only: [:id, :name])
-  end
+  #def as_json(options={})
+  #  super(only: [:id, :name])
+  #end
 end

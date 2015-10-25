@@ -10,20 +10,28 @@ class Api::SessionsController < ApplicationController
     data = JSON.parse(string)
     #data = JSON.parse(token)
     if data["name"] == nil or data["id"] == nil
-      render json: {'status': '301', 'data': {}}
+      @status = 301
       return
     end
 
-    user = User.find_by facebook_id: data["id"]
-    if user == nil
-      new_user = User.new
-      new_user.name = data["name"]
-      new_user.facebook_id = data["id"]
-      new_user.avatar = "123"
-      new_user.save
+    @user = User.find_by facebook_id: data["id"]
+    if @user == nil
+      @user = User.new(
+        name: data["name"],
+        facebook_id: data["id"],
+        avatar: "1.jpg",
+        rating: 0,
+        highscore: 0,
+        exp: 0,
+        accuracy: 5.0,
+        speed: 5.0,
+        versatility: 5.0,
+        diligence: 5.0,
+        impressiveness: 5.0)
+      @user.save
     end
 
-    render json: {'status': '200', 'data': {'message': 'success'}}
+    @status = 200
   end
 
   def destroy

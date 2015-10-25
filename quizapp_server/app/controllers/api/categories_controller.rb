@@ -1,6 +1,6 @@
 class Api::CategoriesController < ApplicationController
   def index
+    @status = 200
     @categories = Category.all
-    render json: {'status': '200', 'data': @categories}
   end
 end

@@ -4,6 +4,9 @@ class Api::MatchesControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
+  setup do
+    @request.headers['Accept'] = Mime::JSON
+  end
 
   test "should return authentication error" do
     get :new, {category: 2, access_token: 'xxx'}

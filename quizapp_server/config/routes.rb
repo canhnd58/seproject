@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  namespace :api do
+  namespace :api, defaults: {format: :json} do
     #users api
     post 'users/session' => 'sessions#create'
     delete 'users/session' => 'session#destroy'

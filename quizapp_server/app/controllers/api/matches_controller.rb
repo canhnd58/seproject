@@ -1,15 +1,12 @@
 class Api::MatchesController < ApplicationController
   def new
     begin
-      status = '200'
-      data = {}
       category = Category.find(params[:category])
     rescue ActiveRecord::RecordNotFound
-      status = '401'
+      @status = 401
     else
-      data = category.questions.all
-    ensure
-      render json: {'status': status, 'data': data}
+      @status = 200
+      @questions = category.questions.all
     end
   end
 
