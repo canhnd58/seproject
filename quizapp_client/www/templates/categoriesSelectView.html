@@ -1,14 +1,14 @@
 <ion-view name="categories" view-title="Categories">
   <ion-content>
-    <ion-list>
-      <button class="button" ng-repeat="item in categoriesData" ng-click="takeQuiz({{item.id}})" >
-        <div class="item item-image">
-          <img src="img/image.jpg">
+    <div class="">
+        <div class="card card-categories item item item-text-wrap ink" ng-repeat="items in categoriesData" ng-click="takeQuiz({{items.id}})" >
+        <div class="">
+          <img class="full-image" src="img/image.jpg">
         </div>
-          <div class="item item-divider">
-            {{item.name}}
+          <div class="item stable-bg positive-900">
+            {{items.name}}
           </div>
-      </button>
-    </ion-list>
+      </div>
+    </div>
   </ion-content>
 </ion-view>

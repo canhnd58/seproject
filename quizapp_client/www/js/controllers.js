@@ -49,7 +49,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('categoriesController', function($scope, $http, $state, categoryId, facebookAccessToken) {
+.controller('categoriesController', function($scope, $http, $state, categoryId, facebookAccessToken, ionicMaterialInk, ionicMaterialMotion) {
   $http.get('/api/categories')
   // $http.get('http://se2015-quizapp.herokuapp.com/api/categories')
     .success(function(data) {
@@ -67,7 +67,11 @@ angular.module('starter.controllers', [])
 
   $scope.goProfile = function() {
     $state.go('profile');
-  }
+  };
+  // Set Motion
+    ionicMaterialMotion.fadeSlideInRight();
+    // Set Ink
+    ionicMaterialInk.displayEffect();
 })
 
 .controller('questionsController', function($scope, $http, categoryId, facebookAccessToken,ionicMaterialInk, ionicMaterialMotion) {
