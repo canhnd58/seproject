@@ -1,22 +1,6 @@
 <ion-view name="questions" view-title="Questions">
-<<<<<<< Updated upstream
-  <ion-content>
-  <div class='test' ng-class="{'blur':finished == true}">
-    <div class="card">
-      <div class="item item-text-wrap mycard" style="text-align:center">
-        {{clientSideList.description}}
-      </div>
-    </div>
-    <div class='parrentButton'>
-      <button class="button button-light" ng-class="{'button-balanced':activeBtn == $index}"
-      ng-repeat="item in clientSideList.answers" ng-click="getValue($index,item.is_correct)" ng-model="user.choice" ng-value="item">
-          {{item.value}}
-      </button>
-    </div>
-    <button class="button button-clear nextButton ion ion-play " ng-click="nextQuestion()" ng-show="Submitted && !finished"></button>
-=======
   <ion-content >
-  <div class="bar bar-header bar-positive ">
+    <div class="bar bar-header bar-positive ">
   <h1 class="title">bar-positive</h1>
 </div>
   <div class='animate-fade-slide-in-right full-height' ng-class="{'blur':finished == true}">
@@ -51,7 +35,6 @@
         </div>
       </div>
     </div>
->>>>>>> Stashed changes
     <div>
       <div class="result-button sample-show-hide" ng-class="{'resultButton':finished == true}" ng-show="finished"> Result: {{score}} </div>
     </div>

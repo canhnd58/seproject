@@ -1,8 +1,6 @@
-<<<<<<< Updated upstream
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngOpenFB', 'chart.js'])
-=======
+
 angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material','starter.services', 'ngOpenFB'])
->>>>>>> Stashed changes
+
 
 .run(function($ionicPlatform, ngFB) {
   $ionicPlatform.ready(function() {

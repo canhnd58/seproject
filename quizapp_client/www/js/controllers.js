@@ -69,12 +69,8 @@ angular.module('starter.controllers', [])
     $state.go('profile');
   }
 })
-<<<<<<< Updated upstream
 
-.controller('questionsController', function($scope, $http, categoryId, facebookAccessToken) {
-=======
 .controller('questionsController', function($scope, $http, categoryId, facebookAccessToken,ionicMaterialInk, ionicMaterialMotion) {
->>>>>>> Stashed changes
   $http.get('/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
   // $http.get('http://se2015-quizapp.herokuapp.com/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
     .success(function(data) {
