@@ -1,6 +1,5 @@
 
-angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'starter.services', 'ngOpenFB'])
-
+angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'starter.services', 'ngOpenFB', 'chart.js'])
 
 .run(function($ionicPlatform, ngFB) {
   $ionicPlatform.ready(function() {
@@ -46,6 +45,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'st
         '': {
           templateUrl: 'templates/loginView.html',
           controller: 'loginController'
+        }
+      }
+    })
+
+    .state('menu', {
+      url: '/menu',
+      views: {
+        '': {
+          templateUrl: 'templates/menuView.html',
+          controller: 'menuController'
         }
       }
     })

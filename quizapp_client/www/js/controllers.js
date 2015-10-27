@@ -1,24 +1,40 @@
 angular.module('starter.controllers', [])
 
-.controller('profileController', function($scope, $http, profileService) {
-  profileService.getData.then(function(data) {
-    $scope.user = data.data.data;
-    $scope.chart.data = [[$scope.user.accuracy, $scope.user.speed, $scope.user.versatility,
-                          $scope.user.diligence, $scope.user.impressiveness]];
-  });
+.controller('menuController', function($scope, $state) {
+  $scope.play = function() {
+    $state.go('categories');
+  };
+  $scope.profile = function() {
+    $state.go('profile');
+  };
+})
 
+.controller('profileController', function($scope, $http, facebookAccessToken) {
   $scope.chart = {
-    labels: ["Accuracy", "Speed", "Versatility", "Diligence", "Impressiveness"],
+    labels: ["Accuracy", "Speed", "Versatility", "Impressiveness", "Diligence"],
+    data: [[5, 5, 5, 5, 5]],
     options: {
       scaleOverride: true,
       scaleStartValue: 0,
       scaleStepWidth: 2,
       scaleSteps: 5,
       responsive: true,
-      pointLabelFontSize : 14,
+      pointLabelFontSize : 12,
       pointDotRadius: 2
     }
   };
+
+  $http({
+    method: 'GET',
+    url: 'api/users/' + facebookAccessToken.getUserId(),
+  }).then(function successCallBack(response) {
+    console.log('Profile data: ', response.data.data);
+    $scope.user = response.data.data;
+    $scope.chart.data = [[$scope.user.accuracy, $scope.user.speed, $scope.user.versatility,
+                          $scope.user.impressiveness, $scope.user.diligence]];
+  }, function errorCallBack(response) {
+    console.log("Something went wrong");
+  });
 })
 
 .controller('loginController', function($scope, $state, $http, ngFB, facebookAccessToken) {
@@ -40,7 +56,7 @@ angular.module('starter.controllers', [])
             console.log('AcessToken sent successfully', status, response);
             console.log('User ID: ', response.data.data.id);
             facebookAccessToken.setUserId(response.data.data.id);
-            $state.go('categories');
+            $state.go('menu');
           }, function errorCallBack(response) {
             alert('Facebook login failed');
           });
@@ -76,18 +92,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('questionsController', function($scope, $http, categoryId, facebookAccessToken, ionicMaterialInk, ionicMaterialMotion) {
-  // $http.get('/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
-  // // $http.get('http://se2015-quizapp.herokuapp.com/api/match', {params: {category: categoryId.getId(), access_token: facebookAccessToken.getToken()}})
-  //   .success(function(data) {
-  //     console.log('Questions Success', data);
-  //     $scope.cnt = 0;
-  //     $scope.clientData = data.data;
-  //     $scope.clientSideList = $scope.clientData[0];
-  //   })
-  //   .error(function(data) {
-  //     console.log('Something went wrong');
-  //   });
-
   $http({
     method: 'GET',
     url:'/api/match',
@@ -129,7 +133,6 @@ angular.module('starter.controllers', [])
     $scope.cnt = $scope.cnt + 1;
     if ($scope.cnt == $scope.clientData.length) $scope.finished = true;
     else $scope.clientSideList = $scope.clientData[$scope.cnt];
-
   };
   // Set Motion
     ionicMaterialMotion.fadeSlideInRight();

@@ -1,16 +1,5 @@
 angular.module('starter.services', [])
 
-.factory('profileService', function($http, facebookAccessToken) {
-  var getDataPromise =
-    $http.get('/api/users/' + facebookAccessToken.getUserId())
-      .then(function(data) {
-        return data;
-      });
-  return {
-    getData: getDataPromise
-  };
-})
-
 .factory('categoryId', function() {
   var id;
   return {

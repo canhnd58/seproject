@@ -8,7 +8,9 @@
       <a class="item">Highscore <span class="item-note">{{user.highscore}}</span></a>
       <a class="item">Level <span class="item-note">{{user.exp / 1000}}</span></a>
     </div>
-    <canvas class="chart chart-radar padding" chart-data="chart.data"
-    chart-labels="chart.labels" chart-options="chart.options" chart-colours="chart.colour"></canvas>
+    <div class="col col-100">
+      <canvas class="chart chart-radar padding" chart-data="chart.data"
+      chart-labels="chart.labels" chart-options="chart.options"></canvas>
+    </div>
   </ion-content>
 </ion-view>

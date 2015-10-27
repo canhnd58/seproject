@@ -8,16 +8,18 @@
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="lib/ionic-material/dist/ionic.material.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <!-- chart.css -->
     <link rel="stylesheet" href="lib/addinglib/chart/angular-chart.css">
-
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="lib/ionic-material/dist/ionic.material.min.js"></script>
+    <!-- material font -->
+    <link href='https://fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic' rel='stylesheet' type='text/css'>
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
 
     <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic-material/dist/ionic.material.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -27,16 +29,15 @@
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
     <!-- openfb.js -->
-    <script src="js/openfb.js"></script>
-    <script src="js/ngopenfb.js"></script>
+    <script src="lib/addinglib/openfb/openfb.js"></script>
+    <script src="lib/addinglib/openfb/ngopenfb.js"></script>
+    <!-- chart.js -->
     <script src="lib/addinglib/chart/Chart.js"></script>
     <script src="lib/addinglib/chart/angular-chart.js"></script>
-    <link href='https://fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic' rel='stylesheet' type='text/css'>
   </head>
   <body ng-app="starter">
     <ion-nav-bar class="bar-positive">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
+      <ion-nav-back-button>|</ion-nav-back-button>
     </ion-nav-bar>
     <ion-nav-view></ion-nav-view>
   </body>
