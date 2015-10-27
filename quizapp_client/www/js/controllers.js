@@ -1,18 +1,32 @@
 angular.module('starter.controllers', [])
 
-.controller('menuController', function($scope, $state) {
+.controller('menuController', function($scope, $state, $http, ngFB, facebook) {
   $scope.play = function() {
     $state.go('categories');
   };
   $scope.profile = function() {
     $state.go('profile');
   };
+  $scope.logout = function() {
+    ngFB.logout();
+    $http({
+      method: 'DELETE',
+      url: '/api/users/session',
+      params: {
+        access_token: facebook.getToken()
+      }
+    }).then(function successCallBack(response) {
+      console.log("Logout data: ", response);
+    }, function errorCallBack(response) {
+      console.log("Something went wrong when Logout");
+    });
+    $state.go('login');
+  };
 })
 
-.controller('profileController', function($scope, $http, facebookAccessToken) {
+.controller('profileController', function($scope, $http, facebook) {
   $scope.chart = {
     labels: ["Accuracy", "Speed", "Versatility", "Impressiveness", "Diligence"],
-    data: [[5, 5, 5, 5, 5]],
     options: {
       scaleOverride: true,
       scaleStartValue: 0,
@@ -26,7 +40,7 @@ angular.module('starter.controllers', [])
 
   $http({
     method: 'GET',
-    url: 'api/users/' + facebookAccessToken.getUserId(),
+    url: 'api/users/' + facebook.getUserId()
   }).then(function successCallBack(response) {
     console.log('Profile data: ', response.data.data);
     $scope.user = response.data.data;
@@ -37,14 +51,14 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('loginController', function($scope, $state, $http, ngFB, facebookAccessToken) {
+.controller('loginController', function($scope, $state, $http, ngFB, facebook) {
   $scope.fbLogin = function() {
     ngFB.login({scope: ''}).then(
       function(response) {
         if (response.status === 'connected') {
           console.log('Facebook login in browser succeeded');
           var accessToken = response.authResponse.accessToken;
-          facebookAccessToken.setToken(accessToken);
+          facebook.setToken(accessToken);
           $http({
             method: 'POST',
             url: '/api/users/session',
@@ -55,7 +69,7 @@ angular.module('starter.controllers', [])
           }).then(function successCallBack(response) {
             console.log('AcessToken sent successfully', status, response);
             console.log('User ID: ', response.data.data.id);
-            facebookAccessToken.setUserId(response.data.data.id);
+            facebook.setUserId(response.data.data.id);
             $state.go('menu');
           }, function errorCallBack(response) {
             alert('Facebook login failed');
@@ -66,7 +80,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('categoriesController', function($scope, $http, $state, categoryId, facebookAccessToken, ionicMaterialInk, ionicMaterialMotion) {
+.controller('categoriesController', function($scope, $http, $state, categoryId, facebook, ionicMaterialInk, ionicMaterialMotion) {
   $http.get('/api/categories')
   // $http.get('http://se2015-quizapp.herokuapp.com/api/categories')
     .success(function(data) {
@@ -91,13 +105,13 @@ angular.module('starter.controllers', [])
     ionicMaterialInk.displayEffect();
 })
 
-.controller('questionsController', function($scope, $http, categoryId, facebookAccessToken, ionicMaterialInk, ionicMaterialMotion) {
+.controller('questionsController', function($scope, $http, categoryId, facebook, ionicMaterialInk, ionicMaterialMotion) {
   $http({
     method: 'GET',
     url:'/api/match',
     params: {
       category: categoryId.getId(),
-      access_token: facebookAccessToken.getToken()
+      access_token: facebook.getToken()
     }
   }).then(function successCallBack(response) {
     console.log("Get questions succeeded", response.data.data.questions);

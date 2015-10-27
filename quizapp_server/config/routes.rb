@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     #users api
     post 'users/session' => 'sessions#create'
-    delete 'users/session' => 'session#destroy'
+    delete 'users/session' => 'sessions#destroy'
     get 'users/:id' => 'users#show'
 
     #matches api

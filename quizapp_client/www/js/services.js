@@ -12,7 +12,7 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('facebookAccessToken', function() {
+.factory('facebook', function() {
   var _accessToken;
   var _userId;
   return {
