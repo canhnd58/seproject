@@ -1,6 +1,8 @@
 class Question < ActiveRecord::Base
   belongs_to :category
   has_many :answers, dependent: :destroy
+  has_many :match_questions
+  has_many :matches, through: :match_questions
   accepts_nested_attributes_for :answers, :category, allow_destroy: true
 
   validates :description, :kind, :score, presence: true

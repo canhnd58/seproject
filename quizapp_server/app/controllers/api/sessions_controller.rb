@@ -52,16 +52,14 @@ class Api::SessionsController < ApplicationController
   def destroy
     begin
       token = params.require(:access_token)
-      user = User.find_by(access_token: token)
-
-      if user == nil
-        @status = 301
-      else
-        user.access_token = ''
-        @status = 200
-      end
+      user = current_user(token)
+      user.access_token = ''
+      user.save
+      @status = 200
     rescue ActionController::ParameterMissing
       @status = 302
+    rescue ApiException::InvalidToken
+      @status = 301
     end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025111100) do
+ActiveRecord::Schema.define(version: 20151027120822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,10 +65,19 @@ ActiveRecord::Schema.define(version: 20151025111100) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "match_questions", force: :cascade do |t|
+    t.integer  "match_id"
+    t.integer  "question_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "match_questions", ["match_id"], name: "index_match_questions_on_match_id", using: :btree
+  add_index "match_questions", ["question_id"], name: "index_match_questions_on_question_id", using: :btree
+
   create_table "matches", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "score"
-    t.integer  "max_score"
     t.integer  "time"
     t.integer  "category_id"
     t.datetime "created_at",  null: false
@@ -108,6 +117,8 @@ ActiveRecord::Schema.define(version: 20151025111100) do
   end
 
   add_foreign_key "answers", "questions"
+  add_foreign_key "match_questions", "matches"
+  add_foreign_key "match_questions", "questions"
   add_foreign_key "matches", "categories"
   add_foreign_key "matches", "users"
   add_foreign_key "questions", "categories"
