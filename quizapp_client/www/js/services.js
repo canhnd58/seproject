@@ -2,7 +2,7 @@ angular.module('starter.services', [])
 
 .factory('profileService', function($http, facebookAccessToken) {
   var getDataPromise =
-    $http.get('/api/users/3')
+    $http.get('/api/users/' + facebookAccessToken.getUserId())
       .then(function(data) {
         return data;
       });
@@ -12,7 +12,7 @@ angular.module('starter.services', [])
 })
 
 .factory('categoryId', function() {
-  var id = null;
+  var id;
   return {
     setId: function(idValue) {
       id = idValue;
@@ -24,8 +24,8 @@ angular.module('starter.services', [])
 })
 
 .factory('facebookAccessToken', function() {
-  var _accessToken = null;
-  var _userId = null;
+  var _accessToken;
+  var _userId;
   return {
     setToken: function(accessToken) {
       _accessToken = accessToken;

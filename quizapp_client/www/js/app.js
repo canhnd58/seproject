@@ -1,5 +1,5 @@
 
-angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material','starter.services', 'ngOpenFB'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'starter.services', 'ngOpenFB'])
 
 
 .run(function($ionicPlatform, ngFB) {

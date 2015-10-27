@@ -1,34 +1,31 @@
 <ion-view name="questions" view-title="Questions">
-  <ion-content >
-    <div class="bar bar-header bar-positive ">
-  <h1 class="title">question</h1>
-</div>
-  <div class='animate-fade-slide-in-right full-height' ng-class="{'blur':finished == true}">
+  <ion-content>
+    <div class='animate-fade-slide-in-right full-height' ng-class="{'blur':finished == true}">
       <div class="card card-question item has-header" >
         <div class="item item-text-wrap">
           {{clientSideList.description}}
         </div>
         <button id="fab-gallery" class="button button-fab button-fab-bottom-right button-energized-900 icon ion-checkmark-round" ng-show="Submitted && !finished" ng-click="nextQuestion()"></button>
       </div>
-      <div class= 'list row answer-row'>
-        <div id='1' class="card card-answer item ink col" ng-class="{'card-change':activeBtn == 1 }" ng-click="getValue($event,clientSideList.answers[0].is_correct)">
+      <div class='list row answer-row'>
+        <div id="1" class="card card-answer item ink col" ng-class="{'card-change':activeBtn == 1}" ng-click="getValue($event,clientSideList.answers[0].is_correct)">
           <div class="item item-text-wrap">
             {{clientSideList.answers[0].value}}
           </div>
         </div>
-        <div id="2" class=" card card-answer item ink col" ng-class="{'card-change':activeBtn == 2}" ng-click="getValue($event,clientSideList.answers[1].is_correct)">
+        <div id="2" class="card card-answer item ink col" ng-class="{'card-change':activeBtn == 2}" ng-click="getValue($event,clientSideList.answers[1].is_correct)">
           <div class="item item-text-wrap">
             {{clientSideList.answers[1].value}}
           </div>
         </div>
       </div>
-      <div class= 'list row answer-row'>
-        <div id="3" class=" card card-answer item ink col" ng-class="{'card-change':activeBtn == 3}" ng-click="getValue($event,clientSideList.answers[2].is_correct">
+      <div class='list row answer-row'>
+        <div id="3" class="card card-answer item ink col" ng-class="{'card-change':activeBtn == 3}" ng-click="getValue($event,clientSideList.answers[2].is_correct)">
           <div class="item item-text-wrap">
             {{clientSideList.answers[2].value}}
           </div>
         </div>
-        <div id="4" class=" card card-answer item ink col" ng-class="{'card-change':activeBtn == 4}" ng-click="getValue($event,clientSideList.answers[3].is_correct">
+        <div id="4" class="card card-answer item ink col" ng-class="{'card-change':activeBtn == 4}" ng-click="getValue($event,clientSideList.answers[3].is_correct)">
           <div class="item item-text-wrap">
             {{clientSideList.answers[3].value}}
           </div>

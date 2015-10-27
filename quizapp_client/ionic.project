@@ -7,7 +7,7 @@
       "proxyUrl": "http://se2015-quizapp.herokuapp.com/api"
     },
     {
-      "path": "/apilocalserver",
+      "path": "/apiLocal",
       "proxyUrl": "http://192.168.84.111:3000/api"
     }
   ]
