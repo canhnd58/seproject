@@ -4,7 +4,7 @@
 
 The QuizApp APIs are exposed using JSON over HTTP.
 
-Respond's format is described below:
+The response's format is described below:
 
 ```
 {
@@ -25,7 +25,7 @@ the bottom of the document.
 
 Login to web service. You must provide provider and access token. After
 receiving the request, server will check if the access token is valid. If it is,
-the server will send back success message.
+the server will send back the id of user.
 
 | Params | Required | Descriptions |
 |--------|----------|--------------|
@@ -34,13 +34,13 @@ the server will send back success message.
 
 **Possible errors**: 301, 302
 
-**Respond's example**:
+**Response's example**:
 
 ```
 {
   "status" : 200,
   "data": {
-    "message" : "success"
+    "id" : 123455
   }
 }
 ```
@@ -56,7 +56,7 @@ invalid.
 
 **Possible errors**: 301, 302
 
-**Respond's example**:
+**Response's example**:
 
 ```
 {
@@ -71,7 +71,7 @@ invalid.
 
 Retrieve informations about user with corresponding id. You can specify the
 infos you want to get using 'fields' query parameter. If 'fields' parameters is
-empty, then the
+empty, then all the informations will be returned.
 
 | Params | Required | Descriptions |
 |--------|----------|--------------|
@@ -79,7 +79,7 @@ empty, then the
 
 **Possible errors**: 302, 401
 
-**Respond's example**:
+**Response's example**:
 
 ```
 {
@@ -103,13 +103,13 @@ empty, then the
 
 ##### GET api/categories
 
-Return list of categories.
+Return list of available categories.
 
 No parameter required.
 
 **Possible errors**: none
 
-**Respond's example**:
+**Response's example**:
 
 ```
 {
@@ -130,9 +130,8 @@ No parameter required.
 
 ##### POST api/match
 
-Return list of questions and answers of them. You must provide access token and
-category id. After this action, new match will be created in the database. The
-match id will be return to the user.
+Create new match of the specified category. Return the match id as well as the
+questions and answers of the match.
 
 | Params | Required | Descriptions |
 |--------|----------|--------------|
@@ -141,12 +140,12 @@ match id will be return to the user.
 
 **Possible errors**: 301, 302, 401
 
-**Respond's example**:
+**Response's example**:
 
 ```
 {
   "status" : 200,
-  "data": { 
+  "data": {
     "match_id" : 123456
     "questions" : [
       {
@@ -154,7 +153,7 @@ match id will be return to the user.
         "image_url" : "someurl.jpg",
         "kind" : 1,
         "score" : 10,
-        "answer" : [
+        "answers" : [
           {
             "value" : "pqrs",
             "is_correct" : true
@@ -171,19 +170,62 @@ match id will be return to the user.
 }
 ```
 
-##### POST api/match
+##### GET api/match/:id
 
-Send the match's result to the server. The user has to send the match id as 
+Return the details information (list of questions and answers) of the match with
+given id. A match can only be access by the user which it is dedicated to.
+
+| Params | Required | Descriptions |
+|--------|----------|--------------|
+| access_token | YES | Current access token of user |
+
+**Possible errors**: 301, 302, 401
+
+**Response's example**:
+
+```
+{
+  "status" : 200,
+  "data" : {
+    "questions" : [
+      {
+        "description" : "abc def ghiklmn?",
+        "image_url" : "someurl.jpg",
+        "kind" : 1,
+        "score" : 10,
+        "answers" : [
+          {
+            "value" : "pqrs",
+            "is_correct" : true
+          },
+          {
+            "value" : "wtxz",
+            "is_correct" : false
+          },
+          ...
+        ]
+      },
+      ...
+    ]
+  }
+}
+```
+
+##### PATCH api/match/:id
+
+Send the match's result to the server. The user has to send the match id as
 well as the access token to server to authenticate.
 
 | Params | Required | Descriptions |
 |--------|----------|--------------|
-| access_token | YES | |
+| access_token | YES | The current access token of user |
+| match_id | YES | The match id of the match |
 | score | YES | Total score of user |
 | time | YES | Total time |
-| match_id | YES | The match id of the match |
 
-**Respond's example**:
+**Possible errors**: 301, 302, 401
+
+**Response's example**:
 
 ```
 {
@@ -194,13 +236,83 @@ well as the access token to server to authenticate.
 }
 ```
 
-**Possible errors**: 301, 302, 401
+## Challenge
+
+##### POST api/challenges
+
+Create new challenge to another user. After challenge is created, 2 match will
+be created. To get the questions or send result of match, use the api in the
+match section.
+
+| Params | Required | Descriptions |
+|--------|----------|--------------|
+| access_token | YES | User's current access token |
+| category | YES | The category of the challenge |
+
+**Possible errors**: 301, 302, 401, 402
+
+**Response's example**:
+
+```
+{
+  "status" : 200,
+  "data" : {
+    "your_match_id" : 123412
+  }
+}
+```
+
+##### GET api/challenges
+
+Return list of challenges to which the user is related.
+
+| Params | Required | Descriptions |
+|--------|----------|--------------|
+| access_token | YES | User's current access token |
+| type | NO | The type of challenge, if the its value is 'challenger', list of challenges in which the user is challenger will be returned. If its value is 'challenged', list of challenges in which the user is challenged will be returned. |
+| status | NO | The status of the returned challenged. It can be 'done', 'not done' or 'done but still new'. |
+| limit | NO | The number of challenge returned. The limit cannot be exceeded than 100. By default, 10 challenges will be returned. |
+
+**Possible errors**: 301, 302
+
+**Response's example**:
+
+```
+{
+  "status" : 200,
+  "data" : {
+    challenges_id: [ 12345, 678910, ...]
+  }
+}
+```
+
+##### GET api/challenges/:id
+
+Return details information of the challenge.
+
+| Params | Required | Descriptions |
+| access_token | YES | User's current access token |
+
+**Possible errors**: 301, 302
+
+**Response's example**:
+
+```
+{
+  "status" : 200,
+  "data" : {
+    "challenger_match_id" : 123,
+    "challenged_match_id" : 124
+  }
+}
+```
 
 ## Status code
 
 | Status code | Description |
 |-------------|-------------|
 | 200 | OK |
-| 301 | Authentication error. It means your access token is invalid |
-| 302 | Syntax error. The request you made is not follow the current syntax |
-| 401 | Can not find record |
+| 301 | Authentication error. This error will be raised if the access token is invalid. |
+| 302 | Syntax error. This error will be raised if the request is not follow the current syntax. |
+| 401 | Can not find record. This error will be raised if the requested resource is not exist. |
+| 402 | The action can not be completed. This error will be raised if the action of user violates the game's rules. |
