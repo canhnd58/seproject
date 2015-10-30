@@ -1,35 +1,42 @@
 ActiveAdmin.register Question do
-  permit_params :description, :image_url, :kind, :score,
-    answers_attributes: [:value, :is_correct]
+  menu priority: 2
+  permit_params :description, :image_url, :kind, :score, :category_id,
+    answers_attributes: [:id, :value, :is_correct, :_destroy]
 
   belongs_to :category, optional: true
-
-  sidebar "Question Details", only: [:show, :edit] do
-    link_to "Answers", admin_question_answers_path(question)
-  end
 
   index do
     selectable_column
     id_column
-    column :description
-    column :image_url
+    column :description do |question|
+      text = "#{question.description[0..150]}"
+      text += "..." if question.description.length > 150
+      text
+    end
     column :kind
     column :score
     column :updated_at
-    column "Answers" do |question|
-      link_to "Answers", admin_question_answers_path(question)
-    end
     actions
   end
 
+  filter :category
+  filter :id
+  filter :description
+  filter :score
+  filter :kind
+  filter :created_at
+  filter :updated_at
+
   form do |f|
     f.inputs 'Questions details' do
-      f.input :category_id, :as => :select, :collection => Category.all.map {|u| ["#{u.name}", u.id]}, :include_blank => false
+      f.input :category_id, as: :select, collection: Category.all.map {|cat| [cat.name, cat.id]}, include_blank: false
       f.input :description
       f.input :image_url
       f.input :kind
       f.input :score
-      f.has_many :answers do |answer|
+    end
+    f.inputs "Answers" do
+      f.has_many :answers, heading: false, allow_destroy: true do |answer|
         answer.input :value
         answer.input :is_correct
       end
@@ -40,10 +47,12 @@ ActiveAdmin.register Question do
   show do
     attributes_table do
       row :id
+      row :category
       row :description
       row :image_url
       row :kind
       row :score
+      row :created_at
       row :updated_at
     end
 

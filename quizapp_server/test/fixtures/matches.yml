@@ -3,13 +3,11 @@
 one:
   user_id:
   score: 1
-  max_score: 1
   time: 1
   category_id:
 
 two:
   user_id:
   score: 1
-  max_score: 1
   time: 1
   category_id:
