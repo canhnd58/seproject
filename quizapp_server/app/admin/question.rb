@@ -1,6 +1,6 @@
 ActiveAdmin.register Question do
   menu priority: 2
-  permit_params :description, :image_url, :kind, :score, :category_id,
+  permit_params :description, :image, :kind, :score, :category_id,
     answers_attributes: [:id, :value, :is_correct, :_destroy]
 
   belongs_to :category, optional: true
@@ -31,7 +31,7 @@ ActiveAdmin.register Question do
     f.inputs 'Questions details' do
       f.input :category_id, as: :select, collection: Category.all.map {|cat| [cat.name, cat.id]}, include_blank: false
       f.input :description
-      f.input :image_url
+      f.input :image
       f.input :kind
       f.input :score
     end
@@ -49,7 +49,9 @@ ActiveAdmin.register Question do
       row :id
       row :category
       row :description
-      row :image_url
+      row "Image" do |question|
+        link_to image_tag(question.image.url), question.image.url
+      end
       row :kind
       row :score
       row :created_at

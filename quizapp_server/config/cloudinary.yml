@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: se2015-quizapp
+  api_key: '495659513447421'
+  api_secret: tjcwSJOTat3F16cDdsQ_y-wG8kE
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: se2015-quizapp
+  api_key: '495659513447421'
+  api_secret: tjcwSJOTat3F16cDdsQ_y-wG8kE
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: se2015-quizapp
+  api_key: '495659513447421'
+  api_secret: tjcwSJOTat3F16cDdsQ_y-wG8kE
+  enhance_image_tag: true
+  static_image_support: false
