@@ -67,6 +67,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'st
           controller: 'profileController'
         }
       }
+    })
+
+    .state('challenge', {
+      url: '/challenge',
+      views: {
+        '': {
+          templateUrl: 'templates/challengeView.html',
+          controller: 'challengeController'
+        }
+      }
     });
 
   $urlRouterProvider.otherwise('/login');

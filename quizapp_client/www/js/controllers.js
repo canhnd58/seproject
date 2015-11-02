@@ -1,9 +1,25 @@
 angular.module('starter.controllers', [])
 
+.controller('challengeController', function($scope, ngFB) {
+  // Get user's friends list
+  ngFB.api({
+    path: '/me/friends'
+  }).then(function successCallBack(response) {
+      console.log("Friend response: ", response);
+      $scope.userFriendsList = response.data;
+    }
+  );
+})
+
 .controller('menuController', function($scope, $state, $http, ngFB, facebook) {
   $scope.play = function() {
     $state.go('categories');
   };
+
+  $scope.challenge = function() {
+    $state.go('challenge');
+  };
+
   $scope.profile = function() {
     $state.go('profile');
   };
@@ -13,25 +29,22 @@ angular.module('starter.controllers', [])
     ngFB.logout();
     $http({
       method: 'DELETE',
-      url: '/api/users/session',
+      url: '/api/user/session',
       params: {
         access_token: facebook.getToken()
       }
     }).then(function successCallBack(response) {
-      if (response.data.status === 200) {
-        console.log("Logout data: ", response.data);
+      if (response.status === 200) {
+        console.log("Logout data: ", response);
         $state.go('login');
-      } else {
-        alert('Something went wrong!!!\nError: ' + response.data.status);
-        // do smt
       }
     }, function errorCallBack(response) {
-      alert("Something went wrong when Logout");
+      alert("Something went wrong when Logout", response);
     });
   };
 })
 
-.controller('profileController', function($scope, $http, facebook) {
+.controller('profileController', function($scope, $http, ngFB, facebook) {
   $scope.chart = {
     labels: ["Accuracy", "Speed", "Versatility", "Impressiveness", "Diligence"],
     options: {
@@ -49,25 +62,23 @@ angular.module('starter.controllers', [])
     method: 'GET',
     url: 'api/users/' + facebook.getUserId()
   }).then(function successCallBack(response) {
-    if (response.data.status === 200) {
-      console.log('Profile data: ', response.data.data);
-      $scope.user = response.data.data;
+    if (response.status === 200) {
+      console.log('Profile data: ', response);
+      $scope.user = response.data;
       $scope.chart.data = [[$scope.user.accuracy, $scope.user.speed, $scope.user.versatility,
                             $scope.user.impressiveness, $scope.user.diligence]];
-    } else {
-      alert('Something went wrong!!!\nError: ' + response.data.status);
-      // do smt
     }
   }, function errorCallBack(response) {
-    alert("Something went wrong!!!");
+    alert("Something went wrong!!!", response);
   });
 })
 
 .controller('loginController', function($scope, $state, $http, ngFB, facebook) {
-  // ngLoginfb
+  // Login Facebook
   $scope.fbLogin = function() {
-    ngFB.login({scope: ''}).then(
+    ngFB.login({scope: 'user_friends'}).then(
       function(response) {
+        console.log('Data facebook response: ', response);
         if (response.status === 'connected') {
           console.log('Facebook login in browser succeeded');
           // Get accessToken from facebook
@@ -76,21 +87,19 @@ angular.module('starter.controllers', [])
           // Send accessToken to server
           $http({
             method: 'POST',
-            url: '/api/users/session',
+            url: '/api/user/session',
             data: {
               provider: 'facebook',
               access_token: accessToken
             }
           }).then(function successCallBack(response) {
-            if (response.data.status === 200) {
-              facebook.setUserId(response.data.data.id);
+            if (response.status === 200) {
+              console.log("Server response: ", response);
+              facebook.setUserId(response.data.id);
               $state.go('menu');
-            } else {
-              alert('Something went wrong!!!\nError: ' + response.data.status);
-              // do smt
             }
           }, function errorCallBack(response) {
-            alert('Facebook login failed');
+            alert('Facebook login failed', response);
           });
         }
       }
@@ -98,21 +107,18 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('categoriesController', function($scope, $http, $state, categoryId, facebook, ionicMaterialInk, ionicMaterialMotion) {
+.controller('categoriesController', function($scope, $http, $state, categoryId, facebook) {
   // Get Categories from server
   $http({
     method: 'GET',
     url: 'api/categories',
   }).then(function successCallBack(response) {
-    if (response.data.status === 200) {
-      console.log('Categories Success', response.data);
-      $scope.categoriesData = response.data.data;
-    } else {
-      alert('Something went wrong!!!\nError: ' + response.data.status);
-      // do smt
+    if (response.status === 200) {
+      console.log('Categories Success', response);
+      $scope.categoriesData = response.data.categories;
     }
   }, function errorCallBack(response) {
-    alert('Something went wrong!!!');
+    alert('Something went wrong!!!', response);
   });
 
   //
@@ -125,32 +131,25 @@ angular.module('starter.controllers', [])
   $scope.goProfile = function() {
     $state.go('profile');
   };
-  // Set Motion
-    ionicMaterialMotion.fadeSlideInRight();
-  // Set Ink
-    ionicMaterialInk.displayEffect();
 })
 
 .controller('questionsController', function($scope, $http, categoryId, facebook, ionicMaterialInk, ionicMaterialMotion) {
   // Get list of questions of user category choice
   $http({
-    method: 'GET',
-    url:'/api/match',
+    method: 'POST',
+    url:'/api/matches',
     params: {
       category: categoryId.getId(),
       access_token: facebook.getToken()
     }
   }).then(function successCallBack(response) {
-    if (response.data.status === 200) {
-      console.log("Get questions succeeded", response.data);
-      $scope.clientData = response.data.data.questions;
-      $scope.clientSideList = response.data.data.questions[0];
-    } else {
-      alert('Something went wrong!!!\nError: ' + response.data.status);
-      // do smt
+    if (response.status === 200) {
+      console.log("Get questions succeeded", response);
+      $scope.clientData = response.data.questions;
+      $scope.clientSideList = response.data.questions[0];
     }
   }, function errorCallBack(response) {
-    alert("Something went wrong!!!");
+    alert("Something went wrong!!!", response);
   });
 
   $scope.cnt = 0;
