@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Api::SessionsControllerTest < ActionController::TestCase
+class Api::User::SessionsControllerTest < ActionController::TestCase
   test "should return authentication error" do
     post :create, {"access_token" => "xxx", "provider" => "facebook"}
     assert_response :success

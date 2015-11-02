@@ -2,14 +2,27 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     #users api
-    post 'users/session' => 'sessions#create'
-    delete 'users/session' => 'sessions#destroy'
     get 'users/:id' => 'users#show'
+    patch 'users/:id' => 'users#update'
+    namespace :user do
+      post 'session' => 'sessions#create'
+      delete 'session' => 'sessions#destroy'
+      post ':id/friends' => 'friends#update'
+      get ':id/friends' => 'friends#index'
+      get ':user_id/friend/:friend_id' => 'friends#show'
+    end
 
     #matches api
     get 'categories' => 'categories#index'
-    get 'match' => 'matches#new'
-    post 'match' => 'matches#save'
+    post 'matches' => 'matches#create'
+    get 'matches/:id' => 'matches#show'
+    get 'match/:id/result' => 'matches#result'
+    patch 'match/:id' => 'matches#update'
+
+    #challenges api
+    post 'challenges' => 'challenges#create'
+    get 'challenges' => 'challenges#index'
+    get 'challenge/:id' => 'challenges#show'
   end
 
   devise_for :admin_users, ActiveAdmin::Devise.config

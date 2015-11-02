@@ -1,7 +1,4 @@
-json.status @status
-if @status == 200
-  json.data @category
-  json.data @categories do |category|
-    json.(category, :id, :name)
-  end
+json.categories @categories do |category|
+  json.(category, :id, :name)
+  json.image_url category.image.url
 end
