@@ -2,7 +2,7 @@ require 'rubygems'
 require 'json'
 require 'open-uri'
 
-class Api::SessionsController < ApplicationController
+class Api::User::SessionsController < ApplicationController
   def create
     provider = params.require(:provider)
     token = params.require(:access_token)
