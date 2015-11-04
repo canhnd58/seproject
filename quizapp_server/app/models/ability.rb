@@ -8,6 +8,6 @@ class Ability
     cannot [:update, :destroy], AdminUser
     can [:update, :destroy], AdminUser, id: admin.id
 
-    cannot [:create, :update], User
+    #cannot [:create, :update], User
   end
 end

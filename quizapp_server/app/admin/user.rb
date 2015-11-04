@@ -1,5 +1,6 @@
 ActiveAdmin.register User do
   menu priority: 4
+  permit_params :access_token
 
   index do
     selectable_column
