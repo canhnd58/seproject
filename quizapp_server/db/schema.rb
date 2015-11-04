@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151104013401) do
+ActiveRecord::Schema.define(version: 20151104151616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,8 +80,10 @@ ActiveRecord::Schema.define(version: 20151104013401) do
     t.integer  "question_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "answer_id"
   end
 
+  add_index "match_questions", ["answer_id"], name: "index_match_questions_on_answer_id", using: :btree
   add_index "match_questions", ["match_id"], name: "index_match_questions_on_match_id", using: :btree
   add_index "match_questions", ["question_id"], name: "index_match_questions_on_question_id", using: :btree
 
@@ -92,6 +94,7 @@ ActiveRecord::Schema.define(version: 20151104013401) do
     t.integer  "category_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "streak"
   end
 
   add_index "matches", ["category_id"], name: "index_matches_on_category_id", using: :btree
@@ -100,11 +103,11 @@ ActiveRecord::Schema.define(version: 20151104013401) do
   create_table "questions", force: :cascade do |t|
     t.text     "description"
     t.string   "image"
-    t.integer  "kind"
     t.integer  "score"
     t.integer  "category_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "kind"
   end
 
   add_index "questions", ["category_id"], name: "index_questions_on_category_id", using: :btree
@@ -141,6 +144,7 @@ ActiveRecord::Schema.define(version: 20151104013401) do
   end
 
   add_foreign_key "answers", "questions"
+  add_foreign_key "match_questions", "answers"
   add_foreign_key "match_questions", "matches"
   add_foreign_key "match_questions", "questions"
   add_foreign_key "matches", "categories"
