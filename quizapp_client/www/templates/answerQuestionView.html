@@ -9,10 +9,12 @@
       </div>
       <div class='list row answer-row'>
         <div id="1" class="card card-answer item ink col" ng-class="{'card-change':activeBtn == 1}" ng-click="getValue($event,clientSideList.answers[0].is_correct)">
+
           <div class="item item-text-wrap">
             {{clientSideList.answers[0].value}}
           </div>
         </div>
+
         <div id="2" class="card card-answer item ink col" ng-class="{'card-change':activeBtn == 2}" ng-click="getValue($event,clientSideList.answers[1].is_correct)">
           <div class="item item-text-wrap">
             {{clientSideList.answers[1].value}}
@@ -35,5 +37,7 @@
     <div>
       <div class="result-button sample-show-hide" ng-class="{'resultButton':finished == true}" ng-show="finished"> Result: {{score}} </div>
     </div>
+    <progress ng-class="{'progress-bar' : changeColor == true}" max="3000" min='0' value="{{tried}}"></progress>
+  </div>
   </ion-content>
 </ion-view>

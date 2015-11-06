@@ -1,4 +1,3 @@
-
 angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'starter.services', 'ngOpenFB', 'chart.js'])
 
 .run(function($ionicPlatform, ngFB) {

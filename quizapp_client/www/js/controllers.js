@@ -133,7 +133,9 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('questionsController', function($scope, $http, categoryId, facebook, ionicMaterialInk, ionicMaterialMotion) {
+
+
+.controller('questionsController', function($scope, $http,$interval, categoryId, facebook, ionicMaterialInk, ionicMaterialMotion) {
   // Get list of questions of user category choice
   $http({
     method: 'POST',
@@ -152,15 +154,32 @@ angular.module('starter.controllers', [])
     alert("Something went wrong!!!", response);
   });
 
+  $scope.countdown = 30;
   $scope.cnt = 0;
   $scope.score = 0;
   $scope.finished = false;
-  $scope.timeOut = false;
   $scope.reset = true;
+  $scope.changeColor = false;
 
   $scope.user = {
     choice: null
   };
+
+  $scope.tried = 3000;
+  var increaseTried = function(){
+    $scope.tried --;
+  };
+
+
+  var loop = $interval(function(){
+    increaseTried();
+    if($scope.tried < 700){
+      $scope.changeColor = true;
+    }
+    if($scope.tried == 0){
+      $scope.nextQuestion();
+    }
+  }, 1);
 
   $scope.getValue = function(index,value) {
     $scope.Submitted = true;
@@ -173,10 +192,15 @@ angular.module('starter.controllers', [])
 
   }
   $scope.nextQuestion = function() {
+    $scope.tried = 3000;
     $scope.Submitted = false;
     $scope.activeBtn = 5;
     $scope.cnt = $scope.cnt + 1;
-    if ($scope.cnt == $scope.clientData.length) $scope.finished = true;
+    $scope.changeColor = false;
+    if ($scope.cnt == $scope.clientData.length){
+      $scope.finished = true;
+      $interval.cancel(loop);
+    } 
     else $scope.clientSideList = $scope.clientData[$scope.cnt];
   };
   // Set Motion
@@ -184,3 +208,6 @@ angular.module('starter.controllers', [])
   // Set Ink
     ionicMaterialInk.displayEffect();
 });
+
+
+
