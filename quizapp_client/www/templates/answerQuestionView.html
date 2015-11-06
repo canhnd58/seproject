@@ -37,7 +37,9 @@
     <div>
       <div class="result-button sample-show-hide" ng-class="{'resultButton':finished == true}" ng-show="finished"> Result: {{score}} </div>
     </div>
-    <progress ng-class="{'progress-bar' : changeColor == true}" max="3000" min='0' value="{{tried}}"></progress>
+    <progress class='progress-bar' ng-class="{'warning' : changeColor == true}" max="3000" min='0' value="{{tried}}"></progress>
+    <div class="row question-row">
+      <div class="question-bar col" ng-repeat="item in clientData" ng-class="{'red': questionsArray[$index] == false ,'blue': questionsArray[$index] == true}">.</div>
   </div>
   </ion-content>
 </ion-view>

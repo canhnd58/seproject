@@ -160,6 +160,8 @@ angular.module('starter.controllers', [])
   $scope.finished = false;
   $scope.reset = true;
   $scope.changeColor = false;
+  $scope.questionsIndex = 0;
+  $scope.questionsArray = [];
 
   $scope.user = {
     choice: null
@@ -192,11 +194,13 @@ angular.module('starter.controllers', [])
 
   }
   $scope.nextQuestion = function() {
+    $scope.questionsArray[$scope.questionsIndex] = $scope.correct;
     $scope.tried = 3000;
     $scope.Submitted = false;
     $scope.activeBtn = 5;
     $scope.cnt = $scope.cnt + 1;
     $scope.changeColor = false;
+    $scope.questionsIndex++;
     if ($scope.cnt == $scope.clientData.length){
       $scope.finished = true;
       $interval.cancel(loop);

@@ -51,7 +51,7 @@
   width: 45%;
 }
 
-progress[value] {
+.progress-bar[value] {
   /* Reset the default appearance */
   -webkit-appearance: none;
    appearance: none;
@@ -60,17 +60,52 @@ progress[value] {
   height: 3px;
 }
 
-progress[value]::-webkit-progress-bar {
+.progress-bar[value]::-webkit-progress-bar {
   background-color: #eee;
   border-radius: 1px;
 }
 
-progress[value]::-webkit-progress-value {
+.progress-bar[value]::-webkit-progress-value {
   background-color: blue;
   background-image:
      -webkit-linear-gradient(left);
     border-radius: 5px; 
 }
-.progress-bar[value]::-webkit-progress-value{
+.warning[value]::-webkit-progress-value{
   background-color: red;
+}
+.question-bar[value]{
+  -webkit-appearance: none;
+   appearance: none;
+  position: absolute;
+  top: 96%;
+  height: 10px;
+}
+
+.question-bar[value]::-webkit-progress-bar {
+  background-color: #eee;
+  
+}
+
+.question-bar[value]::-webkit-progress-value {
+  background-color: ;
+  background-image:
+     -webkit-linear-gradient(left);
+   
+}
+.red{
+  background-color: red;
+}
+.blue{
+  background-color: blue;
+}
+
+.question-row{
+  position: absolute;
+  bottom: 0%;
+}
+.question-bar{
+  height: 3px;
+  margin-left: 3px;
+  padding: 0px;
 }
