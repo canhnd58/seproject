@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include ApiHelper
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
@@ -17,12 +19,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from OpenURI::HTTPError do
     render nothing: true, status: :unauthorized
-  end
-
-  def current_user(token)
-    user = User.find_by(access_token: token)
-    raise ApiException::InvalidToken if user == nil
-    user
   end
 
   def access_denied(exception)

@@ -1,3 +1,3 @@
 json.friends @friends do |friend|
-  json.(friend, :name, :avatar, :win, :lose, :status, :challenge_id)
+  json.(friend, :id, :name, :avatar, :win, :lose, :status, :challenge_id)
 end
