@@ -10,10 +10,16 @@ class Api::User::FriendsController < ApplicationController
     friendslist = params.require(:friends)
     user = current_user(token)
     friendslist.each do |f|
-      @friend = user.user_friends.find_by friend_id: f
+      userbyfb = User.find_by facebook_id: f
+
+      if userbyfb.nil?
+        next
+      end
+
+      @friend = user.user_friends.find_by friend_id: userbyfb.id
       if @friend.nil?
         @friend = UserFriend.new(
-          friend_id: f,
+          friend_id: userbyfb.id,
           status: 0,
           win: 0,
           lose: 0,

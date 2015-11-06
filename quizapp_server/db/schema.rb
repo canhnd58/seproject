@@ -103,11 +103,11 @@ ActiveRecord::Schema.define(version: 20151104151616) do
   create_table "questions", force: :cascade do |t|
     t.text     "description"
     t.string   "image"
+    t.integer  "kind"
     t.integer  "score"
     t.integer  "category_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "kind"
   end
 
   add_index "questions", ["category_id"], name: "index_questions_on_category_id", using: :btree
