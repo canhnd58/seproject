@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', []).constant('TIMER', 30000)
 
 .controller('challengeController', function($scope, $state, $http, $ionicPopup, ngFB, facebook, categoryId, challengeService) {
   // Get user's friends list from Facebook
@@ -241,7 +241,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('questionsController', function($scope, $http, $interval, categoryId, facebook, challengeService,
+.controller('questionsController', function($scope, $http, $interval,$ionicModal, TIMER , categoryId, facebook, challengeService,
   ionicMaterialInk, ionicMaterialMotion) {
   // Get list of questions of user category choice
   if ((challengeService.isChallenge()) && (challengeService.getMatchId() == null)) {
@@ -313,25 +313,30 @@ angular.module('starter.controllers', [])
   $scope.changeColor = false;
   $scope.questionsIndex = 0;
   $scope.questionsArray = [];
+  $scope.nextQuestionBlur = false;
+  $scope.streakCount = 0;
+  $scope.streak = 0;
+  $scope.questionsResult = "";
+  $scope.totalTime = 0;
 
   $scope.user = {
     choice: null
   };
 
-  $scope.tried = 3000;
+  $scope.tried = TIMER;
   var increaseTried = function(){
-    $scope.tried --;
+    $scope.tried -= 100;
   };
 
   var loop = $interval(function(){
     increaseTried();
-    if($scope.tried < 700){
+    if($scope.tried < 7000){
       $scope.changeColor = true;
     }
     if($scope.tried == 0){
       $scope.nextQuestion();
     }
-  }, 1);
+  }, 100);
 
   $scope.getValue = function(index,value) {
     $scope.Submitted = true;
@@ -344,8 +349,32 @@ angular.module('starter.controllers', [])
   };
 
   $scope.nextQuestion = function() {
+    $scope.totalTime += TIMER - $scope.tried;
+    $scope.tried = TIMER + 1000;
+    $scope.nextQuestionBlur = true;
+    if($scope.correct == true){
+      $scope.streakCount++;
+    }
+    if($scope.correct == false){
+      $scope.streak += ($scope.streakCount * $scope.streakCount)
+      $scope.streakCount = 0;
+    };
+    switch ($scope.streakCount) {
+      case 0: $scope.questionsResult = "WRONG"; break;
+      case 1: $scope.questionsResult = "OK"; break;
+      case 2: $scope.questionsResult = "GOOD"; break;
+      case 3: $scope.questionsResult = "GREAT"; break;
+      case 4: $scope.questionsResult = "EXCELLENT"; break;
+      case 5: $scope.questionsResult = "AMAZING"; break;
+      case 6: $scope.questionsResult = "EXPERT"; break;
+      case 7: $scope.questionsResult = "GENIUS"; break;
+      case 8: $scope.questionsResult = "UNSTOPPABLE"; break;
+      case 9: $scope.questionsResult = "GODLIKE"; break;
+      case 10: $scope.questionsResult = "BEYOND GODLIKE"; break;
+    }
+    setTimeout(function() {
+    $scope.nextQuestionBlur = false;
     $scope.questionsArray[$scope.questionsIndex] = $scope.correct;
-    $scope.tried = 3000;
     $scope.Submitted = false;
     $scope.activeBtn = 5;
     $scope.cnt = $scope.cnt + 1;
@@ -356,6 +385,18 @@ angular.module('starter.controllers', [])
       $interval.cancel(loop);
     }
     else $scope.clientSideList = $scope.clientData[$scope.cnt];
+  }, 1000);
+  };
+
+   $ionicModal.fromTemplateUrl('templates/modal.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  
+  $scope.createContact = function(u) {        
+    $scope.contacts.push({ name: u.firstName + ' ' + u.lastName });
+    $scope.modal.hide();
   };
 
   // Set Motion

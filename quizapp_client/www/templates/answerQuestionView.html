@@ -1,6 +1,6 @@
 <ion-view name="questions" view-title="Questions">
   <ion-content>
-    <div class='animate-fade-slide-in-right full-height' ng-class="{'blur':finished == true}">
+    <div class='animate-fade-slide-in-right full-height' ng-class="{'blur':finished == true || nextQuestionBlur}">
       <div class="card card-question item has-header" >
         <div class="item item-text-wrap">
           {{clientSideList.description}}
@@ -37,9 +37,32 @@
     <div>
       <div class="result-button sample-show-hide" ng-class="{'resultButton':finished == true}" ng-show="finished"> Result: {{score}} </div>
     </div>
-    <progress class='progress-bar' ng-class="{'warning' : changeColor == true}" max="3000" min='0' value="{{tried}}"></progress>
+    <div>
+      <div class="resultsButton sample-show-hide" ng-show="nextQuestionBlur" ng-class="{'redQuestionsResult': correct == false ,'blueQuestionsResult': correct == true}"> {{questionsResult}} </div>
+    </div>
+    <progress class='progress-bar' ng-class="{'warning' : changeColor == true}" max="30000" min='0' value="{{tried}}"></progress>
     <div class="row question-row">
-      <div class="question-bar col" ng-repeat="item in clientData" ng-class="{'red': questionsArray[$index] == false ,'blue': questionsArray[$index] == true}">.</div>
+      <div class="question-bar col" ng-repeat="item in clientData" ng-class="{'red': questionsArray[$index] == false ,'blue': questionsArray[$index] == true}"></div>
   </div>
+  <div class="buttons">
+        <button class="button button-icon ion-compose" ng-click="modal.show()">
+        </button>
+      </div>
+  <script id="templates/modal.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-positive">
+          <h1 class="title">New Contact</h1>
+          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+        </ion-header-bar>
+        <ion-content class="padding">
+          <table border="1" style="width:100%">
+            <tr ng-repeat="item in clientData">
+              <td>{{item.description}}</td>
+              <td>{{questionsArray[$index]}}</td>
+            </tr>
+          </table>
+        </ion-content>
+      </ion-modal-view>
+    </script>
   </ion-content>
 </ion-view>

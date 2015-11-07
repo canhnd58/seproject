@@ -109,3 +109,18 @@
   margin-left: 3px;
   padding: 0px;
 }
+
+.resultsButton {
+  position: absolute;
+  top:150px;
+  font-weight: bolder;
+  font-size: -webkit-xxx-large;
+  width: 100%;
+  text-align: center;
+}
+.redQuestionsResult{
+  color: red;
+}
+.blueQuestionsResult{
+  color: blue;
+}
