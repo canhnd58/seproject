@@ -1,5 +1,51 @@
 angular.module('starter.controllers', []).constant('TIMER', 30000)
 
+.controller('mutualProfileController', function($scope, $http, challengeService, facebook) {
+  $scope.chart = {
+    labels: ["Accuracy", "Speed", "Versatility", "Impressiveness", "Diligence"],
+    colours: ['#97BBCD', '#F7464A'],
+    options: {
+      scaleOverride: true,
+      scaleStartValue: 0,
+      scaleStepWidth: 2,
+      scaleSteps: 5,
+      responsive: true,
+      pointLabelFontSize : 12,
+      pointDotRadius: 2
+    }
+  };
+  // Get user score and other information
+  $http({
+    method: 'GET',
+    url: 'api/users/' + facebook.getUserId()
+  }).then(function successCallBack(response) {
+    if (response.status === 200) {
+      console.log('Profile data: ', response);
+      $scope.user = response.data;
+      $scope.chart.data = [[$scope.user.accuracy, $scope.user.speed, $scope.user.versatility,
+                            $scope.user.impressiveness, $scope.user.diligence]];
+    }
+  }, function errorCallBack(response) {
+    alert("Something went wrong!!!", response);
+  });
+
+  // Get opp score and other information
+  $http({
+    method: 'GET',
+    url: 'api/users/' + challengeService.getOpponentId()
+  }).then(function successCallBack(response) {
+    if (response.status === 200) {
+      console.log('Opp profile data: ', response);
+      $scope.opp = response.data;
+      $scope.chart.data.push([$scope.opp.accuracy, $scope.opp.speed, $scope.opp.versatility,
+                            $scope.opp.impressiveness, $scope.opp.diligence]);
+      console.log("All chart data: ", $scope.chart.data);
+    }
+  }, function errorCallBack(response) {
+    alert("Something went wrong!!!", response);
+  });
+})
+
 .controller('challengeController', function($scope, $state, $http, $ionicPopup, ngFB, facebook, categoryId, challengeService) {
   // Get user's friends list from Facebook
   ngFB.api({
@@ -85,6 +131,12 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
     } else if (item.status === "not_viewed") {
 
     }
+  };
+
+  // View mutual information
+  $scope.viewMutualProfile = function(item) {
+    challengeService.setOpponentId(item.id);
+    $state.go('mutualProfile');
   }
 })
 
@@ -388,7 +440,7 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
     $scope.cnt = $scope.cnt + 1;
     $scope.changeColor = false;
     $scope.questionsIndex++;
-    if ($scope.cnt == $scope.clientData.length){
+    if ($scope.cnt == $scope.clientData.length) {
       $scope.finished = true;
       $interval.cancel(loop);
       $http({
@@ -410,14 +462,14 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
         });
     }
     else $scope.clientSideList = $scope.clientData[$scope.cnt];
-  }, 1000);
-  };
+    }, 1000);
+    };
 
-   $ionicModal.fromTemplateUrl('templates/modal.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
+    $ionicModal.fromTemplateUrl('templates/modal.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
 
   // Simple GET request example:
 

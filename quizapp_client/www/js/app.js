@@ -76,6 +76,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'st
           controller: 'challengeController'
         }
       }
+    })
+
+    .state('mutualProfile', {
+      url: 'mutualProfile',
+      views: {
+        '': {
+          templateUrl: 'templates/mutualProfileView.html',
+          controller: 'mutualProfileController'
+        }
+      }
     });
 
   $urlRouterProvider.otherwise('/login');
