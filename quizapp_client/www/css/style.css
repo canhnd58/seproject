@@ -30,7 +30,7 @@
 }
 .resultButton {
   position: absolute;
-  top:150px;
+  top:30%;
   font-weight: bolder;
   font-size: -webkit-xxx-large;
   font-family: ;
@@ -112,7 +112,7 @@
 
 .resultsButton {
   position: absolute;
-  top:150px;
+  top:30%;
   font-weight: bolder;
   font-size: -webkit-xxx-large;
   width: 100%;
@@ -124,3 +124,24 @@
 .blueQuestionsResult{
   color: blue;
 }
+
+.result-button-scoreboard{
+  position: absolute;
+  left: 40%;
+  top:40%;
+  font-weight: bolder;
+  font-size: -webkit-xxx-large;
+  width: 100%;
+  text-align: center;
+}
+
+.result-button-retry{
+  position: absolute;
+  left: 55%;
+  top:40%;
+  font-weight: bolder;
+  font-size: -webkit-xxx-large;
+  width: 100%;
+  text-align: center;
+}
+

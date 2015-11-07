@@ -298,6 +298,7 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
       }
     }).then(function successCallBack(response) {
       console.log("Get questions succeeded", response);
+      $scope.matchId = response.data.match_id;
       $scope.clientData = response.data.questions;
       $scope.clientSideList = response.data.questions[0];
     }, function errorCallBack(response) {
@@ -305,7 +306,6 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
     });
   }
 
-  $scope.countdown = 30;
   $scope.cnt = 0;
   $scope.score = 0;
   $scope.finished = false;
@@ -318,6 +318,7 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
   $scope.streak = 0;
   $scope.questionsResult = "";
   $scope.totalTime = 0;
+  $scope.answersArray = [];
 
   $scope.user = {
     choice: null
@@ -337,8 +338,11 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
       $scope.nextQuestion();
     }
   }, 100);
-
-  $scope.getValue = function(index,value) {
+  $scope.matchIdfuntion = function(){
+    return $scope.matchId;
+  }
+  $scope.getValue = function(index,value,answersId) {
+    $scope.answersArray[$scope.questionsIndex] = answersId;
     $scope.Submitted = true;
     $scope.activeBtn = index.currentTarget.id;
     if(value == true){
@@ -354,10 +358,14 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
     $scope.nextQuestionBlur = true;
     if($scope.correct == true){
       $scope.streakCount++;
+      if($scope.cnt + 1 == $scope.clientData.length){
+        $scope.streak += ($scope.streakCount * $scope.streakCount);
+      }
     }
     if($scope.correct == false){
-      $scope.streak += ($scope.streakCount * $scope.streakCount)
+      $scope.streak += ($scope.streakCount * $scope.streakCount);
       $scope.streakCount = 0;
+
     };
     switch ($scope.streakCount) {
       case 0: $scope.questionsResult = "WRONG"; break;
@@ -383,6 +391,23 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
     if ($scope.cnt == $scope.clientData.length){
       $scope.finished = true;
       $interval.cancel(loop);
+      $http({
+        method: 'PATCH',
+        url: ' api/match/' + $scope.matchIdfuntion(),
+        data: {
+          access_token : facebook.getToken(),
+          score : $scope.score,
+          time : $scope.totalTime,
+          streak : $scope.streak,
+          answers : $scope.answersArray
+        }
+      }).then(function successCallback(response) {
+          // this callback will be called asynchronously
+          // when the response is available
+        }, function errorCallback(response) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+        });
     }
     else $scope.clientSideList = $scope.clientData[$scope.cnt];
   }, 1000);
@@ -393,11 +418,8 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
   }).then(function(modal) {
     $scope.modal = modal;
   });
-  
-  $scope.createContact = function(u) {        
-    $scope.contacts.push({ name: u.firstName + ' ' + u.lastName });
-    $scope.modal.hide();
-  };
+
+  // Simple GET request example:
 
   // Set Motion
     ionicMaterialMotion.fadeSlideInRight();
