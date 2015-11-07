@@ -2,7 +2,17 @@
   <ion-content>
     <div class="list">
       <div class="item item-divider"> Friends list </div>
-      <div class="item" ng-repeat="items in userFriendsList"> {{items.name}} </div>
+      <div class="item item-button-right" ng-repeat="items in userFriendsList">
+        <div class="buttons">
+          <button ng-class="{'{{items.buttonStyle}}': true}" ng-click="changeChallenge({{items}})">
+            <i ng-class="{'{{items.iconStyle}}': true}"></i>
+          </button>
+          <button class="button button-light ink" ng-click="viewMutualProfile()">
+            <i class="icon ion-android-alert"></i>
+          </button>
+        </div>
+        {{items.name}}
+      </div>
     </div>
   </ion-content>
 </ion-view>
