@@ -1,5 +1,51 @@
 angular.module('starter.controllers', []).constant('TIMER', 30000)
 
+.controller('challengeResultModalController', function($scope, $state, $ionicModal, $http, facebook, challengeService) {
+  $ionicModal.fromTemplateUrl('templates/challengeResultModalView.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+
+    // Get matchId
+    $http({
+      method: 'GET',
+      url: '/api/challenge/' + challengeService.getChallengeId(),
+      params: {
+        access_token: facebook.getToken()
+      }
+    }).then(function successCallBack(response) {
+      console.log("Get api challenge: ", response);
+      var userMatchId = response.data.challenger_match_id;
+      var oppMatchId = response.data.challengee_match_id;
+
+      $http({
+        method: 'GET',
+        url: '/api/match/' + userMatchId + '/result'
+      }).then(function successCallBack(response) {
+        console.log("Get api challenge user: ", response.data);
+        $scope.userResult = response.data;
+      });
+
+      $http({
+        method: 'GET',
+        url: '/api/match/' + oppMatchId + '/result'
+      }).then(function successCallBack(response) {
+        console.log("Get api challenge opp: ", response.data);
+        $scope.oppResult = response.data;
+      });
+    });
+
+    $scope.modal.show();
+  });
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+    $state.go('menu');
+  };
+
+})
+
 .controller('mutualProfileController', function($scope, $http, challengeService, facebook) {
   $scope.chart = {
     labels: ["Accuracy", "Speed", "Versatility", "Impressiveness", "Diligence"],
@@ -46,7 +92,8 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
   });
 })
 
-.controller('challengeController', function($scope, $state, $http, $ionicPopup, ngFB, facebook, categoryId, challengeService) {
+.controller('challengeController', function($scope, $controller, $state, $http, $ionicPopup, $ionicModal,
+  ngFB, facebook, categoryId, challengeService) {
   // Get user's friends list from Facebook
   ngFB.api({
     path: '/me/friends'
@@ -116,6 +163,7 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
     if (item.status === "normal") {
       console.log(item.id);
       challengeService.setOpponentId(item.id);
+      challengeService.setChallengeStatus(item.status);
       $state.go('categories');
     } else if (item.status === "challenged") {
       challengeService.setChallengeId(item.challenge_id);
@@ -129,7 +177,11 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
         // do smt
       });
     } else if (item.status === "not_viewed") {
-
+      $scope.oppName = item.name;
+      $scope.userName = facebook.getUserName();
+      challengeService.setChallengeId(item.challenge_id);
+      var modalController = $scope.$new();
+      $controller('challengeResultModalController', {$scope: modalController});
     }
   };
 
@@ -236,6 +288,7 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
             if (response.status === 200) {
               console.log("Server response: ", response);
               facebook.setUserId(response.data.id);
+              facebook.setUserName(response.data.name);
               $ionicLoading.hide();
               $state.go('menu');
             }
@@ -293,18 +346,22 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
   };
 })
 
-.controller('questionsController', function($scope, $http, $interval,$ionicModal, TIMER , categoryId, facebook, challengeService,
+.controller('questionsController', function($scope, $state, $controller, $http, $interval,$ionicModal, TIMER , categoryId, facebook, challengeService,
   ionicMaterialInk, ionicMaterialMotion) {
   // Get list of questions of user category choice
   if ((challengeService.isChallenge()) && (challengeService.getMatchId() == null)) {
     // Get matchId of the challenge
     $http({
       method: 'GET',
-      url: '/api/challenge/' + challengeService.getChallengeId()
+      url: '/api/challenge/' + challengeService.getChallengeId(),
+      params: {
+        access_token: facebook.getToken()
+      }
     }).then(function successCallBack(response) {
       console.log("Get /api/challenge response: ", response);
       challengeService.setMatchId(response.data.challengee_match_id);
       console.log("Match Id", challengeService.getMatchId());
+      $scope.matchId = challengeService.getMatchId();
       $http({
         method: 'GET',
         url: '/api/matches/' + challengeService.getMatchId(),
@@ -324,6 +381,7 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
   }
 
   if (challengeService.getMatchId() != null) {
+    $scope.matchId = challengeService.getMatchId();
     $http({
       method: 'GET',
       url: '/api/matches/' + challengeService.getMatchId(),
@@ -390,7 +448,7 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
       $scope.nextQuestion();
     }
   }, 100);
-  $scope.matchIdfuntion = function(){
+  $scope.matchIdfunction = function(){
     return $scope.matchId;
   }
   $scope.getValue = function(index,value,answersId) {
@@ -417,7 +475,6 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
     if($scope.correct == false){
       $scope.streak += ($scope.streakCount * $scope.streakCount);
       $scope.streakCount = 0;
-
     };
     switch ($scope.streakCount) {
       case 0: $scope.questionsResult = "WRONG"; break;
@@ -440,12 +497,17 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
     $scope.cnt = $scope.cnt + 1;
     $scope.changeColor = false;
     $scope.questionsIndex++;
+    if ($scope.cnt == $scope.clientData.length && challengeService.isChallenge() && challengeService.getChallengeStatus() != "normal") {
+      var modalController = $scope.$new();
+      $controller('challengeResultModalController', {$scope: modalController});
+    };
     if ($scope.cnt == $scope.clientData.length) {
+      console.log($scope.answersArray);
       $scope.finished = true;
       $interval.cancel(loop);
       $http({
         method: 'PATCH',
-        url: ' api/match/' + $scope.matchIdfuntion(),
+        url: ' api/match/' + $scope.matchIdfunction(),
         data: {
           access_token : facebook.getToken(),
           score : $scope.score,
@@ -462,7 +524,7 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
         });
     }
     else $scope.clientSideList = $scope.clientData[$scope.cnt];
-    }, 1000);
+    }, 300);
     };
 
     $ionicModal.fromTemplateUrl('templates/modal.html', {
@@ -471,7 +533,9 @@ angular.module('starter.controllers', []).constant('TIMER', 30000)
       $scope.modal = modal;
     });
 
-  // Simple GET request example:
+  $scope.retry = function() {
+    $state.go('menu');
+  }
 
   // Set Motion
     ionicMaterialMotion.fadeSlideInRight();

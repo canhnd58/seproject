@@ -1,0 +1,46 @@
+<ion-modal-view name="challenge-modal">
+  <ion-header-bar class="bar-positive" align-title="center">
+    <div class="title">
+      Result
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+      <div class="item item-divider">
+        <div class="row">
+          <div class="col col-offset-33"></div>
+          <div class="col col-33">{{userName}}</div>
+          <div class="col col-33">{{oppName}}</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="row">
+          <div class="col col-33">Score</div>
+          <div class="col col-33">{{userResult.score}}</div>
+          <div class="col col-33">{{oppResult.score}}</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="row">
+          <div class="col col-33">Time</div>
+          <div class="col col-33">{{userResult.time / 1000}}</div>
+          <div class="col col-33">{{oppResult.time / 1000}}</div>
+        </div>
+      </div>
+      <div class="item" ng-repeat="userAns in userResult.questions">
+        <div class="row">
+          <div class="col col-33">Question {{$index + 1}}: {{userAns.description}} + {{oppResult.questions[$index].description}}</div>
+          <div class="col col-33">{{userAns.is_correct}}</div>
+          <div class="col col-33">{{oppResult.questions[$index].is_correct}}</div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  <ion-footer-bar>
+    <div class="tabs">
+        <div class="tab-item" ng-click="closeModal()">
+          Close
+        </div>
+    </div>
+  </ion-footer-bar>
+</ion-modal-view>

@@ -5,6 +5,7 @@ angular.module('starter.services', [])
   var _opponentId = null;
   var _challengeId = null;
   var _matchId = null;
+  var _challengeStatus = null;
   return {
     setChallenge: function() {
       _isChallenge = true;
@@ -14,6 +15,12 @@ angular.module('starter.services', [])
     },
     isChallenge: function() {
       return _isChallenge;
+    },
+    setChallengeStatus: function(value) {
+      _challengeStatus = value;
+    },
+    getChallengeStatus: function() {
+      return _challengeStatus;
     },
     setOpponentId: function(idValue) {
       _opponentId = idValue;
@@ -52,7 +59,14 @@ angular.module('starter.services', [])
 .factory('facebook', function() {
   var _accessToken;
   var _userId;
+  var _userName;
   return {
+    setUserName: function(userName) {
+      _userName = userName;
+    },
+    getUserName: function() {
+      return _userName;
+    },
     setToken: function(accessToken) {
       _accessToken = accessToken;
     },

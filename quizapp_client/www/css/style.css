@@ -39,8 +39,8 @@
   text-align: center;
   }
 .sample-show-hide {
-	-webkit-transition:all linear 0.5s;
-	transition:all linear 0.5s;
+	-webkit-transition:all linear 0.1s;
+	transition:all linear 0.1s;
 }
 
 .sample-show-hide.ng-hide {
@@ -69,7 +69,7 @@
   background-color: blue;
   background-image:
      -webkit-linear-gradient(left);
-    border-radius: 5px; 
+    border-radius: 5px;
 }
 .warning[value]::-webkit-progress-value{
   background-color: red;
@@ -84,14 +84,14 @@
 
 .question-bar[value]::-webkit-progress-bar {
   background-color: #eee;
-  
+
 }
 
 .question-bar[value]::-webkit-progress-value {
   background-color: ;
   background-image:
      -webkit-linear-gradient(left);
-   
+
 }
 .red{
   background-color: red;
@@ -144,4 +144,3 @@
   width: 100%;
   text-align: center;
 }
-
