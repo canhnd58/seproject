@@ -8,7 +8,7 @@
     },
     {
       "path": "/api",
-      "proxyUrl": "http://192.168.128.103:3000/api"
+      "proxyUrl": "http://192.168.96.102:3000/api"
     },
 		{
 			"path": "/apiKhanh",
