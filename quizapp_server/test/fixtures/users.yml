@@ -1,7 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: hgminh95
+minh:
+  id: 1
+  name: hgminh
   facebook_id: MyString
   avatar: MyString
   rating: 1.5
@@ -12,10 +13,11 @@ one:
   versatility: 1.5
   diligence: 1.5
   impressiveness: 1.5
-  access_token: yyy
+  access_token: mmm
 
-two:
-  name: MyString
+canh:
+  id: 2
+  name: canhzz
   facebook_id: MyString
   avatar: MyString
   rating: 1.5
@@ -26,3 +28,19 @@ two:
   versatility: 1.5
   diligence: 1.5
   impressiveness: 1.5
+  access_token: ccc
+
+nam:
+  id: 3
+  name: unoarid
+  facebook_id: MyString
+  avatar: MyString
+  rating: 1.5
+  highscore: 1
+  exp: 1
+  accuracy: 1.5
+  speed: 1.5
+  versatility: 1.5
+  diligence: 1.5
+  impressiveness: 1.5
+  access_token: nnn

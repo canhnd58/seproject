@@ -1,13 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user_id:
-  score: 1
-  time: 1
-  category_id:
+new_match:
+  id: 1
+  user_id: 1
+  category_id: 1
 
-two:
-  user_id:
-  score: 1
-  time: 1
-  category_id:
+old_match:
+  id: 2
+  user_id: 1
+  category_id: 1
+  score: 10
+  time: 10
+  streak: 2

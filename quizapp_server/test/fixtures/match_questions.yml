@@ -1,9 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  match: 
-  question: 
+new_match_1:
+  match_id: 1
+  question_id: 1
 
-two:
-  match: 
-  question: 
+new_match_2:
+  match_id: 1
+  question_id: 2
+
+old_match_1:
+  match_id: 2
+  question_id: 3
+  answer_id: 1

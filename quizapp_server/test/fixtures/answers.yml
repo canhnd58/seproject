@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   value: 1995
   is_correct: true
   question_id: 2
 
 two:
+  id: 2
   value: 2012
   is_correct: false
   question_id: 2
