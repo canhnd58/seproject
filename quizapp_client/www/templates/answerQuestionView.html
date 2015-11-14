@@ -35,18 +35,18 @@
       </div>
     </div>
     <div>
-      <div class="sample-show-hide" ng-class="{'resultButton':finished == true}" ng-show="finished"> Result: {{score}} </div>
+      <div class="animated bounceInUp" ng-class="{'resultButton':finished == true}" ng-show="finished"> Result: {{score}} </div>
     </div>
     <div>
-      <div class="resultsButton sample-show-hide" ng-show="nextQuestionBlur" ng-class="{'redQuestionsResult': correct == false ,'blueQuestionsResult': correct == true}"> {{questionsResult}} </div>
+      <div class="resultsButton animated bounceIn" ng-show="nextQuestionBlur" ng-class="{'redQuestionsResult': correct == false ,'blueQuestionsResult': correct == true}"> {{questionsResult}} </div>
     </div>
     <progress class='progress-bar' ng-class="{'warning' : changeColor == true}" max="30000" min='0' value="{{tried}}"></progress>
     <div class="row question-row">
       <div class="question-bar col" ng-repeat="item in clientData" ng-class="{'red': questionsArray[$index] == false ,'blue': questionsArray[$index] == true}"></div>
-  </div>
+    </div>
   <div class="buttons">
-    <button class="button button-fab result-button-scoreboard sample-show-hide icon ion-ios-paw" ng-class="{'resultButton':finished == true}" ng-show="finished" ng-click="modal.show()"></button>
-    <button class="button button-fab result-button-retry sample-show-hide icon ion-refresh" ng-class="{'resultButton':finished == true}" ng-show="finished" ng-click="retry()"></button>
+    <button class="button button-fab  animated bounceInUp icon ion-ios-paw " ng-class="{'result-button-scoreboard':finished == true}" ng-show="finished" ng-click="modal.show()"></button>
+    <button class="button button-fab  animated bounceInUp icon ion-refresh" ng-class="{'result-button-retry':finished == true}" ng-show="finished" ng-click="retry()"></button>
   </div>
   <script id="templates/modal.html" type="text/ng-template">
       <ion-modal-view>

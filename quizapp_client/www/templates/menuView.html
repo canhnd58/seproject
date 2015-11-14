@@ -1,24 +1,41 @@
 <ion-view name="menu" view-title="Menu">
   <ion-content>
-    <label class="item item-text-wrap">
-      <button class="button button-block button-calm-900" ng-click="play()">
-        <i class="icon ion-play"></i> Play
-      </button>
-    </label>
-    <label class="item item-text-wrap">
-      <button class="button button-block button-energized-900" ng-click="challenge()">
-        <i class="icon ion-knife"></i> Challenge
-      </button>
-    </label>
-    <label class="item item-text-wrap">
-      <button class="button button-block button-balanced-900" ng-click="profile()">
-        <i class="icon ion-person"></i> Profile
-      </button>
-    </label>
-    <label class="item item-text-wrap">
-      <button class="button button-block button-assertive-900" ng-click="logout()">
-        <i class="icon ion-power"></i> Logout
-      </button>
-    </label>
+
+    <div class="button-categories-group ">
+      <img class="image-login" src="img/wallpaper.jpg">
+      <div class="button-categories">
+        <button class="button  bar-balanced button-fab" ng-click="play()">
+          <i class="icon ion-play"></i>
+        </button>
+        <i class="textview animated fadeInRight">
+          TRAINING
+        </i>
+      </div>
+      <div class="button-categories">
+        <button class="button  bar-balanced button-fab " ng-click="challenge()">
+          <i class="icon ion-knife"></i>
+        </button>
+        <i class="textview animated fadeInRight">
+          CHALLENGE
+        </i>
+      </div>
+      <div class="button-categories">
+        <button class="button  bar-balanced button-fab" ng-click="profile()">
+          <i class="icon ion-person"></i>
+        </button>
+        <i class="textview animated fadeInRight">
+          PROFILE
+        </i>
+      </div>
+      <div class="button-categories">
+        <button class="button  bar-balanced button-fab " ng-click="logout()">
+          <i class="icon ion-power"></i>
+        </button>
+        <i class="textview animated fadeInRight">
+          LOGOUT
+        </i>
+      </div>
+    </div>
+
   </ion-content>
 </ion-view>

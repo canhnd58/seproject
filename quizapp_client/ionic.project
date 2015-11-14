@@ -7,11 +7,11 @@
       "proxyUrl": "http://se2015-quizapp.herokuapp.com/api"
     },
     {
-      "path": "/api",
+      "path": "/apiKhanh",
       "proxyUrl": "http://192.168.96.102:3000/api"
     },
 		{
-			"path": "/apiKhanh",
+			"path": "/api",
 			"proxyUrl": "http://192.168.128.105:3000/api"
 		}
   ]
