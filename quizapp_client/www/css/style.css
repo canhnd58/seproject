@@ -145,14 +145,16 @@
   text-align: center;
 }
 
-.play-button{
-  z-index: 300;
-  position: absolute;
-  left: 40%;
-  width: 20%;
-  top:30%;
-  text-align: center;
-  border-radius: 20px 20px;
+.button-outline.play-button{
+  position: relative;
+  font-weight: 100;
+  font-size: 1em;
+  width: 20px;
+  padding: 0;
+  margin-left:30%;
+  margin-right:30%;
+  border-radius: 50% 50%;
+  color: #2F5D5D;
 }
 
 .image-login{
@@ -170,17 +172,41 @@
 }
 .button-categories{
   z-index: 300;
-  margin-left: 30%;
   margin-top: 5%;
 }
 
 .textview{
-  margin-left: 5%;
+  margin-left: 2%;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 1em;
   letter-spacing: 2px;
   position: relative;
   color: #285858;
   pointer-events: none;
   z-index: 9999;
+}
+.item-note{
+  color: black;
+}
+
+.login-text{
+  position: absolute;
+  top:30%;
+  font-size: 4em;
+  color: #285858;
+  font-family: waker;
+  z-index: 9999;
+}
+
+.login-play-row{
+  position: absolute;
+  top:45%;
+  font-size: 2em;
+  color: #2F5D5D;
+  font-family: waker;
+  z-index: 9999;
+}
+
+.ss{
+  margin-left: inherit;
 }
