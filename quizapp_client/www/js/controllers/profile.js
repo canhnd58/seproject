@@ -1,5 +1,8 @@
 angular.module('starter.controllers')
-.controller('profileController', function($scope, $http, ngFB, facebook) {
+
+.controller('profile', function($scope, $http, globalService, ngFB, userInfo, userAPI) {
+
+  // Creating init chart
   $scope.chart = {
     labels: ["Accuracy", "Speed", "Versatility", "Impressiveness", "Diligence"],
     options: {
@@ -12,18 +15,18 @@ angular.module('starter.controllers')
       pointDotRadius: 2
     }
   };
+
   // Get user score and other information
-  $http({
-    method: 'GET',
-    url: 'api/users/' + facebook.getUserId()
-  }).then(function successCallBack(response) {
-    if (response.status === 200) {
-      console.log('Profile data: ', response);
+  userAPI.getId(userInfo.getUserId())
+  .then(function successCallBack(response) {
+    globalService.showData("Profile data", response.data);
+    if (response.status == 200) {
       $scope.user = response.data;
       $scope.chart.data = [[$scope.user.accuracy, $scope.user.speed, $scope.user.versatility,
                             $scope.user.impressiveness, $scope.user.diligence]];
-    }
-  }, function errorCallBack(response) {
-    alert("Something went wrong!!!", response);
+  }})
+  .catch(function(response, status) {
+    globalService.handleErrorResponse("Error when get user's profile", status);
   });
+
 });

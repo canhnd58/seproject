@@ -1,0 +1,18 @@
+<ion-modal-view name="single-modal">
+  <ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">SCOREBOARD</h1>
+    <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <table border="1" style="width:100%">
+      <tr ng-repeat="item in questionsData">
+        <td>{{item.description}}</td>
+        <td>{{questionsArray[$index]}}</td>
+      </tr>
+      <tr>
+        <td>SCORE</td>
+        <td>{{score}}</td>
+      </tr>
+    </table>
+  </ion-content>
+</ion-modal-view>

@@ -4,7 +4,14 @@
       <div class="item item-divider"> Friends list </div>
       <div class="item item-button-right" ng-repeat="items in userFriendsList">
         <div class="buttons">
-          <button ng-class="{'{{items.buttonStyle}}': true}" ng-click="changeChallenge({{items}})">
+          <button ng-class="{'button button-positive ink': items.status == 'normal',
+                            'button button-assertive ink': items.status == 'challenged',
+                            'button button-stable ink': items.status == 'challenging',
+                            'button button-balanced ink': items.status == 'not_viewed'}" ng-click="changeChallenge({{items}})">
+          <i ng-class="{'icon ion-scissors': items.status == 'normal',
+                        'icon ion-checkmark': items.status == 'challenged',
+                        'icon ion-ios-pulse': items.status == 'challenging',
+                        'icon ion-ios-information-empty': items.status == 'not_viewed'}"></i>
             <i ng-class="{'{{items.iconStyle}}': true}"></i>
           </button>
           <button class="button button-light ink" ng-click="viewMutualProfile({{items}})">
