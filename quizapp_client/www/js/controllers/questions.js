@@ -55,13 +55,14 @@ angular.module('starter.controllers')
   };
 
   // Show questions and calculate result
+  var resultSound = new Audio();
   var cnt = 0;
   $scope.score = 0;
   $scope.correct = false;
   $scope.finished = false;
   var totalTime = 0;
   var reset = true;
-  $scope.chageColor = false;
+  $scope.changeColor = false;
   $scope.questionsArray = [];
   var streakCount = 0;
   var streak = 0;
@@ -94,23 +95,26 @@ angular.module('starter.controllers')
     $scope.activeBtn = index.currentTarget.id;
     if (value == true) {
       $scope.correct = true;
-      $scope.score += $scope.singleQuestion.score;
     }
     else $scope.correct = false;
   };
 
   $scope.nextQuestion = function() {
-
     totalTime += appConstants.TIMER - $scope.tried;
     $scope.tried = appConstants.TIMER + 1000;
     $scope.nextQuestionBlur = true;
 
     if ($scope.correct == true) {
+      resultSound = new Audio('sound/correctanswer.mp3');
+      resultSound.play();
       streakCount++;
+      $scope.score += $scope.singleQuestion.score;
       if (cnt + 1 == $scope.questionsData.length) {
         streak += streakCount * streakCount;
       }
     } else if ($scope.correct == false) {
+      resultSound = new Audio('sound/wronganswer.mp3');
+      resultSound.play();
       streak += streakCount * streakCount;
       streakCount = 0;
     };
