@@ -34,7 +34,7 @@ class Api::MatchesControllerTest < ActionController::TestCase
     assert_response :ok
 
     data = JSON.parse @response.body
-    assert_equal 2, data['questions']
+    assert_equal 2, data['questions'].length
   end
 
   test "get match information twice" do
@@ -55,7 +55,7 @@ class Api::MatchesControllerTest < ActionController::TestCase
     get :result, {id: 2}
     assert_response :ok
 
-    data = JSON.parse @response
+    data = JSON.parse @response.body
     assert_equal 10, data['score']
   end
 
