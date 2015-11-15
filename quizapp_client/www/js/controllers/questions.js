@@ -4,7 +4,7 @@ angular.module('starter.controllers')
   globalService, appConstants, userInfo, gameInfo, challengeAPI, matchAPI, ionicMaterialInk, ionicMaterialMotion) {
 
   // Get list of questions of user category choice
-
+  globalService.loadingScreenShow();
   // Case 1: isChallengee and isChallengee
   if (gameInfo.isChallenge() && !gameInfo.isChallenger()) {
 
@@ -16,9 +16,11 @@ angular.module('starter.controllers')
       .then(function(response) {
         $scope.questionsData = response.data.questions;
         $scope.singleQuestion = response.data.questions[0];
+        globalService.loadingScreenHide();
       })
-      .catch(function(response, status) {
-        globalService.handleErrorResponse("Get questions challenge of challengee failed", status);
+      .catch(function(response) {
+        globalService.loadingScreenHide();
+        globalService.handleErrorResponse("Get questions for challengee failed: " + response.statusText, response.status);
       });
 
   };
@@ -29,9 +31,11 @@ angular.module('starter.controllers')
       .then(function(response) {
         $scope.questionsData = response.data.questions;
         $scope.singleQuestion = response.data.questions[0];
+        globalService.loadingScreenHide();
       })
-      .catch(function(response, status) {
-        globalService.handleErrorResponse("Get questions challenge of challenger failed", status);
+      .catch(function(response) {
+        globalService.loadingScreenHide();
+        globalService.handleErrorResponse("Get questions for challenger failed: " + response.statusText, response.status);
       });
   };
 
@@ -42,9 +46,11 @@ angular.module('starter.controllers')
         gameInfo.setMatchId(response.data.match_id);
         $scope.questionsData = response.data.questions;
         $scope.singleQuestion = response.data.questions[0];
+        globalService.loadingScreenHide();
       })
-      .catch(function(response, status) {
-        globalService.handleErrorResponse("Get questions single player failed", status);
+      .catch(function(response) {
+        globalService.loadingScreenHide();
+        globalService.handleErrorResponse("Get questions for trainning failed: " + response.statusText, response.status);
       });
   };
 
@@ -55,7 +61,7 @@ angular.module('starter.controllers')
   $scope.finished = false;
   var totalTime = 0;
   var reset = true;
-  var chageColor = false;
+  $scope.chageColor = false;
   $scope.questionsArray = [];
   var streakCount = 0;
   var streak = 0;
@@ -67,7 +73,7 @@ angular.module('starter.controllers')
     choice: null
   };
 
-  $scope.tried = appConstants.TIMER;
+  $scope.tried = appConstants.TIMER + 3500;
   var increaseTried = function() {
     $scope.tried -= 100;
   };
@@ -75,7 +81,7 @@ angular.module('starter.controllers')
   var loop = $interval(function() {
     increaseTried();
     if ($scope.tried < 7000) {
-      changeColor = true;
+      $scope.changeColor = true;
     }
     if ($scope.tried == 0) {
       $scope.nextQuestion();
@@ -125,7 +131,7 @@ angular.module('starter.controllers')
       };
 
       if (cnt == $scope.questionsData.length) {
-        $scope.finished = true && gameInfo.getChallengeStatus() != "challenged";
+        $scope.finished = gameInfo.getChallengeStatus() != "challenged";
         $interval.cancel(loop);
         matchAPI.patchMatchId(gameInfo.getMatchId(), userInfo.getAccessToken(), $scope.score, totalTime, streak, answersArray);
       } else $scope.singleQuestion = $scope.questionsData[cnt];

@@ -5,6 +5,8 @@ angular.module('starter.controllers')
   var userMatchId;
   var oppMatchId;
 
+  globalService.loadingScreenShow();
+
   $scope.oppName = gameInfo.getOppName();
 
   $ionicModal.fromTemplateUrl('templates/challengeResultModalView.html', {
@@ -25,10 +27,12 @@ angular.module('starter.controllers')
   })
   .then(function(response) {
     $scope.oppResult = response.data;
+    globalService.loadingScreenHide();
     $scope.modal.show();
   })
-  .catch(function(response, status) {
-    globalService.handleErrorResponse("Get challenge game info failed", status);
+  .catch(function(response) {
+    globalService.loadingScreenHide();
+    globalService.handleErrorResponse("Get challenge game info failed: " + response.statusText, response.status);
   });
 
   $scope.closeModal = function() {
@@ -36,43 +40,5 @@ angular.module('starter.controllers')
     if (gameInfo.getChallengeStatus() != 'not_viewed') $state.go('menu')
     else $state.reload();
   };
-
-  // $ionicModal.fromTemplateUrl('templates/challengeResultModalView.html', {
-  //   scope: $scope,
-  //   animation: 'slide-in-up'
-  // }).then(function(modal) {
-  //   $scope.modal = modal;
-  //
-  //   // Get matchId
-  //   $http({
-  //     method: 'GET',
-  //     url: '/api/challenge/' + challengeService.getChallengeId(),
-  //     params: {
-  //       access_token: facebook.getToken()
-  //     }
-  //   }).then(function successCallBack(response) {
-  //     console.log("Get api challenge: ", response);
-  //     var userMatchId = response.data.challenger_match_id;
-  //     var oppMatchId = response.data.challengee_match_id;
-  //
-  //     $http({
-  //       method: 'GET',
-  //       url: '/api/match/' + userMatchId + '/result'
-  //     }).then(function successCallBack(response) {
-  //       console.log("Get api challenge user: ", response.data);
-  //       $scope.userResult = response.data;
-  //     });
-  //
-  //     $http({
-  //       method: 'GET',
-  //       url: '/api/match/' + oppMatchId + '/result'
-  //     }).then(function successCallBack(response) {
-  //       console.log("Get api challenge opp: ", response.data);
-  //       $scope.oppResult = response.data;
-  //     });
-  //   });
-  //
-  //   $scope.modal.show();
-  // });
 
 });

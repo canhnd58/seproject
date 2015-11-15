@@ -8,15 +8,18 @@ angular.module('starter.controllers')
         if (response.status === 'connected') {
           var accessToken = response.authResponse.accessToken;
           userInfo.setAccessToken(accessToken);
+          globalService.loadingScreenShow();
           return userAPI.postSession("facebook", userInfo.getAccessToken());
         }
       })
       .then(function(response) {
         userInfo.setUserId(response.data.id);
+        globalService.loadingScreenHide();
         $state.go('menu');
       })
-      .catch(function(response, status) {
-        globalService.handleErrorResponse("Login Facebook failed", status);
+      .catch(function(response) {
+        globalService.loadingScreenHide();
+        globalService.handleErrorResponse("Login Facebook failed: " + response.statusText, response.status);
       });
     };
 

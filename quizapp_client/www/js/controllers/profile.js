@@ -2,6 +2,7 @@ angular.module('starter.controllers')
 
 .controller('profile', function($scope, $http, globalService, ngFB, userInfo, userAPI) {
 
+  globalService.loadingScreenShow();
   // Creating init chart
   $scope.chart = {
     labels: ["Accuracy", "Speed", "Versatility", "Impressiveness", "Diligence"],
@@ -18,15 +19,15 @@ angular.module('starter.controllers')
 
   // Get user score and other information
   userAPI.getId(userInfo.getUserId())
-  .then(function successCallBack(response) {
-    globalService.showData("Profile data", response.data);
-    if (response.status == 200) {
+    .then(function successCallBack(response) {
       $scope.user = response.data;
       $scope.chart.data = [[$scope.user.accuracy, $scope.user.speed, $scope.user.versatility,
                             $scope.user.impressiveness, $scope.user.diligence]];
-  }})
-  .catch(function(response, status) {
-    globalService.handleErrorResponse("Error when get user's profile", status);
-  });
+      globalService.loadingScreenHide();
+    })
+    .catch(function(response) {
+      globalService.loadingScreenHide();
+      globalService.handleErrorResponse("Get user's profile failed: " + response.statusText, response.status);
+    });
 
 });

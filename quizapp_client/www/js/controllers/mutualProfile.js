@@ -1,6 +1,8 @@
 angular.module('starter.controllers')
 
-.controller('mutualProfile', function($scope, $http, appConstants, userAPI, userInfo, gameInfo) {
+.controller('mutualProfile', function($scope, $http, appConstants, globalService, userAPI, userInfo, gameInfo) {
+
+  globalService.loadingScreenShow();
 
   $scope.chart = {
     labels: ["Accuracy", "Speed", "Versatility", "Impressiveness", "Diligence"],
@@ -22,8 +24,9 @@ angular.module('starter.controllers')
       $scope.chart.data = [[$scope.user.accuracy, $scope.user.speed, $scope.user.versatility,
                             $scope.user.impressiveness, $scope.user.diligence]];
     })
-    .catch(function(response, status) {
-      globalService.handleErrorResponse("Get user data game failed", status);
+    .catch(function(response) {
+      globalService.loadingScreenHide();
+      globalService.handleErrorResponse("Get user data game failed: " + response.statusText, response.status);
     });
 
   userAPI.getId(gameInfo.getOppId())
@@ -31,9 +34,11 @@ angular.module('starter.controllers')
       $scope.opp = response.data;
       $scope.chart.data.push([$scope.opp.accuracy, $scope.opp.speed, $scope.opp.versatility,
                             $scope.opp.impressiveness, $scope.opp.diligence]);
+      globalService.loadingScreenHide();
     })
-    .catch(function(response, status) {
-      globalService.handleErrorResponse("Get opp data game failed", status);
+    .catch(function(response) {
+      globalService.loadingScreenHide();
+      globalService.handleErrorResponse("Get opponent data game failed: " + response.statusText, response.status);
     });
 
 });

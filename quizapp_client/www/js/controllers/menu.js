@@ -1,6 +1,7 @@
 angular.module('starter.controllers')
 
 .controller('menu', function($scope, $state, $http, globalService, ngFB, userInfo, gameInfo, userAPI) {
+
   // Single play game mode
   $scope.play = function() {
     gameInfo.setIsChallenge(false);
@@ -25,8 +26,8 @@ angular.module('starter.controllers')
       .then(function(response) {
         $state.go('login');
       })
-      .catch(function(response, status) {
-        globalService.handleErrorResponse("Logout Facebook failed", status);
+      .catch(function(response) {
+        globalService.handleErrorResponse("Logout facebook failed: " + response.statusText, response.status);
       });
   };
 
