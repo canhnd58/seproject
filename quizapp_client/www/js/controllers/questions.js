@@ -127,19 +127,29 @@ angular.module('starter.controllers')
       $scope.submitted = false;
       $scope.activeBtn = 5;
       $scope.changeColor = false;
-      cnt++;
 
-      if (cnt == $scope.questionsData.length && gameInfo.isChallenge() && gameInfo.getChallengeStatus() != "normal") {
-        var modalController = $scope.$new();
-        $controller('challengeResultModal', {$scope: modalController});
+      cnt++;
+      if (cnt < $scope.questionsData.length) {
+        $scope.singleQuestion = $scope.questionsData[cnt];
       };
 
       if (cnt == $scope.questionsData.length) {
-        $scope.finished = gameInfo.getChallengeStatus() != "challenged";
         $interval.cancel(loop);
-        matchAPI.patchMatchId(gameInfo.getMatchId(), userInfo.getAccessToken(), $scope.score, totalTime, streak, answersArray);
-      } else $scope.singleQuestion = $scope.questionsData[cnt];
+        $scope.finished = gameInfo.getChallengeStatus() != "challenged";
+      };
+      
     }, 300);
+
+    if (cnt == $scope.questionsData.length) {
+      matchAPI.patchMatchId(gameInfo.getMatchId(), userInfo.getAccessToken(), $scope.score, totalTime, streak, answersArray)
+        .then(function(response) {
+          if (gameInfo.isChallenge() && gameInfo.getChallengeStatus() == "challenged") {
+            var modalController = $scope.$new();
+            $controller('challengeResultModal', {$scope: modalController});
+          };
+        });
+    };
+
   };
 
   $ionicModal.fromTemplateUrl('templates/singleResultModal.html', {
