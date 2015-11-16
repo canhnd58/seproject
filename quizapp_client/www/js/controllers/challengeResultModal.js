@@ -18,8 +18,13 @@ angular.module('starter.controllers')
     return challengeAPI.getId(gameInfo.getChallengeId(), userInfo.getAccessToken());
   })
   .then(function(response) {
-    userMatchId = response.data.challenger_match_id;
-    oppMatchId = response.data.challengee_match_id;
+    if (gameInfo.getChallengeStatus() == 'not_viewed') {
+      userMatchId = response.data.challenger_match_id;
+      oppMatchId = response.data.challengee_match_id;
+    } else if (gameInfo.getChallengeStatus() == 'challenged') {
+      userMatchId = response.data.challengee_match_id;
+      oppMatchId = response.data.challenger_match_id;
+    };
     return matchAPI.getMatchIdResult(userMatchId);
   }).then(function(response) {
     $scope.userResult = response.data;
@@ -29,6 +34,12 @@ angular.module('starter.controllers')
     $scope.oppResult = response.data;
     globalService.loadingScreenHide();
     $scope.modal.show();
+  })
+  .then(function() {
+    $scope.result = "YOU WIN";
+    if ($scope.userResult.score < $scope.oppResult.score ||
+      ($scope.userResult.score == $scope.oppResult.score && $scope.userResult.time < $scope.oppResult.time))
+        $scope.result = "YOU LOSE";
   })
   .catch(function(response) {
     globalService.loadingScreenHide();

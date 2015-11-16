@@ -1,16 +1,21 @@
-<ion-modal-view name="single-modal">
-  <ion-header-bar class="bar bar-header bar-positive">
+<ion-modal-view name="single-modal" style="width: 80%; height: 80%; top: 10%; left: 10%; right: 10%; bottom: 10%;">
+  <ion-header-bar class="bar-positive">
     <h1 class="title">SCOREBOARD</h1>
     <button class="button button-clear button-primary ion-close" ng-click="modal.hide()"></button>
   </ion-header-bar>
-  <ion-content class="list">
-      <div class="row row-center item-divider" ng-repeat="item in questionsData">
-        <div class="col col-75 item item-text-wrap">{{item.description}}</div>
-        <div class="col text-center" ng-class="{'ion-close': questionsArray[$index] == false, 'ion-checkmark-round': questionsArray[$index] == true}"></div>
-      </div>
-      <div class="row">
-        <div class="col col-75 text-center">SCORE</div>
-        <div class="col text-center">{{score}}</div>
+  <ion-content>
+      <div class="list">
+        <div class="item" ng-repeat="item in questionsData">
+          <div class="row">
+            <div class="col col-75 item item-text-wrap">{{item.description}}</div>
+            <div class="col text-center" ng-class="{'icon ion-close assertive': questionsArray[$index] == false,
+            'icon ion-checkmark-round balanced': questionsArray[$index] == true}"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-75">SCORE</div>
+          <div class="col text-center">{{score}}</div>
+        </div>
       </div>
   </ion-content>
 </ion-modal-view>

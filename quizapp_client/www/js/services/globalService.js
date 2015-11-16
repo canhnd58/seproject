@@ -25,8 +25,12 @@ angular.module('starter.services')
         _popUp("Sorry", errorString + ".");
         break;
 
+      case 403:
+        _popUp("Sorry", errorString + ".");
+        break;
+
       case 404:
-        _popUp("Sorry", errorString + "." + "\nPlease check your network connection.");
+        _popUp("Sorry", errorString + ".");
         break;
 
       case 500:

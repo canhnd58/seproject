@@ -1,46 +1,48 @@
-<ion-modal-view name="challenge-modal">
-  <ion-header-bar class="bar-positive" align-title="center">
+<ion-modal-view name="challenge-modal" style="width: 80%; height: 80%; top: 10%; left: 10%; right: 10%; bottom: 10%;">
+  <ion-header-bar ng-class="{'bar-balanced': result == 'YOU WIN',
+                            'bar-assertive': result == 'YOU LOSE'}" align-title="center">
     <div class="title">
-      Result
+      {{result}}
     </div>
+    <button class="button button-clear button-primary ion-close" ng-click="closeModal()"></button>
   </ion-header-bar>
   <ion-content>
     <div class="list">
       <div class="item item-divider">
         <div class="row">
           <div class="col col-offset-33"></div>
-          <div class="col col-33">You</div>
-          <div class="col col-33">{{oppName}}</div>
+          <div class="col col-33 text-center">You</div>
+          <div class="col col-33 text-center">{{oppName}}</div>
         </div>
       </div>
       <div class="item">
         <div class="row">
           <div class="col col-33">Score</div>
-          <div class="col col-33">{{userResult.score}}</div>
-          <div class="col col-33">{{oppResult.score}}</div>
+          <div class="col col-33 text-center">{{userResult.score}}</div>
+          <div class="col col-33 text-center">{{oppResult.score}}</div>
         </div>
       </div>
       <div class="item">
         <div class="row">
           <div class="col col-33">Time</div>
-          <div class="col col-33">{{userResult.time / 1000}}</div>
-          <div class="col col-33">{{oppResult.time / 1000}}</div>
+          <div class="col col-33 text-center">{{userResult.time / 1000}}s</div>
+          <div class="col col-33 text-center">{{oppResult.time / 1000}}s</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="row">
+          Questions
         </div>
       </div>
       <div class="item" ng-repeat="userAns in userResult.questions">
         <div class="row">
-          <div class="col col-33">Question {{$index + 1}}: {{userAns.description}} + {{oppResult.questions[$index].description}}</div>
-          <div class="col col-33">{{userAns.is_correct}}</div>
-          <div class="col col-33">{{oppResult.questions[$index].is_correct}}</div>
+          <div class="col col-33">{{userAns.description}}</div>
+          <div class="col col-33 text-center" ng-class="{'icon ion-close assertive': userAns.is_correct == false,
+                                                        'icon ion-checkmark-round balanced': userAns.is_correct == true}"></div>
+          <div class="col col-33 text-center" ng-class="{'icon ion-close assertive': oppResult.questions[$index].is_correct == false,
+                                                        'icon ion-checkmark-round balanced': oppResult.questions[$index].is_correct == true}"></div>
         </div>
       </div>
     </div>
   </ion-content>
-  <ion-footer-bar>
-    <div class="tabs">
-        <div class="tab-item" ng-click="closeModal()">
-          Close
-        </div>
-    </div>
-  </ion-footer-bar>
 </ion-modal-view>
