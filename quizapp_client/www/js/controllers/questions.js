@@ -137,18 +137,18 @@ angular.module('starter.controllers')
         $interval.cancel(loop);
         $scope.finished = gameInfo.getChallengeStatus() != "challenged";
       };
-      
-    }, 300);
 
-    if (cnt == $scope.questionsData.length) {
-      matchAPI.patchMatchId(gameInfo.getMatchId(), userInfo.getAccessToken(), $scope.score, totalTime, streak, answersArray)
-        .then(function(response) {
-          if (gameInfo.isChallenge() && gameInfo.getChallengeStatus() == "challenged") {
-            var modalController = $scope.$new();
-            $controller('challengeResultModal', {$scope: modalController});
-          };
-        });
-    };
+      if (cnt == $scope.questionsData.length) {
+        matchAPI.patchMatchId(gameInfo.getMatchId(), userInfo.getAccessToken(), $scope.score, totalTime, streak, answersArray)
+          .then(function(response) {
+            if (gameInfo.isChallenge() && gameInfo.getChallengeStatus() == "challenged") {
+              var modalController = $scope.$new();
+              $controller('challengeResultModal', {$scope: modalController});
+            };
+          });
+      };
+
+    }, 300);
 
   };
 
