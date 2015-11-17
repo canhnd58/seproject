@@ -5,6 +5,6 @@ class Match < ActiveRecord::Base
   has_many :questions, -> { order 'match_questions.id' }, through: :match_questions
 
   def finished?
-    return @updated_at != @created_at
+    return updated_at != created_at
   end
 end

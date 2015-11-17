@@ -26,7 +26,8 @@ class Api::User::SessionsController < ApplicationController
           speed: 5.0,
           versatility: 5.0,
           diligence: 5.0,
-          impressiveness: 5.0)
+          impressiveness: 5.0,
+          last_played: Time.now)
       else
         @user.access_token = token
       end

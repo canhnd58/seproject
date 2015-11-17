@@ -16,12 +16,13 @@ class Api::MatchesController < ApplicationController
     @user = current_user(params.require :access_token)
     @match = Match.find(params.require :id)
     raise ApiException::InvalidToken if @match.user_id != @user.id
+    raise ApiException::InvalidAction if @match.finished?
 
     @match.score = params.require :score
     @match.time = params.require :time
     @match.streak = params.require :streak
     answer_ids = params.require :answers
-    #raise ActionController::ParameterMissing.new(:answers) if answer_ids.length != QUESTION_LIMIT
+    raise ActionController::ParameterMissing.new(:answers) if answer_ids.length != @match.questions.count
 
     answer_ids.each do |a_id|
       q_id = Answer.find(a_id).question_id
@@ -45,7 +46,7 @@ class Api::MatchesController < ApplicationController
   def result
     #SELECTED_COLUMNS =
     @match = Match.find(params[:id])
-    #raise ActiveRecord::RecordNotFound.new(:id) unless @match.finished?
+    raise ApiException::InvalidAction unless @match.finished?
     @m_questions = MatchQuestion.joins(:question)
                   .joins("INNER JOIN answers ON match_questions.answer_id = answers.id")
                   .select([:description, :score], "match_questions.id, answers.value AS answer_value, answers.is_correct AS answer_is_correct")
@@ -112,9 +113,22 @@ class Api::MatchesController < ApplicationController
       #versatility
       total_cat = Category.count
       needed_cat = 0.7 * total_cat
-      cat_ids = Match.order(updated_at: :desc).limit(total_cat).pluck(:category_id).uniq
+      cat_ids = @user.matches.order(updated_at: :desc).limit(total_cat).pluck(:category_id).uniq
       current_versa = (cat_ids.length / needed_cat) * ATTRIBUTE_MAX
       @user.versatility = inch(@user.versatility, current_versa)
+
+      #diligence
+      @user.last_played = @user.updated_at if @user.last_played.nil?
+      current_time = Time.now
+      needed_interval = 86400
+      dif = current_time - @user.last_played - needed_interval
+      if dif <= 0
+        @user.diligence = inch(@user.diligence, ATTRIBUTE_MAX, true)
+      else
+        current_diligence = -(dif / needed_interval) * ATTRIBUTE_MAX
+        @user.diligence = inch(@user.diligence, current_diligence, true)
+      end
+      @user.last_played = current_time
 
       @user.save!
     end

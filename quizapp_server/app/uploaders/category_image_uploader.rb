@@ -2,8 +2,8 @@
 
 class CategoryImageUploader < CarrierWave::Uploader::Base
   include Cloudinary::CarrierWave
-  WIDTH = 200
-  HEIGHT = 200
+  WIDTH = 400
+  HEIGHT = 400
 
   process eager: true
   process resize_to_fill: [WIDTH, HEIGHT]
