@@ -23,13 +23,8 @@ angular.module('starter.controllers')
       $scope.user = response.data;
       $scope.chart.data = [[$scope.user.accuracy, $scope.user.speed, $scope.user.versatility,
                             $scope.user.impressiveness, $scope.user.diligence]];
+      return userAPI.getId(gameInfo.getOppId());
     })
-    .catch(function(response) {
-      globalService.loadingScreenHide();
-      globalService.handleErrorResponse("Get user data game failed: " + response.statusText, response.status);
-    });
-
-  userAPI.getId(gameInfo.getOppId())
     .then(function(response) {
       $scope.opp = response.data;
       $scope.chart.data.push([$scope.opp.accuracy, $scope.opp.speed, $scope.opp.versatility,
@@ -38,7 +33,19 @@ angular.module('starter.controllers')
     })
     .catch(function(response) {
       globalService.loadingScreenHide();
-      globalService.handleErrorResponse("Get opponent data game failed: " + response.statusText, response.status);
+      globalService.handleErrorResponse("Get user data game failed: " + response.statusText, response.status);
     });
+
+  // userAPI.getId(gameInfo.getOppId())
+  //   .then(function(response) {
+  //     $scope.opp = response.data;
+  //     $scope.chart.data.push([$scope.opp.accuracy, $scope.opp.speed, $scope.opp.versatility,
+  //                           $scope.opp.impressiveness, $scope.opp.diligence]);
+  //     globalService.loadingScreenHide();
+  //   })
+  //   .catch(function(response) {
+  //     globalService.loadingScreenHide();
+  //     globalService.handleErrorResponse("Get opponent data game failed: " + response.statusText, response.status);
+  //   });
 
 });

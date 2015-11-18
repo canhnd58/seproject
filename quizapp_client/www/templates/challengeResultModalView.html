@@ -36,7 +36,7 @@
       </div>
       <div class="item" ng-repeat="userAns in userResult.questions">
         <div class="row">
-          <div class="col col-33">{{userAns.description}}</div>
+          <div class="col col-33 item item-text-wrap">{{userAns.description}}</div>
           <div class="col col-33 text-center" ng-class="{'icon ion-close assertive': userAns.is_correct == false,
                                                         'icon ion-checkmark-round balanced': userAns.is_correct == true}"></div>
           <div class="col col-33 text-center" ng-class="{'icon ion-close assertive': oppResult.questions[$index].is_correct == false,
