@@ -8,7 +8,7 @@
                             'button button-assertive ink': items.status == 'challenged',
                             'button button-stable ink': items.status == 'challenging',
                             'button button-balanced ink': items.status == 'not_viewed'}" ng-click="changeChallenge({{items}})">
-          <i ng-class="{'icon ion-scissors': items.status == 'normal',
+          <i ng-class="{'icon ion-paper-airplane': items.status == 'normal',
                         'icon ion-checkmark': items.status == 'challenged',
                         'icon ion-ios-pulse': items.status == 'challenging',
                         'icon ion-ios-information-empty': items.status == 'not_viewed'}"></i>
