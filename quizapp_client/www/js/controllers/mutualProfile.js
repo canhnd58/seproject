@@ -2,6 +2,10 @@ angular.module('starter.controllers')
 
 .controller('mutualProfile', function($scope, $http, appConstants, globalService, userAPI, userInfo, gameInfo) {
 
+  $scope.goBackView = function() {
+    globalService.changeToBackState();
+  };
+
   globalService.loadingScreenShow();
 
   $scope.chart = {

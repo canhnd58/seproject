@@ -1,6 +1,12 @@
 <ion-view name="questions" view-title="Questions">
-  <ion-content>
+  <ion-header-bar class="bar-positive">
+    <div>
+      <button class="button button-clear icon-left ion-reply" ng-click="goBackView()"></button>
+    </div>
+    <h1 class="title" align-title="center">Questions</h1>
+  </ion-header-bar>
 
+  <ion-content>
     <div class='animate-fade-slide-in-right full-height' ng-class="{'blur':finished == true || nextQuestionBlur}">
       <div class="card card-question item has-header">
         <div class="item item-text-wrap">
@@ -61,6 +67,5 @@
       <button class="button button-fab animated bounceInUp icon ion-refresh"
         ng-class="{'result-button-retry': finished == true}" ng-show="finished" ng-click="retry()"></button>
     </div>
-
   </ion-content>
 </ion-view>

@@ -3,6 +3,10 @@ angular.module('starter.controllers')
 .controller('challenge', function($scope, $controller, $state, $http, $ionicPopup, $ionicModal,
   ngFB, globalService, userAPI, userInfo, gameInfo) {
 
+  $scope.goBackView = function() {
+    globalService.changeToBackState();
+  };
+
   globalService.loadingScreenShow();
   ngFB.api({path: '/me/friends'})
     .then(function(response) {

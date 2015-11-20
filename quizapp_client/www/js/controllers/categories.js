@@ -2,6 +2,10 @@ angular.module('starter.controllers')
 
 .controller('categories', function($scope, $http, $state, globalService, matchAPI, challengeAPI, userInfo, gameInfo) {
 
+  $scope.goBackView = function() {
+    globalService.changeToBackState();
+  };
+
   globalService.loadingScreenShow();
   // Get Categories from server
   matchAPI.getCategories()

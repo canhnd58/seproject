@@ -11,22 +11,22 @@
       <div class="item item-divider">
         <div class="row">
           <div class="col col-offset-33"></div>
-          <div class="col col-33 text-center">You</div>
-          <div class="col col-33 text-center">{{oppName}}</div>
+          <div class="col col-33 text-center item-text-wrap">You</div>
+          <div class="col col-33 text-center item-text-wrap">{{oppName}}</div>
         </div>
       </div>
       <div class="item">
         <div class="row">
           <div class="col col-33">Score</div>
-          <div class="col col-33 text-center">{{userResult.score}}</div>
-          <div class="col col-33 text-center">{{oppResult.score}}</div>
+          <div class="col col-33 text-center item-text-wrap">{{userResult.score}}</div>
+          <div class="col col-33 text-center item-text-wrap">{{oppResult.score}}</div>
         </div>
       </div>
       <div class="item">
         <div class="row">
           <div class="col col-33">Time</div>
-          <div class="col col-33 text-center">{{userResult.time / 1000}}s</div>
-          <div class="col col-33 text-center">{{oppResult.time / 1000}}s</div>
+          <div class="col col-33 text-center item-text-wrap">{{userResult.time / 1000}}s</div>
+          <div class="col col-33 text-center item-text-wrap">{{oppResult.time / 1000}}s</div>
         </div>
       </div>
       <div class="item">
@@ -38,9 +38,9 @@
         <div class="row">
           <div class="col col-33 item item-text-wrap">{{userAns.description}}</div>
           <div class="col col-33 text-center" ng-class="{'icon ion-close assertive': userAns.is_correct == false,
-                                                        'icon ion-checkmark-round balanced': userAns.is_correct == true}"></div>
+            'icon ion-checkmark-round balanced': userAns.is_correct == true}"></div>
           <div class="col col-33 text-center" ng-class="{'icon ion-close assertive': oppResult.questions[$index].is_correct == false,
-                                                        'icon ion-checkmark-round balanced': oppResult.questions[$index].is_correct == true}"></div>
+            'icon ion-checkmark-round balanced': oppResult.questions[$index].is_correct == true}"></div>
         </div>
       </div>
     </div>

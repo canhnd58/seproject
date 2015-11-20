@@ -67,6 +67,10 @@ angular.module('starter.services')
       });
   };
 
+  var _changeToBackState = function(stateValue) {
+    $ionicHistory.goBack();
+  };
+
   var _turnOffAnimateForNextView = function() {
     $ionicHistory.nextViewOptions({
       disableAnimate: true
@@ -80,6 +84,7 @@ angular.module('starter.services')
     loadingScreenHide: _loadingScreenHide,
     popUp: _popUp,
     changeState: _changeState,
+    changeToBackState: _changeToBackState,
     turnOffAnimateForNextView: _turnOffAnimateForNextView
   };
 

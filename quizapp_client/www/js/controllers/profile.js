@@ -2,6 +2,10 @@ angular.module('starter.controllers')
 
 .controller('profile', function($scope, $http, globalService, ngFB, userInfo, userAPI) {
 
+  $scope.goBackView = function() {
+    globalService.changeToBackState();
+  };
+
   globalService.loadingScreenShow();
   // Creating init chart
   $scope.chart = {
