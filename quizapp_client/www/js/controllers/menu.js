@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 
-.controller('menu', function($scope, $state, $http, globalService, ngFB, userInfo, gameInfo, userAPI) {
+.controller('menu', function($scope, $state, $http, globalService, localStorage, ngFB, userInfo, gameInfo, userAPI) {
 
   // Single play game mode
   $scope.play = function() {
@@ -24,7 +24,8 @@ angular.module('starter.controllers')
     ngFB.logout();
     userAPI.deleteSession(userInfo.getAccessToken())
       .then(function(response) {
-        $state.go('login');
+        localStorage.removeObject('_userLocalData');
+        globalService.changeState('login');
       })
       .catch(function(response) {
         globalService.handleErrorResponse("Logout facebook failed: " + response.statusText, response.status);

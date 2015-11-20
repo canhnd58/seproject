@@ -106,6 +106,8 @@ starter.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider
       }
     });
 
-  $urlRouterProvider.otherwise('/login');
   $ionicConfigProvider.views.maxCache(0);
+
+  $urlRouterProvider.otherwise('/login')
+
 });

@@ -1,6 +1,6 @@
 angular.module('starter.services')
 
-.factory('globalService', function($ionicLoading, $ionicPopup, $ionicHistory) {
+.factory('globalService', function($ionicLoading, $ionicPopup, $ionicHistory, $state) {
 
   var _popUp = function(title, template) {
     var alertPopup = $ionicPopup.alert({
@@ -67,13 +67,20 @@ angular.module('starter.services')
       });
   };
 
+  var _turnOffAnimateForNextView = function() {
+    $ionicHistory.nextViewOptions({
+      disableAnimate: true
+    });
+  };
+
   return {
     handleErrorResponse: _handleErrorResponse,
     showData: _showData,
     loadingScreenShow: _loadingScreenShow,
     loadingScreenHide: _loadingScreenHide,
     popUp: _popUp,
-    changeState: _changeState
+    changeState: _changeState,
+    turnOffAnimateForNextView: _turnOffAnimateForNextView
   };
 
 });
