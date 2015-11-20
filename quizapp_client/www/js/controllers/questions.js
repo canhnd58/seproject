@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 
-.controller('questions', function($scope, $state, $controller, $http, $timeout, $interval, $ionicModal,
+.controller('questions', function($scope, $state, $controller, $timeout, $interval, $ionicModal, $ionicHistory,
   globalService, appConstants, userInfo, gameInfo, challengeAPI, matchAPI, ionicMaterialInk, ionicMaterialMotion) {
 
   // Get list of questions of user category choice
@@ -160,7 +160,7 @@ angular.module('starter.controllers')
   });
 
   $scope.retry = function() {
-    $state.go('menu');
+    globalService.changeState('menu');
   };
 
   ionicMaterialMotion.fadeSlideInRight();

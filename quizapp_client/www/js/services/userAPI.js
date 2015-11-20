@@ -1,6 +1,8 @@
 angular.module('starter.services')
 
-.factory('userAPI', function($http) {
+.factory('userAPI', function($http, appConstants) {
+
+  var url = appConstants.SERVER_URL;
 
   // Params: paramName(YES) -> paramName is required
 
@@ -15,7 +17,7 @@ angular.module('starter.services')
   var _post_session = function(providerVal, access_tokenVal) {
     return $http({
       method: 'POST',
-      url: '/api/user/session',
+      url: url + '/api/user/session',
       params: {
         provider: providerVal,
         access_token: access_tokenVal
@@ -32,7 +34,7 @@ angular.module('starter.services')
   var _delete_session = function(access_tokenVal) {
     return $http({
       method: 'DELETE',
-      url: '/api/user/session',
+      url: url + '/api/user/session',
       params: {
         access_token: access_tokenVal
       }
@@ -49,14 +51,14 @@ angular.module('starter.services')
   var _get_id = function(idVal) {
     return $http({
       method: 'GET',
-      url: '/api/users/' + idVal
+      url: url + '/api/users/' + idVal
     });
   };
 
   var _post_id_friends = function(idVal, access_tokenVal, friendsVal) {
     return $http({
       method: 'POST',
-      url: '/api/user/' + idVal + '/friends',
+      url: url + '/api/user/' + idVal + '/friends',
       params: {
         access_token: access_tokenVal,
         "friends[]": friendsVal
@@ -67,7 +69,7 @@ angular.module('starter.services')
   var _get_id_friends = function(idVal, access_tokenVal) {
     return $http({
       method: 'GET',
-      url: '/api/user/' + idVal + '/friends',
+      url: url + '/api/user/' + idVal + '/friends',
       params: {
         access_token: access_tokenVal,
       }
@@ -78,7 +80,7 @@ angular.module('starter.services')
   var _get_id_friend_friendId = function(idVal, friend_idVal) {
     return $http({
       method: 'GET',
-      url: '/api/users/' + idVal + '/friend/' + friend_idVal
+      url: url + '/api/users/' + idVal + '/friend/' + friend_idVal
     });
   };
 
@@ -87,7 +89,7 @@ angular.module('starter.services')
   var _patch_id = function(idVal, access_tokenVal) {
     return $http({
       method: 'PATCH',
-      url: '/api/user/' + idVal,
+      url: url + '/api/user/' + idVal,
       params: {
         access_token: access_tokenVal
       }

@@ -36,16 +36,4 @@ angular.module('starter.controllers')
       globalService.handleErrorResponse("Get user data game failed: " + response.statusText, response.status);
     });
 
-  // userAPI.getId(gameInfo.getOppId())
-  //   .then(function(response) {
-  //     $scope.opp = response.data;
-  //     $scope.chart.data.push([$scope.opp.accuracy, $scope.opp.speed, $scope.opp.versatility,
-  //                           $scope.opp.impressiveness, $scope.opp.diligence]);
-  //     globalService.loadingScreenHide();
-  //   })
-  //   .catch(function(response) {
-  //     globalService.loadingScreenHide();
-  //     globalService.handleErrorResponse("Get opponent data game failed: " + response.statusText, response.status);
-  //   });
-
 });

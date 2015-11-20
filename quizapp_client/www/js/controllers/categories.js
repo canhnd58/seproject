@@ -7,6 +7,7 @@ angular.module('starter.controllers')
   matchAPI.getCategories()
     .then(function(response) {
       $scope.categoriesData = response.data.categories;
+      console.log(response);
       globalService.loadingScreenHide();
     })
     .catch(function(response) {
@@ -28,7 +29,7 @@ angular.module('starter.controllers')
             gameInfo.setChallengeId(response.data.challenge_id);
             gameInfo.setMatchId(response.data.your_match_id);
             globalService.loadingScreenHide();
-            $state.go('questions');
+            globalService.changeState('questions');
           })
           .catch(function(response) {
             globalService.loadingScreenHide();
@@ -39,7 +40,7 @@ angular.module('starter.controllers')
       }
       // Offline mode
       case false: {
-        $state.go('questions');
+        globalService.changeState('questions');
         break;
       }
     }

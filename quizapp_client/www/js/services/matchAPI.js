@@ -1,12 +1,14 @@
 angular.module('starter.services')
 
-.factory('matchAPI', function($http) {
+.factory('matchAPI', function($http, appConstants) {
+
+  var url = appConstants.SERVER_URL;
 
   // GET api/categories
   var _get_categories = function() {
     return $http({
       method: 'GET',
-      url: '/api/categories'
+      url: url + '/api/categories'
     });
   };
 
@@ -14,7 +16,7 @@ angular.module('starter.services')
   var _post_matches = function(categoryVal, access_tokenVal) {
     return $http({
       method: 'POST',
-      url: '/api/matches',
+      url: url + '/api/matches',
       params: {
         category: categoryVal,
         access_token: access_tokenVal
@@ -26,7 +28,7 @@ angular.module('starter.services')
   var _get_matches_id = function(idVal, access_tokenVal) {
     return $http({
       method: 'GET',
-      url: '/api/matches/' + idVal,
+      url: url + '/api/matches/' + idVal,
       params: {
         access_token: access_tokenVal
       }
@@ -37,7 +39,7 @@ angular.module('starter.services')
   var _get_match_id_result = function(idVal) {
     return $http({
       method: 'GET',
-      url: '/api/match/' + idVal + '/result',
+      url: url + '/api/match/' + idVal + '/result',
     });
   };
 
@@ -45,7 +47,7 @@ angular.module('starter.services')
   var _patch_match_id = function(idVal, access_tokenVal, scoreVal, timeVal, streakVal, answersVal) {
     return $http({
       method: 'PATCH',
-      url: '/api/match/' + idVal,
+      url: url + '/api/match/' + idVal,
       params: {
         access_token: access_tokenVal,
         score: scoreVal,

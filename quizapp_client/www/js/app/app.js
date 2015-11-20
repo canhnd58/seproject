@@ -7,6 +7,8 @@ angular.module('starter.services', []);
 
 starter.constant('appConstants', {
   APP_FACEBOOK_ID: '1653563448265048',
+  // SERVER_URL: 'http://se2015-quizapp.herokuapp.com',
+  SERVER_URL: '',
   TIMER: 30000,
   BLUECOLOR: '#97BBCD',
   REDCOLOR: '#F7464A',

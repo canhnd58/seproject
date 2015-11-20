@@ -9,7 +9,10 @@ angular.module('starter.services')
     });
 
     alertPopup.then(function(response) {
-      $ionicHistory.goBack();
+      $ionicHistory.clearCache()
+        .then(function() {
+          $ionicHistory.goBack();
+        });
     });
 
   };
@@ -57,12 +60,20 @@ angular.module('starter.services')
     $ionicLoading.hide();
   };
 
+  var _changeState = function(stateValue) {
+    $ionicHistory.clearCache()
+      .then(function() {
+        $state.go(stateValue);
+      });
+  };
+
   return {
     handleErrorResponse: _handleErrorResponse,
     showData: _showData,
     loadingScreenShow: _loadingScreenShow,
     loadingScreenHide: _loadingScreenHide,
-    popUp: _popUp
+    popUp: _popUp,
+    changeState: _changeState
   };
 
 });

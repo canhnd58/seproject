@@ -1,12 +1,14 @@
 angular.module('starter.services')
 
-.factory('challengeAPI', function($http) {
+.factory('challengeAPI', function($http, appConstants) {
+
+  var url = appConstants.SERVER_URL;
 
   // POST api/challenges
   var _post = function(access_tokenVal, categoryVal, opponent_idVal) {
     return $http({
       method: 'POST',
-      url: '/api/challenges',
+      url: url + '/api/challenges',
       params: {
         access_token: access_tokenVal,
         category: categoryVal,
@@ -19,7 +21,7 @@ angular.module('starter.services')
   var _get = function(access_tokenVal) {
     return $http({
       method: 'GET',
-      url: '/api/challenges',
+      url: url + '/api/challenges',
       params: {
         access_token: access_tokenVal
       }
@@ -30,7 +32,7 @@ angular.module('starter.services')
   var _get_id = function(idVal, access_tokenVal) {
     return $http({
       method: 'GET',
-      url: '/api/challenge/' + idVal,
+      url: url + '/api/challenge/' + idVal,
       params: {
         access_token: access_tokenVal
       }
