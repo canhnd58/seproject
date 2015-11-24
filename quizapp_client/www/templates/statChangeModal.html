@@ -1,0 +1,57 @@
+<ion-modal-view name="stat-modal" class="modalStyle">
+  <ion-header-bar class="bar-positive">
+    <div class="title">
+      YOUR STAT CHANGE
+    </div>
+    <button class="button button-clear button-primary ion-close" ng-click="closeModal()"></button>
+  </ion-header-bar>
+  <ion-content>
+
+    <div class="list">
+      <div class="item item-divider">
+        Stat
+      </div>
+
+      <div class="item">
+        <div class="row">
+          <div class="col col-33">Accuracy</div>
+          <div class="col col-offset-20"></div>
+          <div class="col"> {{oldStat.accuracy}} -> {{newStat.accuracy}} </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="row">
+          <div class="col col-33">Speed</div>
+          <div class="col col-offset-20"></div>
+          <div class="col"> {{oldStat.speed}} -> {{newStat.speed}} </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="row">
+          <div class="col col-33">Versatility</div>
+          <div class="col col-offset-20"></div>
+          <div class="col"> {{oldStat.versatility}} -> {{newStat.versatility}} </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="row">
+          <div class="col col-33">Diligence</div>
+          <div class="col col-offset-20"></div>
+          <div class="col"> {{oldStat.diligence}} -> {{newStat.diligence}} </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="row">
+          <div class="col col-33">Impressiveness</div>
+          <div class="col col-offset-20"></div>
+          <div class="col"> {{oldStat.impressiveness}} -> {{newStat.impressiveness}} </div>
+        </div>
+      </div>
+
+    </div>
+  </ion-content>
+</ion-modal-view>

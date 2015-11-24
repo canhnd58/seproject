@@ -4,7 +4,7 @@
     <div class="title">
       {{result}}
     </div>
-    <button class="button button-clear button-primary ion-close" ng-click="closeModal()"></button>
+    <button class="button button-clear button-primary ion-ios-redo-outline" ng-click="goToStatChange()"></button>
   </ion-header-bar>
   <ion-content>
     <div class="list">
@@ -15,24 +15,28 @@
           <div class="col col-33 text-center item-text-wrap">{{oppName}}</div>
         </div>
       </div>
+      <div class="item item-divider">
+        Score
+      </div>
       <div class="item">
         <div class="row">
-          <div class="col col-33">Score</div>
+          <div class="col col-offset-33"></div>
           <div class="col col-33 text-center item-text-wrap">{{userResult.score}}</div>
           <div class="col col-33 text-center item-text-wrap">{{oppResult.score}}</div>
         </div>
       </div>
+      <div class="item item-divider">
+        Time
+      </div>
       <div class="item">
         <div class="row">
-          <div class="col col-33">Time</div>
+          <div class="col col-offset-33"></div>
           <div class="col col-33 text-center item-text-wrap">{{userResult.time / 1000}}s</div>
           <div class="col col-33 text-center item-text-wrap">{{oppResult.time / 1000}}s</div>
         </div>
       </div>
-      <div class="item">
-        <div class="row">
+      <div class="item item-divider">
           Questions
-        </div>
       </div>
       <div class="item" ng-repeat="userAns in userResult.questions">
         <div class="row">

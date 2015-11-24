@@ -1,7 +1,7 @@
 angular.module('starter.controllers')
 
-.controller('questions', function($scope, $state, $controller, $timeout, $interval, $ionicModal, $ionicHistory,
-  globalService, appConstants, userInfo, gameInfo, challengeAPI, matchAPI, ionicMaterialInk, ionicMaterialMotion) {
+.controller('questions', function($scope, $controller, $timeout, $interval, $ionicModal, $ionicHistory,
+  globalService, appConstants, userInfo, gameInfo, userAPI, challengeAPI, matchAPI, ionicMaterialInk, ionicMaterialMotion) {
 
   $scope.goBackView = function() {
     $interval.cancel(loop);
@@ -60,24 +60,24 @@ angular.module('starter.controllers')
   };
 
   // Show questions and calculate result
+  var streak = 0; // required
+  $scope.score = 0; // required
+  var totalTime = 0; // required
+  var answersArray = []; // required
+
   var resultSound = new Audio();
   var cnt = 0;
-  $scope.score = 0;
+  var streakCount = 0;
   $scope.correct = false;
   $scope.finished = false;
-  var totalTime = 0;
-  var reset = true;
   $scope.changeColor = false;
   $scope.questionsArray = [];
-  var streakCount = 0;
-  var streak = 0;
   $scope.questionsResult = "";
-  var totalTime = 0;
-  var answersArray = [];
 
-  $scope.tried = appConstants.TIMER + 3500;
+
+  $scope.tried = appConstants.TIMER + 3000;
   var increaseTried = function() {
-    $scope.tried -= 100;
+    $scope.tried -= 50;
   };
 
   var loop = $interval(function() {
@@ -88,7 +88,7 @@ angular.module('starter.controllers')
     if ($scope.tried == 0) {
       $scope.nextQuestion();
     }
-  }, 100);
+  }, 50);
 
   $scope.getValue = function(index, value, answersId) {
     answersArray[cnt] = answersId;
@@ -102,12 +102,12 @@ angular.module('starter.controllers')
 
   $scope.nextQuestion = function() {
     totalTime += appConstants.TIMER - $scope.tried;
-    $scope.tried = appConstants.TIMER + 1000;
+    $scope.tried = appConstants.TIMER + 500;
     $scope.nextQuestionBlur = true;
 
     if ($scope.correct == true) {
       resultSound = new Audio('sound/correctanswer.mp3');
-      resultSound.play();
+      // resultSound.play();
       streakCount++;
       $scope.score += $scope.singleQuestion.score;
       if (cnt + 1 == $scope.questionsData.length) {
@@ -115,54 +115,56 @@ angular.module('starter.controllers')
       }
     } else if ($scope.correct == false) {
       resultSound = new Audio('sound/wronganswer.mp3');
-      resultSound.play();
+      // resultSound.play();
       streak += streakCount * streakCount;
       streakCount = 0;
     };
 
     $scope.questionsResult = appConstants.QUESTIONSRESULT[streakCount];
+    $scope.questionsArray[cnt] = $scope.correct;
+    cnt++;
 
     $timeout(function() {
       $scope.nextQuestionBlur = false;
-      $scope.questionsArray[cnt] = $scope.correct;
       $scope.submitted = false;
       $scope.activeBtn = 5;
       $scope.changeColor = false;
 
-      cnt++;
       if (cnt < $scope.questionsData.length) {
         $scope.singleQuestion = $scope.questionsData[cnt];
       };
 
-      if (cnt == $scope.questionsData.length) {
-        $interval.cancel(loop);
-        $scope.finished = gameInfo.getChallengeStatus() != "challenged";
-      };
-
-      if (cnt == $scope.questionsData.length) {
-        matchAPI.patchMatchId(gameInfo.getMatchId(), userInfo.getAccessToken(), $scope.score, totalTime, streak, answersArray)
-          .then(function(response) {
-            if (gameInfo.isChallenge() && gameInfo.getChallengeStatus() == "challenged") {
-              var modalController = $scope.$new();
-              $controller('challengeResultModal', {$scope: modalController});
-            };
-          });
-      };
-
     }, 300);
 
-  };
+    if (cnt == $scope.questionsData.length) {
+      $interval.cancel(loop);
+      $scope.finished = gameInfo.getChallengeStatus() != "challenged";
+    };
 
-  $ionicModal.fromTemplateUrl('templates/singleResultModal.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
+    if (cnt == $scope.questionsData.length) {
+      globalService.loadingScreenShow();
+      userAPI.getId(userInfo.getUserId())
+        .then(function(response) {
+          $scope.oldStat = response.data;
+          return matchAPI.patchMatchId(gameInfo.getMatchId(),
+            userInfo.getAccessToken(), $scope.score, totalTime,
+            streak, answersArray);
+        })
+        .then(function(response) {
+          globalService.loadingScreenHide();
+          if (gameInfo.isChallenge() && gameInfo.getChallengeStatus() == "challenged") {
+            var modalController = $scope.$new();
+            $controller('challengeResultModal', {$scope: modalController});
+          } else if (!gameInfo.isChallenge()) {
+            var modalController = $scope.$new();
+            $controller('singleResultModal', {$scope: modalController});
+          };
+        })
+        .catch(function(response) {
+          globalService.handleErrorResponse("Send match result failed: " + response.statusText, response.status);
+        });
+    };
 
-  $scope.retry = function() {
-    $interval.cancel(loop);
-    globalService.changeState('menu');
   };
 
   ionicMaterialMotion.fadeSlideInRight();

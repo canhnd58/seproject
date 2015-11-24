@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 
-.controller('challengeResultModal', function($scope, $state, $ionicModal, $http, globalService,
+.controller('challengeResultModal', function($scope, $ionicModal, $controller, globalService,
   challengeAPI, matchAPI, gameInfo, userInfo) {
   var userMatchId;
   var oppMatchId;
@@ -46,10 +46,12 @@ angular.module('starter.controllers')
     globalService.handleErrorResponse("Get challenge game info failed: " + response.statusText, response.status);
   });
 
-  $scope.closeModal = function() {
+  $scope.goToStatChange = function() {
     $scope.modal.hide();
-    if (gameInfo.getChallengeStatus() != 'not_viewed') globalService.changeState('menu')
-    else $state.reload();
+    if (gameInfo.getChallengeStatus() != 'not_viewed') {
+      var goStatModal = $scope.$new();
+      $controller('statChangeModal', {$scope: goStatModal});
+    } else $state.reload();
   };
 
 });
