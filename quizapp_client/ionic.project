@@ -10,9 +10,16 @@
       "path": "/apiKhanh",
       "proxyUrl": "http://192.168.96.102:3000/api"
     },
-		{
-			"path": "/apiCanh",
-			"proxyUrl": "http://192.168.128.105:3000/api"
-		}
+    {
+      "path": "/apiCanh",
+      "proxyUrl": "http://192.168.128.105:3000/api"
+    }
+  ],
+  "browsers": [
+    {
+      "platform": "android",
+      "browser": "crosswalk",
+      "version": "12.41.296.5"
+    }
   ]
 }

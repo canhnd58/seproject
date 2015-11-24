@@ -104,9 +104,12 @@ starter.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider
           controller: 'mutualProfile'
         }
       }
-    });
+    })
+
+    ;
 
   $ionicConfigProvider.views.maxCache(0);
+  $ionicConfigProvider.scrolling.jsScrolling(false);
 
   $urlRouterProvider.otherwise('/login')
 

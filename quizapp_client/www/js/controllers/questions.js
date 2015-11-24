@@ -4,6 +4,7 @@ angular.module('starter.controllers')
   globalService, appConstants, userInfo, gameInfo, challengeAPI, matchAPI, ionicMaterialInk, ionicMaterialMotion) {
 
   $scope.goBackView = function() {
+    $interval.cancel(loop);
     globalService.changeState('menu');
   };
 
@@ -73,10 +74,6 @@ angular.module('starter.controllers')
   $scope.questionsResult = "";
   var totalTime = 0;
   var answersArray = [];
-
-  $scope.user = {
-    choice: null
-  };
 
   $scope.tried = appConstants.TIMER + 3500;
   var increaseTried = function() {
@@ -164,6 +161,7 @@ angular.module('starter.controllers')
   });
 
   $scope.retry = function() {
+    $interval.cancel(loop);
     globalService.changeState('menu');
   };
 

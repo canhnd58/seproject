@@ -38,7 +38,7 @@ angular.module('starter.controllers')
   .then(function() {
     $scope.result = "YOU WIN";
     if ($scope.userResult.score < $scope.oppResult.score ||
-      ($scope.userResult.score == $scope.oppResult.score && $scope.userResult.time < $scope.oppResult.time))
+      ($scope.userResult.score == $scope.oppResult.score && $scope.userResult.time > $scope.oppResult.time))
         $scope.result = "YOU LOSE";
   })
   .catch(function(response) {
@@ -48,7 +48,7 @@ angular.module('starter.controllers')
 
   $scope.closeModal = function() {
     $scope.modal.hide();
-    if (gameInfo.getChallengeStatus() != 'not_viewed') $state.go('menu')
+    if (gameInfo.getChallengeStatus() != 'not_viewed') globalService.changeState('menu')
     else $state.reload();
   };
 
