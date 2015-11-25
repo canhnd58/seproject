@@ -17,6 +17,16 @@ angular.module('starter.services')
 
   };
 
+  var _confirmPopUp = function(title, template, cancelText, okText) {
+    var confirmPopUp = $ionicPopup.confirm({
+      title: title,
+      template: template,
+      cancelText: cancelText,
+      okText: okText
+    });
+    return confirmPopUp;
+  };
+
   var _handleErrorResponse = function(errorString, status) {
     console.log(errorString + " " + status);
     switch (status) {
@@ -83,6 +93,7 @@ angular.module('starter.services')
     loadingScreenShow: _loadingScreenShow,
     loadingScreenHide: _loadingScreenHide,
     popUp: _popUp,
+    confirmPopUp: _confirmPopUp,
     changeState: _changeState,
     changeToBackState: _changeToBackState,
     turnOffAnimateForNextView: _turnOffAnimateForNextView

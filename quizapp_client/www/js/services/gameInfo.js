@@ -4,6 +4,7 @@ angular.module('starter.services')
   var _isChallenge,
       _isChallenger,
       _categoryId,
+      _categoryName,
       _challengeId,
       _oppId,
       _oppName,
@@ -22,9 +23,13 @@ angular.module('starter.services')
     _categoryId = idVal;
   };
 
+  var setCategoryName = function setCategoryName(nameVal) {
+    _categoryName = nameVal;
+  };
+
   var setChallengeId = function setChallengeId(idVal) {
     _challengeId = idVal;
-  }
+  };
 
   var setOppId = function setOopId(idVal) {
     _oppId = idVal;
@@ -54,6 +59,10 @@ angular.module('starter.services')
     setCategoryId: setCategoryId,
     getCategoryId: function() {
       return _categoryId
+    },
+    setCategoryName: setCategoryName,
+    getCategoryName: function() {
+      return _categoryName
     },
     setChallengeId: setChallengeId,
     getChallengeId: function() {

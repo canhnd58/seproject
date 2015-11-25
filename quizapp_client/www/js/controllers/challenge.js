@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 
-.controller('challenge', function($scope, $controller, $state, $http, $ionicPopup, $ionicModal,
+.controller('challenge', function($scope, $controller,
   ngFB, globalService, userAPI, userInfo, gameInfo) {
 
   $scope.goBackView = function() {
@@ -45,13 +45,14 @@ angular.module('starter.controllers')
       case "normal":
         gameInfo.setOppId(item.id);
         gameInfo.setIsChallenger(true);
-        $state.go('categories');
+        globalService.changeState('categories');
         break;
       case "challenged":
         gameInfo.setChallengeId(item.challenge_id);
+        gameInfo.setCategoryName("This name is not available! Waiting for update API.");
         gameInfo.setIsChallenger(false);
         $scope.oppName = item.name;
-        $state.go('questions');
+        globalService.changeState('questions');
         break;
       case "challenging":
         $ionicPopup.alert({

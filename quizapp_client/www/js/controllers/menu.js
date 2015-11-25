@@ -5,6 +5,7 @@ angular.module('starter.controllers')
   // Single play game mode
   $scope.play = function() {
     gameInfo.setIsChallenge(false);
+    gameInfo.setOppId(0);
     $state.go('categories');
   };
 
@@ -21,15 +22,20 @@ angular.module('starter.controllers')
 
   // Logout facebook
   $scope.logout = function() {
-    ngFB.logout();
-    userAPI.deleteSession(userInfo.getAccessToken())
-      .then(function(response) {
-        localStorage.removeObject('_userLocalData');
-        globalService.changeState('login');
-      })
-      .catch(function(response) {
-        globalService.handleErrorResponse("Logout facebook failed: " + response.statusText, response.status);
-      });
+    var confirmPopUp = globalService.confirmPopUp("Logout", "Are you sure to logout?", "No", "Yes");
+    confirmPopUp.then(function(userChoice) {
+      if (userChoice) {
+        ngFB.logout();
+        userAPI.deleteSession(userInfo.getAccessToken())
+          .then(function(response) {
+            localStorage.removeObject('_userLocalData');
+            globalService.changeState('login');
+          })
+          .catch(function(response) {
+            globalService.handleErrorResponse("Logout facebook failed: " + response.statusText, response.status);
+          });
+      };
+    });
   };
 
 });

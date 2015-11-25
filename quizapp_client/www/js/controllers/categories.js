@@ -11,7 +11,6 @@ angular.module('starter.controllers')
   matchAPI.getCategories()
     .then(function(response) {
       $scope.categoriesData = response.data.categories;
-      console.log(response);
       globalService.loadingScreenHide();
     })
     .catch(function(response) {
@@ -19,9 +18,10 @@ angular.module('starter.controllers')
       globalService.handleErrorResponse("Get categories failed: " + response.statusText, response.status);
     });
 
-  $scope.takeQuiz = function(categoryId) {
-
+  $scope.takeQuiz = function(categoryId, categoryName) {
+    
     gameInfo.setCategoryId(categoryId);
+    gameInfo.setCategoryName(categoryName);
 
     switch(gameInfo.isChallenge()) {
 

@@ -11,15 +11,17 @@
         <div class="item" ng-repeat="item in questionsData">
           <div class="row">
             <div class="col col-75 item item-text-wrap">{{item.description}}</div>
-            <div class="col text-center" ng-class="{'icon ion-close assertive': questionsArray[$index] == false,
-            'icon ion-checkmark-round balanced': questionsArray[$index] == true}"></div>
+            <div class="col text-center" ng-class="{'icon ion-close assertive': correctArray[$index] == false,
+            'icon ion-checkmark-round balanced': correctArray[$index] == true}"></div>
           </div>
         </div>
         <div class="item item-divider">
           Score
         </div>
-        <div class="row">
-          <div class="col text-center">{{score}}</div>
+        <div class="item">
+          <div class="row">
+            <div class="col item item-text-wrap">{{score}}</div>
+          </div>
         </div>
       </div>
   </ion-content>

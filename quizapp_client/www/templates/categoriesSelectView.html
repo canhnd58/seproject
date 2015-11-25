@@ -9,7 +9,7 @@
   <ion-content>
     <div class="">
         <div class="card card-categories item item item-text-wrap ink"
-          ng-repeat="items in categoriesData" ng-click="takeQuiz({{items.id}})">
+          ng-repeat="items in categoriesData" ng-click="takeQuiz(items.id, items.name)">
         <div class="">
           <img class="full-image" src={{items.image_url}}>
         </div>

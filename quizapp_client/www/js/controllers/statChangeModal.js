@@ -19,6 +19,8 @@ angular.module('starter.controllers')
       }, 400);
     };
 
+  }).catch(function(response) {
+    globalService.handleErrorResponse("Get stat change data failed: " + response.statusText, response.status);
   });
 
 })
