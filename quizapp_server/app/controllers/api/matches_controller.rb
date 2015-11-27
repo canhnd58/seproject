@@ -32,7 +32,13 @@ class Api::MatchesController < ApplicationController
     end
     #update_user_attributes!
     @match.save!
-    @user.update_after_matching! @match
+    @user.update_highscore @match
+    @user.update_accuracy @match
+    @user.update_speed @match
+    @user.update_versatility @match
+    @user.update_impressiveness @match
+    @user.update_diligence @match
+    @user.save!
     update_user_status!
     render nothing: true, status: :ok
   end

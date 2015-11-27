@@ -1,5 +1,6 @@
-json.(@user, :name, :avatar, :rating, :highscore, :exp)
+json.(@user, :name, :rating, :highscore, :exp)
 
+json.avatar @rank.avatar.url
 json.accuracy @user.accuracy.round(1)
 json.speed @user.speed.round(1)
 json.versatility @user.versatility.round(1)

@@ -1,4 +1,7 @@
 class Match < ActiveRecord::Base
+  QUESTION_LIMIT = 10
+  QUESTION_TIME = 30000
+
   belongs_to :user
   belongs_to :category
   has_many :match_questions

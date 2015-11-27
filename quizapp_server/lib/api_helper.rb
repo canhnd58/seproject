@@ -6,7 +6,7 @@ module ApiHelper
   end
 
   def randomize_questions(category)
-    q_ids = category.question_ids.sort_by { rand }.slice(0, QUESTION_LIMIT)
+    q_ids = category.question_ids.sort_by { rand }.slice(0, Match::QUESTION_LIMIT)
     questions = Question.where(id: q_ids).sort_by{ rand }
   end
 end
