@@ -20,12 +20,9 @@ class Api::User::FriendsController < ApplicationController
       if @friend.nil?
         @friend = UserFriend.new(
           friend_id: userbyfb.id,
-          status: 0,
-          win: 0,
-          lose: 0,
           user_id: user.id
           )
-        @friend.save
+        @friend.save!
       end
     end
     render nothing: true, status: :ok

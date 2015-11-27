@@ -10,9 +10,6 @@ class Api::ChallengesController < ApplicationController
     if challengee_f.nil?
       challengee_f = UserFriend.new(
           friend_id: challenger.id,
-          win: 0,
-          lose: 0,
-          status: 0,
           user_id: challengee.id)
     end
     raise ApiException::InvalidAction unless challenger_f.normal? && (challengee_f.normal? || challengee_f.not_viewed?)

@@ -3,7 +3,7 @@
 minh:
   id: 1
   name: hgminh
-  facebook_id: MyString
+  facebook_id: 1
   avatar: MyString
   rating: 1.5
   highscore: 1
@@ -18,7 +18,7 @@ minh:
 canh:
   id: 2
   name: canhzz
-  facebook_id: MyString
+  facebook_id: 2
   avatar: MyString
   rating: 1.5
   highscore: 1
@@ -33,7 +33,7 @@ canh:
 nam:
   id: 3
   name: unoarid
-  facebook_id: MyString
+  facebook_id: 3
   avatar: MyString
   rating: 1.5
   highscore: 1

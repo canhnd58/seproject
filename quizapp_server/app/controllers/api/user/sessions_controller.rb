@@ -18,20 +18,11 @@ class Api::User::SessionsController < ApplicationController
           name: data["name"],
           facebook_id: data["id"],
           access_token: token,
-          avatar: "1.jpg",
-          rating: 0,
-          highscore: 0,
-          exp: 0,
-          accuracy: 5.0,
-          speed: 5.0,
-          versatility: 5.0,
-          diligence: 5.0,
-          impressiveness: 5.0,
           last_played: Time.now)
       else
         @user.access_token = token
       end
-      @user.save
+      @user.save!
     else
       render nothing: true, status: :bad_request
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117135154) do
+ActiveRecord::Schema.define(version: 20151118060741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,11 +114,11 @@ ActiveRecord::Schema.define(version: 20151117135154) do
 
   create_table "user_friends", force: :cascade do |t|
     t.integer  "friend_id"
-    t.integer  "status"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.integer  "win"
-    t.integer  "lose"
+    t.integer  "status",       default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "win",          default: 0
+    t.integer  "lose",         default: 0
     t.integer  "challenge_id"
     t.integer  "user_id"
   end
@@ -130,16 +130,16 @@ ActiveRecord::Schema.define(version: 20151117135154) do
     t.string   "name"
     t.string   "facebook_id"
     t.string   "avatar"
-    t.float    "rating"
-    t.integer  "highscore"
-    t.integer  "exp"
-    t.float    "accuracy"
-    t.float    "speed"
-    t.float    "versatility"
-    t.float    "diligence"
-    t.float    "impressiveness"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.integer  "rating",         default: 0
+    t.integer  "highscore",      default: 0
+    t.integer  "exp",            default: 0
+    t.integer  "accuracy",       default: 0
+    t.integer  "speed",          default: 0
+    t.integer  "versatility",    default: 0
+    t.integer  "diligence",      default: 0
+    t.integer  "impressiveness", default: 0
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "access_token"
     t.datetime "last_played"
   end

@@ -30,8 +30,9 @@ class Api::MatchesController < ApplicationController
       m_question.answer_id = a_id
       m_question.save!
     end
-    update_user_attributes!
+    #update_user_attributes!
     @match.save!
+    @user.update_after_matching! @match
     update_user_status!
     render nothing: true, status: :ok
   end
@@ -59,8 +60,8 @@ class Api::MatchesController < ApplicationController
       #Update status if this is the challengee's match
       challenge = @user.friend_challenges.find_by challengee_match_id: @match.id
       unless challenge.nil?
-        user = UserFriend.find_by user_id: challenge.challengee_id, friend_id: challenge.challenger_id
-        friend = UserFriend.find_by user_id: challenge.challenger_id, friend_id: challenge.challengee_id
+        user = UserFriend.find_by! user_id: challenge.challengee_id, friend_id: challenge.challenger_id
+        friend = UserFriend.find_by! user_id: challenge.challenger_id, friend_id: challenge.challengee_id
 
         user.normal!
         friend.not_viewed!
@@ -81,7 +82,7 @@ class Api::MatchesController < ApplicationController
       #Update status if this is the challenger's match
       challenge = @user.self_challenges.find_by challenger_match_id: @match.id
       unless challenge.nil?
-        friend = UserFriend.find_by user_id: challenge.challengee_id, friend_id: challenge.challenger_id
+        friend = UserFriend.find_by! user_id: challenge.challengee_id, friend_id: challenge.challenger_id
         friend.challenged!
         friend.save!
       end

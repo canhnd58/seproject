@@ -1,6 +1,6 @@
 ActiveAdmin.register Question do
   menu priority: 2
-  permit_params :description, :image, :kind, :score, :category_id,
+  permit_params :description, :image, :score, :category_id,
     answers_attributes: [:id, :value, :is_correct, :_destroy]
 
   belongs_to :category, optional: true
@@ -13,7 +13,6 @@ ActiveAdmin.register Question do
       text += "..." if question.description.length > 150
       text
     end
-    column :kind
     column :score
     column :updated_at
     actions
@@ -23,7 +22,6 @@ ActiveAdmin.register Question do
   filter :id
   filter :description
   filter :score
-  filter :kind
   filter :created_at
   filter :updated_at
 
@@ -32,7 +30,6 @@ ActiveAdmin.register Question do
       f.input :category_id, as: :select, collection: Category.all.map {|cat| [cat.name, cat.id]}, include_blank: false
       f.input :description
       f.input :image
-      f.input :kind
       f.input :score
     end
     f.inputs "Answers" do
@@ -52,7 +49,6 @@ ActiveAdmin.register Question do
       row "Image" do |question|
         link_to image_tag(question.image.url), question.image.url
       end
-      row :kind
       row :score
       row :created_at
       row :updated_at
