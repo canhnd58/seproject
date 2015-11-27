@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151118060741) do
+ActiveRecord::Schema.define(version: 20151127045435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,16 +130,16 @@ ActiveRecord::Schema.define(version: 20151118060741) do
     t.string   "name"
     t.string   "facebook_id"
     t.string   "avatar"
-    t.integer  "rating",         default: 0
+    t.float    "rating",         default: 0.0
     t.integer  "highscore",      default: 0
     t.integer  "exp",            default: 0
-    t.integer  "accuracy",       default: 0
-    t.integer  "speed",          default: 0
-    t.integer  "versatility",    default: 0
-    t.integer  "diligence",      default: 0
-    t.integer  "impressiveness", default: 0
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.float    "accuracy",       default: 0.0
+    t.float    "speed",          default: 0.0
+    t.float    "versatility",    default: 0.0
+    t.float    "diligence",      default: 0.0
+    t.float    "impressiveness", default: 0.0
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "access_token"
     t.datetime "last_played"
   end

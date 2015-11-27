@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
       self.diligence = inch(diligence, current_diligence, true)
     end
     self.last_played = current_time
+    self.save!
   end
 
   private
