@@ -1,7 +1,12 @@
 angular.module('starter.services')
 
-.factory('localStorage', ['$window', function($window) {
+.factory('localStorage', ['$window', '$ionicHistory', function($window, $ionicHistory) {
+
   return {
+
+    isHave: function(key) {
+      return (JSON.parse($window.localStorage[key] || null) != null);
+    },
 
     set: function(key, value) {
       $window.localStorage[key] = value;
@@ -25,6 +30,12 @@ angular.module('starter.services')
 
     removeObject: function(key) {
       return $window.localStorage.removeItem(key);
+    },
+
+    clearAllData: function() {
+      $window.localStorage.clear();
+      $ionicHistory.clearCache();
+      $ionicHistory.clearHistory();
     }
 
   }

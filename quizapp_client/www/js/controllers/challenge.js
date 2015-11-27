@@ -1,7 +1,7 @@
 angular.module('starter.controllers')
 
-.controller('challenge', function($scope, $controller,
-  ngFB, globalService, userAPI, userInfo, gameInfo) {
+.controller('challenge', function($scope, $controller, $ionicPopup,
+  ngFB, globalService, localStorage, userAPI, userInfo, gameInfo) {
 
   $scope.goBackView = function() {
     globalService.changeToBackState();
@@ -28,6 +28,12 @@ angular.module('starter.controllers')
   userAPI.getIdFriends(userInfo.getUserId(), userInfo.getAccessToken())
     .then(function(response) {
       $scope.userFriendsList = response.data.friends;
+      var keyString =
+        '_' + userInfo.getUserId() +
+        '_' + 'true' + '_';
+      angular.forEach($scope.userFriendsList, function(value, key) {
+        value.isHave = localStorage.isHave(keyString + value.id);
+      });
       globalService.loadingScreenHide();
     })
     .catch(function(response) {
@@ -38,6 +44,7 @@ angular.module('starter.controllers')
   $scope.changeChallenge = function(item) {
 
     gameInfo.setIsChallenge(true);
+    gameInfo.setOppId(item.id);
     gameInfo.setOppName(item.name);
     gameInfo.setChallengeStatus(item.status);
 
@@ -55,10 +62,23 @@ angular.module('starter.controllers')
         globalService.changeState('questions');
         break;
       case "challenging":
-        $ionicPopup.alert({
-          title: "Sorry!",
-          template: "You have already challenged " + item.name + "."
-        });
+        var keyString =
+          '_' + userInfo.getUserId() +
+          '_' + gameInfo.isChallenge() +
+          '_' + gameInfo.getOppId();
+        if (localStorage.isHave(keyString)) {
+          globalService.confirmPopUp("Continue", "Do you want to continue your last state challenge with " + item.name + "?", "Later", "Yes")
+            .then(function(userChoice) {
+              if (userChoice) {
+                globalService.changeState('questions');
+              }
+            });
+        } else {
+          $ionicPopup.alert({
+            title: "Sorry!",
+            template: "You have already challenged " + item.name + "."
+          });
+        };
         break;
       case "not_viewed":
         $scope.oppName = item.name;
@@ -72,7 +92,7 @@ angular.module('starter.controllers')
   // View mutual information
   $scope.viewMutualProfile = function(item) {
     gameInfo.setOppId(item.id);
-    $state.go('mutualProfile');
+    globalService.changeState('mutualProfile');
   };
 
 });

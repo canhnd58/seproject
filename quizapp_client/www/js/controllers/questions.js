@@ -5,8 +5,6 @@ angular.module('starter.controllers')
   userAPI, challengeAPI, matchAPI,
   ionicMaterialInk, ionicMaterialMotion) {
 
-  $scope.categoryName = gameInfo.getCategoryName();
-
   // Show questions and calculate result
   var streak = 0; // required
   $scope.score = 0; // required
@@ -27,7 +25,7 @@ angular.module('starter.controllers')
   var questionsDataPromise = getQuestionsData();
   questionsDataPromise
     .then(function(response) {
-      resendResult()
+      resendResult(gameInfo.isChallenge())
         .catch(function(response) {
           var increaseTried = function() {
             $scope.tried -= 50;
@@ -88,19 +86,18 @@ angular.module('starter.controllers')
         $scope.singleQuestion = $scope.questionsData[cnt];
       };
 
+      resendResult(gameInfo.isChallenge());
     }, 300);
-
-    resendResult();
 
   };
 
   $scope.goBackView = function() {
     var confirmPopUp = globalService.confirmPopUp("Back to menu",
-      "Are you sure to go back to menu?<br>Your match will be saved (soon).", "No", "Yes");
+      "Are you sure to go back to menu?<br>Your match will be saved.", "No", "Yes");
     confirmPopUp.then(function(userChoice) {
       if (userChoice) {
         $interval.cancel($scope.loop);
-        backupData();
+        backupData(gameInfo.isChallenge());
         globalService.changeState('menu');
       };
     });
@@ -111,12 +108,16 @@ angular.module('starter.controllers')
 
   // Functions
   // backupdata() save your answer in localStorage if you go back to menu
-  var backupData = function() {
-    localStorage.setObject(
-      "_" + userInfo.getUserId() +
-      "_" + gameInfo.isChallenge() +
-      "_" + gameInfo.getOppId() +
-      "_" + gameInfo.getCategoryId(), {
+  var backupData = function(boolVal) {
+    var keyStringValue =
+      '_' + userInfo.getUserId() +
+      '_' + gameInfo.isChallenge() + '_';
+
+    if (!boolVal)
+      keyStringValue += gameInfo.getCategoryId()
+    else keyStringValue += gameInfo.getOppId();
+
+    localStorage.setObject(keyStringValue, {
         cnt: cnt,
         streak: streak,
         streakCount: streakCount,
@@ -131,21 +132,25 @@ angular.module('starter.controllers')
       });
   };
   // removeData() remove your old backupData() when you finish send result to server
-  var removeData = function() {
-    localStorage.removeObject(
-      "_" + userInfo.getUserId() +
-      "_" + gameInfo.isChallenge() +
-      "_" + gameInfo.getOppId() +
-      "_" + gameInfo.getCategoryId());
+  var removeData = function(boolVal) {
+    var keyStringValue =
+      '_' + userInfo.getUserId() +
+      '_' + gameInfo.isChallenge() + '_';
+
+    if (!boolVal)
+      keyStringValue += gameInfo.getCategoryId()
+    else keyStringValue += gameInfo.getOppId();
+
+    localStorage.removeObject(keyStringValue);
   };
   // resendResult() use when send result to server having trouble
   // data will be saved and will resend to server in the next time user play
-  var resendResult = function() {
+  var resendResult = function(boolVal) {
     var defer = $q.defer();
 
     if (cnt == $scope.questionsData.length) {
       $interval.cancel($scope.loop);
-      $scope.finished = gameInfo.getChallengeStatus() != "challenged";
+      $scope.finished = true;
       globalService.loadingScreenShow();
       userAPI.getId(userInfo.getUserId())
         .then(function(response) {
@@ -156,19 +161,19 @@ angular.module('starter.controllers')
         })
         .then(function(response) {
           globalService.loadingScreenHide();
-          removeData();
+          removeData(gameInfo.isChallenge());
           defer.resolve("Send result to server success.");
           if (gameInfo.isChallenge() && gameInfo.getChallengeStatus() == "challenged") {
             var modalController = $scope.$new();
             $controller('challengeResultModal', {$scope: modalController});
-          } else if (!gameInfo.isChallenge()) {
+          } else {
             var modalController = $scope.$new();
             $controller('singleResultModal', {$scope: modalController});
           };
         })
         .catch(function(response) {
           globalService.loadingScreenHide();
-          backupData();
+          backupData(gameInfo.isChallenge());
           defer.reject("Send result to server failed.");
           globalService.handleErrorResponse("Send match result failed: " + response.statusText, response.status);
         });
@@ -181,76 +186,38 @@ angular.module('starter.controllers')
   function getQuestionsData() {
     var defer = $q.defer();
 
-    if (localStorage.getObject(
-      '_' + userInfo.getUserId() +
-      '_' + gameInfo.isChallenge() +
-      '_' + gameInfo.getOppId() +
-      '_' + gameInfo.getCategoryId()) != null) {
+    // CASE 1: TRAINNING MODE
+    if (!gameInfo.isChallenge()) {
+      // CASE 1.1: Having item in localStorage
+      // key: '_' + userId + '_' + false + '_' + categoryId
+      if (localStorage.isHave(
+        '_' + userInfo.getUserId() +
+        '_' + gameInfo.isChallenge() +
+        '_' + gameInfo.getCategoryId()
+      )) {
         var oldMatchData = localStorage.getObject(
-          "_" + userInfo.getUserId() +
-          "_" + gameInfo.isChallenge() +
-          "_" + gameInfo.getOppId() +
-          "_" + gameInfo.getCategoryId());
+          '_' + userInfo.getUserId() +
+          '_' + gameInfo.isChallenge() +
+          '_' + gameInfo.getCategoryId());
 
-        cnt = oldMatchData.cnt;
-        streak = oldMatchData.streak;
-        streakCount = oldMatchData.streakCount;
-        $scope.score = oldMatchData.score;
-        totalTime = oldMatchData.totalTime;
-        answersArray = oldMatchData.answersArray;
-        $scope.correctArray = oldMatchData.correctArray;
-        $scope.questionsData = oldMatchData.questionsData;
-        $scope.singleQuestion = oldMatchData.questionsData[cnt];
-        $scope.tried = oldMatchData.tried + 2800;
-        matchId = oldMatchData.matchId;
+          cnt = oldMatchData.cnt;
+          streak = oldMatchData.streak;
+          streakCount = oldMatchData.streakCount;
+          $scope.score = oldMatchData.score;
+          totalTime = oldMatchData.totalTime;
+          answersArray = oldMatchData.answersArray;
+          $scope.correctArray = oldMatchData.correctArray;
+          $scope.questionsData = oldMatchData.questionsData;
+          $scope.singleQuestion = oldMatchData.questionsData[cnt];
+          $scope.tried = oldMatchData.tried + 2800;
+          matchId = oldMatchData.matchId;
 
-        gameInfo.setMatchId(matchId);
+          gameInfo.setMatchId(matchId);
 
-        defer.resolve("Get old questions success");
-
-    } else {
-      // Get list of questions of user category choice
-      globalService.loadingScreenShow();
-      // Case 1: isChallengee and isChallengee
-      if (gameInfo.isChallenge() && !gameInfo.isChallenger()) {
-
-        challengeAPI.getId(gameInfo.getChallengeId(), userInfo.getAccessToken())
-          .then(function(response) {
-            gameInfo.setMatchId(response.data.challengee_match_id);
-            return matchAPI.getMatchesId(gameInfo.getMatchId(), userInfo.getAccessToken());
-          })
-          .then(function(response) {
-            $scope.questionsData = response.data.questions;
-            $scope.singleQuestion = response.data.questions[0];
-            globalService.loadingScreenHide();
-            defer.resolve("Get questions success");
-          })
-          .catch(function(response) {
-            globalService.loadingScreenHide();
-            defer.reject("Get questions failed");
-            globalService.handleErrorResponse("Get questions for challengee failed: " + response.statusText, response.status);
-          });
-
-      };
-
-      // Case 2: isChallenge and isChallenger
-      if (gameInfo.isChallenge() && gameInfo.isChallenger()) {
-        matchAPI.getMatchesId(gameInfo.getMatchId(), userInfo.getAccessToken())
-          .then(function(response) {
-            $scope.questionsData = response.data.questions;
-            $scope.singleQuestion = response.data.questions[0];
-            globalService.loadingScreenHide();
-            defer.resolve("Get questions success");
-          })
-          .catch(function(response) {
-            globalService.loadingScreenHide();
-            defer.reject("Get questions failed");
-            globalService.handleErrorResponse("Get questions for challenger failed: " + response.statusText, response.status);
-          });
-      };
-
-      // Case 3: !isChallenge()
-      if (!gameInfo.isChallenge()) {
+          defer.resolve("Get old questions success");
+      } else {
+        // CASE 1.2: Get questions from server
+        globalService.loadingScreenShow();
         matchAPI.postMatches(gameInfo.getCategoryId(), userInfo.getAccessToken())
           .then(function(response) {
             gameInfo.setMatchId(response.data.match_id);
@@ -264,6 +231,77 @@ angular.module('starter.controllers')
             defer.reject("Get questions failed");
             globalService.handleErrorResponse("Get questions for trainning failed: " + response.statusText, response.status);
           });
+      };
+    };
+
+    // CASE 2: CHALLENGE MODE
+    if (gameInfo.isChallenge()) {
+      // CASE 2.1: Having item in localStorage
+      // key: '_' + userId + '_' + true + '_' + oppId
+      if (localStorage.isHave(
+        '_' + userInfo.getUserId() +
+        '_' + gameInfo.isChallenge() +
+        '_' + gameInfo.getOppId()
+      )) {
+        var oldMatchData = localStorage.getObject(
+          '_' + userInfo.getUserId() +
+          '_' + gameInfo.isChallenge() +
+          '_' + gameInfo.getOppId());
+
+          cnt = oldMatchData.cnt;
+          streak = oldMatchData.streak;
+          streakCount = oldMatchData.streakCount;
+          $scope.score = oldMatchData.score;
+          totalTime = oldMatchData.totalTime;
+          answersArray = oldMatchData.answersArray;
+          $scope.correctArray = oldMatchData.correctArray;
+          $scope.questionsData = oldMatchData.questionsData;
+          $scope.singleQuestion = oldMatchData.questionsData[cnt];
+          $scope.tried = oldMatchData.tried + 2800;
+          matchId = oldMatchData.matchId;
+
+          gameInfo.setMatchId(matchId);
+
+          defer.resolve("Get old questions success");
+      } else {
+        // CASE 2.2: Get questions from server
+        // Case 2.2.1: isChallengee and isChallengee
+        if (gameInfo.isChallenge() && !gameInfo.isChallenger()) {
+          challengeAPI.getId(gameInfo.getChallengeId(), userInfo.getAccessToken())
+            .then(function(response) {
+              gameInfo.setMatchId(response.data.challengee_match_id);
+              return matchAPI.getMatchesId(gameInfo.getMatchId(), userInfo.getAccessToken());
+            })
+            .then(function(response) {
+              $scope.questionsData = response.data.questions;
+              $scope.singleQuestion = response.data.questions[0];
+              globalService.loadingScreenHide();
+              defer.resolve("Get questions success");
+            })
+            .catch(function(response) {
+              globalService.loadingScreenHide();
+              defer.reject("Get questions failed");
+              globalService.handleErrorResponse("Get questions for challengee failed: " + response.statusText, response.status);
+            });
+
+        };
+
+        // Case 2.2.2: isChallenge and isChallenger
+        if (gameInfo.isChallenge() && gameInfo.isChallenger()) {
+          matchAPI.getMatchesId(gameInfo.getMatchId(), userInfo.getAccessToken())
+            .then(function(response) {
+              $scope.questionsData = response.data.questions;
+              $scope.singleQuestion = response.data.questions[0];
+              globalService.loadingScreenHide();
+              defer.resolve("Get questions success");
+            })
+            .catch(function(response) {
+              globalService.loadingScreenHide();
+              defer.reject("Get questions failed");
+              globalService.handleErrorResponse("Get questions for challenger failed: " + response.statusText, response.status);
+            });
+        };
+
       };
 
     };

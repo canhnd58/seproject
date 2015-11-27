@@ -26,9 +26,9 @@ angular.module('starter.controllers')
     confirmPopUp.then(function(userChoice) {
       if (userChoice) {
         ngFB.logout();
+        localStorage.removeObject('_userLocalData');
         userAPI.deleteSession(userInfo.getAccessToken())
           .then(function(response) {
-            localStorage.removeObject('_userLocalData');
             globalService.changeState('login');
           })
           .catch(function(response) {

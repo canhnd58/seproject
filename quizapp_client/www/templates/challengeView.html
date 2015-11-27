@@ -13,11 +13,13 @@
         <div class="buttons">
           <button ng-class="{'button button-positive ink': items.status == 'normal',
                             'button button-assertive ink': items.status == 'challenged',
-                            'button button-stable ink': items.status == 'challenging',
+                            'button button-stable ink': items.status == 'challenging' && items.isHave == false,
+                            'button button-royal ink': items.status == 'challenging' && items.isHave == true,
                             'button button-balanced ink': items.status == 'not_viewed'}" ng-click="changeChallenge({{items}})">
           <i ng-class="{'icon ion-paper-airplane': items.status == 'normal',
                         'icon ion-checkmark': items.status == 'challenged',
-                        'icon ion-ios-pulse': items.status == 'challenging',
+                        'icon ion-ios-pulse': items.status == 'challenging' && items.isHave == false,
+                        'icon ion-load-d': items.status == 'challenging' && items.isHave == true,
                         'icon ion-ios-information-empty': items.status == 'not_viewed'}"></i>
             <i ng-class="{'{{items.iconStyle}}': true}"></i>
           </button>

@@ -1,7 +1,7 @@
 angular.module('starter.controllers')
 
-.controller('challengeResultModal', function($scope, $ionicModal, $controller, globalService,
-  challengeAPI, matchAPI, gameInfo, userInfo) {
+.controller('challengeResultModal', function($scope, $ionicModal, $controller, $state,
+  globalService, challengeAPI, matchAPI, gameInfo, userInfo) {
   var userMatchId;
   var oppMatchId;
 
