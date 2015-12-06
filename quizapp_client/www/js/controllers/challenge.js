@@ -7,10 +7,11 @@ angular.module('starter.controllers')
     globalService.changeToBackState();
   };
 
+  $scope.userFBFriendsList = [];
   globalService.loadingScreenShow();
   ngFB.api({path: '/me/friends'})
     .then(function(response) {
-      var userFBFriendsList = response.data;
+      userFBFriendsList = response.data;
       $scope.friendsIdList = [];
       angular.forEach(userFBFriendsList, function(value, key) {
         $scope.friendsIdList.push(value.id);

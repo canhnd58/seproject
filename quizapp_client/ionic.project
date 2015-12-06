@@ -3,7 +3,7 @@
   "app_id": "a458c686",
   "proxies": [
     {
-      "path": "/apiServer",
+      "path": "/api",
       "proxyUrl": "http://se2015-quizapp.herokuapp.com/api"
     },
     {
@@ -11,7 +11,7 @@
       "proxyUrl": "http://192.168.96.102:3000/api"
     },
     {
-      "path": "/api",
+      "path": "/apiCanh1",
       "proxyUrl": "http://192.168.128.105:3000/api"
     },
 		{

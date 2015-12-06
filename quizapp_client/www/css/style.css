@@ -222,4 +222,15 @@
   bottom: 20%;
   right: 10%;
   left: 10%;
+  border: 1px solid black;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+.statusChangeRed {
+  color: red;
+}
+
+.statusChangeGreen {
+  color: green;
 }

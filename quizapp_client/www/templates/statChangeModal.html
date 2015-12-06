@@ -16,7 +16,9 @@
         <div class="row">
           <div class="col col-33">Accuracy</div>
           <div class="col col-offset-20"></div>
-          <div class="col"> {{oldStat.accuracy}} -> {{newStat.accuracy}} </div>
+          <div class="col" ng-class="{'statusChangeRed': oldStat.accuracy > newStat.accuracy,
+                                      'statusChangeGreen': oldStat.accuracy <= newStat.accuracy}">
+                                      {{oldStat.accuracy}} -> {{newStat.accuracy}} </div>
         </div>
       </div>
 
@@ -24,7 +26,9 @@
         <div class="row">
           <div class="col col-33">Speed</div>
           <div class="col col-offset-20"></div>
-          <div class="col"> {{oldStat.speed}} -> {{newStat.speed}} </div>
+          <div class="col" ng-class="{'statusChangeRed': oldStat.speed > newStat.speed,
+                                      'statusChangeGreen': oldStat.speed <= newStat.speed}">
+                                      {{oldStat.speed}} -> {{newStat.speed}} </div>
         </div>
       </div>
 
@@ -32,7 +36,9 @@
         <div class="row">
           <div class="col col-33">Versatility</div>
           <div class="col col-offset-20"></div>
-          <div class="col"> {{oldStat.versatility}} -> {{newStat.versatility}} </div>
+          <div class="col" ng-class="{'statusChangeRed': oldStat.versatility > newStat.versatility,
+                                      'statusChangeGreen': oldStat.versatility <= newStat.versatility}">
+                                      {{oldStat.versatility}} -> {{newStat.versatility}} </div>
         </div>
       </div>
 
@@ -40,7 +46,9 @@
         <div class="row">
           <div class="col col-33">Diligence</div>
           <div class="col col-offset-20"></div>
-          <div class="col"> {{oldStat.diligence}} -> {{newStat.diligence}} </div>
+          <div class="col" ng-class="{'statusChangeRed': oldStat.diligence > newStat.diligence,
+                                      'statusChangeGreen': oldStat.diligence <= newStat.diligence}">
+                                      {{oldStat.diligence}} -> {{newStat.diligence}} </div>
         </div>
       </div>
 
@@ -48,7 +56,9 @@
         <div class="row">
           <div class="col col-33">Impressiveness</div>
           <div class="col col-offset-20"></div>
-          <div class="col"> {{oldStat.impressiveness}} -> {{newStat.impressiveness}} </div>
+          <div class="col" ng-class="{'statusChangeRed': oldStat.impressiveness > newStat.impressiveness,
+                                      'statusChangeGreen': oldStat.impressiveness <= newStat.impressiveness}">
+                                      {{oldStat.impressiveness}} -> {{newStat.impressiveness}} </div>
         </div>
       </div>
 
