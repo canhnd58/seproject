@@ -148,7 +148,7 @@ angular.module('starter.controllers')
   var resendResult = function(boolVal) {
     var defer = $q.defer();
 
-    if (cnt == $scope.questionsData.length) {
+    if (cnt == $scope.questionsData.length && boolVal = gameInfo.isChallenge()) {
       $interval.cancel($scope.loop);
       $scope.finished = true;
       globalService.loadingScreenShow();
