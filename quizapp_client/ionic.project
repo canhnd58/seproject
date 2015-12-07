@@ -12,7 +12,7 @@
     },
     {
       "path": "/apiCanh1",
-      "proxyUrl": "http://192.168.128.105:3000/api"
+      "proxyUrl": "http://192.168.128.109:3000/api"
     },
 		{
 			"path": "/apiCanh2",

@@ -8,12 +8,12 @@
 
   <ion-content>
     <div class="list padding">
-      <div class="item item-divider">
+      <div class="item item-divider item-avatar" style="height: 64px;">
+        <img class="full-image" src={{user.avatar}}>
         {{user.name}}
       </div>
-      <a class="item">Rating <span class="item-note">{{user.rating}}</span></a>
-      <a class="item">Highscore <span class="item-note">{{user.highscore}}</span></a>
-      <a class="item">Level <span class="item-note">{{user.exp / 1000}}</span></a>
+      <a class="item"> Rating <span class="item-note">{{user.rating}}</span></a>
+      <a class="item"> Highscore <span class="item-note">{{user.highscore}}</span></a>
     </div>
     <div class="col col-100">
       <canvas class="chart chart-radar padding" chart-data="chart.data"

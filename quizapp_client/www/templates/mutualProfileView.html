@@ -8,12 +8,14 @@
 
   <ion-content>
     <div class="list padding">
-      <div class="item item-divider">
+      <div class="item item-divider item-avatar" style="height: 64px;">
+        <img src={{user.avatar}}>
         {{user.name}}
       </div>
       <a class="item">Rating <span class="item-note">{{user.rating}}</span></a>
       <a class="item">Highscore <span class="item-note">{{user.highscore}}</span></a>
-      <div class="item item-divider">
+      <div class="item item-divider item-avatar" style="height: 64px;">
+        <img src={{opp.avatar}}>
         {{opp.name}}
       </div>
       <a class="item">Rating <span class="item-note">{{opp.rating}}</span></a>
