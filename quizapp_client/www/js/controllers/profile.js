@@ -30,6 +30,7 @@ angular.module('starter.controllers')
       globalService.loadingScreenHide();
     })
     .catch(function(response) {
+      console.log(response.data);
       globalService.loadingScreenHide();
       globalService.handleErrorResponse("Get user's profile failed: " + response.statusText, response.status);
     });
