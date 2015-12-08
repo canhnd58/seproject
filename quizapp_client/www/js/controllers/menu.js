@@ -28,6 +28,7 @@ angular.module('starter.controllers')
     var confirmPopUp = globalService.confirmPopUp("Logout", "Are you sure to logout?", "No", "Yes");
     confirmPopUp.then(function(userChoice) {
       if (userChoice) {
+        localStorage.removeObject('_userLocalData');
         ngFB.logout();
         userAPI.deleteSession(userInfo.getAccessToken())
           .then(function(response) {

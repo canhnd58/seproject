@@ -2,7 +2,16 @@ angular.module('starter.controllers')
 
 .controller('login', function($scope, $state, ngFB, globalService, localStorage, userInfo, userAPI) {
   // localStorage.clearAllData();
+  if (localStorage.getObject('_userLocalData') != null) {
+    var userLocalData = localStorage.getObject('_userLocalData');
 
+    userInfo.setAccessToken(userLocalData.accessToken);
+    userInfo.setUserId(userLocalData.id);
+
+    globalService.turnOffAnimateForNextView();
+    globalService.changeState('menu');
+  };
+  
   $scope.fbLogin = function() {
     ngFB.login({scope: 'user_friends'})
       .then(function(response) {
