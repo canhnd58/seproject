@@ -19,13 +19,13 @@ class User < ActiveRecord::Base
   end
 
   def update_exp(match)
-    exp += match.score / Match::QUESTION_LIMIT
+    self.exp += match.score / Match::QUESTION_LIMIT
     return if rank == Rank.last.id
     next_rank = rank + 1
     up_attr = Rank.required_attribute(next_rank)
     up = [accuracy, speed, diligence, impressiveness, versatility].min >= up_attr
     up_exp = Rank.required_exp(next_rank)
-    exp = up_exp if exp > up_exp && !up
+    self.exp = up_exp if exp > up_exp && !up
   end
 
   def update_highscore(match)

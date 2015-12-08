@@ -32,6 +32,7 @@ class Api::MatchesController < ApplicationController
     end
     #update_user_attributes!
     @match.save!
+    @user.update_exp @match
     @user.update_highscore @match
     @user.update_accuracy @match
     @user.update_speed @match
